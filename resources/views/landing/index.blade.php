@@ -152,69 +152,12 @@
         </div>
     </section>
 
-    <!-- Quick Role Access Cards Section -->
-    <section class="py-12 bg-white border-y border-slate-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-8">
-                <span class="text-xs font-extrabold uppercase tracking-wider text-brand-600">Sistem 2 Role Terintegrasi</span>
-                <h2 class="text-2xl font-bold text-slate-900 mt-1">Pilih Portal Akses Sesuai Kebutuhan Anda</h2>
-                <p class="text-sm text-slate-500 mt-1">Washora dirancang khusus untuk kenyamanan pelanggan dan kemudahan manajemen operasional laundry.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                <!-- Customer Role Card -->
-                <div class="p-6 rounded-3xl bg-gradient-to-br from-brand-50/50 to-white border border-brand-100 hover:border-brand-300 transition-all hover:shadow-lg group">
-                    <div class="flex items-start justify-between">
-                        <div class="w-12 h-12 rounded-2xl bg-brand-600 text-white flex items-center justify-center shadow-md shadow-brand-600/20 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-user text-xl"></i>
-                        </div>
-                        <span class="px-3 py-1 bg-brand-100 text-brand-700 rounded-full text-xs font-bold">Portal Pelanggan</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900 mt-4">Pelanggan / Customer</h3>
-                    <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
-                        Pesan laundry secara online, lacak progres pencucian realtime, lihat riwayat nota, tanpa perlu timbang sendiri di rumah.
-                    </p>
-                    <div class="mt-5 flex items-center gap-3">
-                        <a href="{{ route('user.login') }}" class="px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-all shadow-sm">
-                            Masuk Pelanggan
-                        </a>
-                        <a href="{{ route('user.register') }}" class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold transition-all">
-                            Daftar Akun Baru
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Admin Role Card -->
-                <div class="p-6 rounded-3xl bg-gradient-to-br from-slate-900 to-slate-800 text-white border border-slate-700 hover:border-slate-600 transition-all hover:shadow-xl group">
-                    <div class="flex items-start justify-between">
-                        <div class="w-12 h-12 rounded-2xl bg-cyan-500 text-slate-950 flex items-center justify-center shadow-md shadow-cyan-500/20 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-shield-halved text-xl"></i>
-                        </div>
-                        <span class="px-3 py-1 bg-slate-800 text-cyan-400 border border-slate-700 rounded-full text-xs font-bold">Portal Admin</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mt-4">Administrator / Pengelola</h3>
-                    <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
-                        Verifikasi berat & kalkulasi harga, update status pencucian, kirim notifikasi WhatsApp otomatis, kelola layanan, dan lihat laporan omset.
-                    </p>
-                    <div class="mt-5 flex items-center gap-3">
-                        <a href="{{ route('admin.login') }}" class="px-4 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-bold transition-all shadow-sm">
-                            Masuk Portal Admin
-                        </a>
-                        <span class="text-[11px] text-slate-400 flex items-center gap-1">
-                            <i class="fa-solid fa-lock text-[10px]"></i> Akses Terproteksi
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Services Section -->
     <section id="layanan" class="py-20 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-14">
                 <span class="text-xs font-extrabold uppercase tracking-wider text-brand-600">Pilihan Layanan Laundry</span>
-                <h2 class="text-3xl font-extrabold text-slate-900 mt-2">Daftar Layanan Berkualitas & Higienis</h2>
+                <h2 class="text-3xl font-extrabold text-slate-900 mt-2">Pilih Layanan Berkualitas & Higienis</h2>
                 <p class="text-slate-600 text-sm mt-2">Tersedia pilihan pengerjaan Regular maupun Express dengan penanganan khusus untuk berbagai jenis bahan.</p>
             </div>
 
