@@ -160,7 +160,25 @@
                 <h2 class="text-3xl font-extrabold text-slate-900 mt-2">Pilih Layanan Berkualitas & Higienis</h2>
                 <p class="text-slate-600 text-sm mt-2">Tersedia pilihan pengerjaan Regular maupun Express dengan penanganan khusus untuk berbagai jenis bahan.</p>
             </div>
+            <!-- toggle -->
+            <div class="flex justify-center mt-8">
+                <div class="inline-flex bg-gray-100 rounded-full p-1">
+                    <button 
+                    type="button"
+                    onclick="filterServices('reguler')"
+                    id="btn-reguler"
+                    class = "filter-btn px-8 py-3 rounded-full text-white bg-orange-500 shadow-md transition-all duration-200">
+                    cuci regular
+                    </button>
+                    <button
+                    type="button"
+                    onclick="filterServices('express')"
+                    id="btn-express"
+                    class = "filter-btn px-8 py-3 rounded-full text-white bg-blue-500 shadow-md transition-all duration-200">
+                    cuci express
+                    </button>
 
+            </div>
             <!-- Categories Tabs & Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($featuredServices as $service)
