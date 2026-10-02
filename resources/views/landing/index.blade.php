@@ -26,7 +26,7 @@
                         Solusi Laundry Modern, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-brand-500 to-cyan-500">Bersih, Cepat & Praktis.</span>
                     </h1>
 
-                    <p class="text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                    <p class="-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
                         Pesan laundry tanpa ribet menimbang di rumah. Nikmati layanan antar-jemput, tracking pengerjaan realtime, serta konfirmasi akurat & transparan langsung ke WhatsApp Anda.
                     </p>
 
@@ -159,26 +159,32 @@
                 <span class="text-xs font-extrabold uppercase tracking-wider text-brand-600">Pilihan Layanan Laundry</span>
                 <h2 class="text-3xl font-extrabold text-slate-900 mt-2">Pilih Layanan Berkualitas & Higienis</h2>
                 <p class="text-slate-600 text-sm mt-2">Tersedia pilihan pengerjaan Regular maupun Express dengan penanganan khusus untuk berbagai jenis bahan.</p>
+                <div class="flex justify-center mt-8 mb-10">
+    <div class="inline-flex items-center bg-slate-100 rounded-full p-1">
+
+        <button
+            type="button"
+            id="btn-setrika"
+            onclick="filterLayanan('setrika')"
+            class="filter-btn px-8 py-3 rounded-full font-semibold bg-orange-500 text-white shadow-md transition-all duration-200"
+        >
+            Cuci Setrika
+        </button>
+
+        <button
+            type="button"
+            id="btn-lipat"
+            onclick="filterLayanan('lipat')"
+            class="filter-btn px-8 py-3 rounded-full font-semibold text-slate-700 transition-all duration-200"
+        >
+            Cuci Lipat
+        </button>
+
+    </div>
+</div>
             </div>
             <!-- toggle -->
-            <div class="flex justify-center mt-8">
-                <div class="inline-flex bg-gray-100 rounded-full p-1">
-                    <button 
-                    type="button"
-                    onclick="filterServices('reguler')"
-                    id="btn-reguler"
-                    class = "filter-btn px-8 py-3 rounded-full text-white bg-orange-500 shadow-md transition-all duration-200">
-                    cuci regular
-                    </button>
-                    <button
-                    type="button"
-                    onclick="filterServices('express')"
-                    id="btn-express"
-                    class = "filter-btn px-8 py-3 rounded-full text-white bg-blue-500 shadow-md transition-all duration-200">
-                    cuci express
-                    </button>
-
-            </div>
+           
             <!-- Categories Tabs & Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($featuredServices as $service)
