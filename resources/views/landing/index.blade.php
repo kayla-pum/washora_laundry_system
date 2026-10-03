@@ -164,26 +164,25 @@
 
         <button
             type="button"
-            id="btn-setrika"
-            onclick="filterLayanan('setrika')"
+            id="btn-reguler"
+            onclick="filterLayanan('reguler')"
             class="filter-btn px-8 py-3 rounded-full font-semibold bg-orange-500 text-white shadow-md transition-all duration-200"
         >
-            Cuci Setrika
+            Reguler
         </button>
 
         <button
             type="button"
-            id="btn-lipat"
-            onclick="filterLayanan('lipat')"
+            id="btn-express"
+            onclick="filterLayanan('express')"
             class="filter-btn px-8 py-3 rounded-full font-semibold text-slate-700 transition-all duration-200"
         >
-            Cuci Lipat
+            Express
         </button>
 
     </div>
 </div>
             </div>
-            <!-- toggle -->
            
             <!-- Categories Tabs & Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
