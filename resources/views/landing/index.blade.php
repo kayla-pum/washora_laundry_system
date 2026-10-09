@@ -186,9 +186,10 @@
 
            
             <!-- Categories Tabs & Grid -->
-            {{--<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($featuredServices as $service)
-                    <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col justify-between group">
+                    <div class="service-card bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col justify-between group" data-service-type="{{ strtolower($service->service_type) }}"
+                        >
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
                                 <span class="px-3 py-1 rounded-full text-[11px] font-bold {{ $service->service_type === 'express' ? 'bg-amber-100 text-amber-800' : 'bg-brand-50 text-brand-700' }}">
@@ -224,7 +225,7 @@
                         </div>
                     </div>
                 @endforeach
-            </div>--}}
+            </div>
 
             <div class="text-center mt-10">
                 <a href="{{ route('services') }}" class="inline-flex items-center gap-2 text-sm font-bold text-brand-600 hover:text-brand-700 hover:underline">
