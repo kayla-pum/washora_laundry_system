@@ -164,8 +164,8 @@
 
         <button
             type="button"
-            id="btn-reguler"
-            onclick="filterLayanan('reguler')"
+            id="btn-regular"
+            onclick="filterLayanan('regular')"
             class="filter-btn px-8 py-3 rounded-full font-semibold bg-orange-500 text-white shadow-md transition-all duration-200"
         >
             Reguler
@@ -396,4 +396,49 @@
 
     <!-- Public Footer -->
     @include('layouts.footer')
+
+<script>
+    function filterLayanan(type) {
+        const cards = document.querySelectorAll('.service-card');
+
+        cards.forEach(card => {
+            const serviceType = card.dataset.serviceType;
+
+            if (serviceType === type) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        // Atur tampilan tombol aktif dan nonaktif
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.classList.remove(
+                'bg-orange-500',
+                'text-white',
+                'shadow-md'
+            );
+
+            button.classList.add('text-slate-700');
+        });
+
+        const activeButton = document.getElementById(
+            type === 'regular' ? 'btn-reguler' : 'btn-express'
+        );
+
+        if (activeButton) {
+            activeButton.classList.remove('text-slate-700');
+            activeButton.classList.add(
+                'bg-orange-500',
+                'text-white',
+                'shadow-md'
+            );
+        }
+    }
+
+    // Tampilan awal: Reguler
+    document.addEventListener('DOMContentLoaded', function () {
+        filterLayanan('regular');
+    });
+</script>
 @endsection
