@@ -16,11 +16,6 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
                 <!-- Left Column: Copy & CTAs -->
                 <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-                    <!-- Pill Tag -->
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-brand-200 shadow-sm text-xs font-bold text-brand-700">
-                        <span class="flex h-2 w-2 rounded-full bg-cyan-500 animate-ping"></span>
-                        <span>Sistem Informasi Laundry Cerdas & Terpercaya</span>
-                    </div>
 
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
                         Solusi Laundry Modern, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-brand-500 to-cyan-500">Bersih, Cepat & Praktis.</span>
@@ -168,7 +163,7 @@
             onclick="filterLayanan('regular')"
             class="filter-btn px-8 py-3 rounded-full font-semibold bg-orange-500 text-white shadow-md transition-all duration-200"
         >
-            Reguler
+            Regular
         </button>
 
         <button
@@ -423,7 +418,7 @@
         });
 
         const activeButton = document.getElementById(
-            type === 'regular' ? 'btn-reguler' : 'btn-express'
+            type === 'regular' ? 'btn-regular' : 'btn-express'
         );
 
         if (activeButton) {
