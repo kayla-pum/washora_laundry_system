@@ -26,6 +26,9 @@ class PublicPagesTest extends TestCase
         $response->assertSee('Layanan');
         $response->assertSee('Paket Hemat');
         $response->assertSee('Cara Kerja');
+        $response->assertSee('Reservasi');
+        $response->assertSee(route('user.orders.create'));
+        $response->assertDontSee('href="http://localhost#paket"', false);
     }
 
     public function test_services_catalog_page_loads_successfully(): void
