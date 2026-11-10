@@ -15,7 +15,7 @@ class EnsureUserIsCustomer
     public function handle(Request $request, Closure $next): Response
     {
         if (! Auth::check()) {
-            return redirect()->route('user.login')->with('warning', 'Silakan login terlebih dahulu untuk mengakses dashboard pelanggan.');
+            return redirect()->route('user.login')->with('warning', 'Silakan masuk terlebih dahulu untuk melanjutkan.');
         }
 
         if (! Auth::user()->isUser()) {

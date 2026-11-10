@@ -28,70 +28,25 @@
                     <i class="fa-solid fa-magnifying-glass text-sm"></i>
                 </button>
 
-                @auth
-                    @if(auth()->user()->isAdmin())
-                        <div class="flex items-center gap-2">
-                            <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-sm transition-all">
-                                <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-                                <i class="fa-solid fa-gauge text-slate-400 text-xs"></i>
-                                <span>Dashboard Admin</span>
-                            </a>
-                            <form action="{{ route('logout') }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" title="Keluar" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center text-xs transition-colors border border-slate-200/60">
-                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                </button>
-                            </form>
-                        </div>
-                    @else
-                        <div class="flex items-center gap-2">
-                            <a href="{{ route('user.dashboard') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md shadow-brand-600/20 transition-all">
-                                <i class="fa-solid fa-user text-xs"></i>
-                                <span>{{ Str::limit(auth()->user()->name, 14) }}</span>
-                            </a>
-                            <form action="{{ route('logout') }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" title="Keluar" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center text-xs transition-colors border border-slate-200/60">
-                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                </button>
-                            </form>
-                        </div>
-                    @endif
-                @else
-                    <!-- Simplified Auth Dropdown: Konsolidasi Akses Admin & Pengguna -->
-                    <div class="relative" id="auth-dropdown-wrapper">
-                        <button type="button" onclick="toggleAuthDropdown()" id="auth-dropdown-btn" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md shadow-brand-600/20 hover:shadow-brand-600/30 transition-all focus:outline-none">
-                            <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
-                            <span>Masuk</span>
-                            <i class="fa-solid fa-chevron-down text-[10px] ml-0.5 opacity-80" id="auth-dropdown-chevron"></i>
-                        </button>
+                @guest
+                    <a href="{{ route('user.login') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md shadow-brand-600/20 hover:shadow-brand-600/30 transition-all">
+                        <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
+                        <span>Masuk</span>
+                    </a>
+                @endguest
 
-                        <!-- Floating Portal Selector Dropdown -->
-                        <div id="auth-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 p-2 z-50">
-                            <div class="px-3 py-2 border-b border-slate-100">
-                                <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Pilih Akses Masuk</p>
-                            </div>
-                            <div class="mt-1 space-y-1">
-                                <a href="{{ route('user.login') }}" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-brand-50 group transition-colors">
-                                    <div class="w-9 h-9 rounded-xl bg-brand-100 text-brand-600 group-hover:bg-brand-600 group-hover:text-white flex items-center justify-center text-xs transition-colors shrink-0">
-                                        <i class="fa-solid fa-user"></i>
-                                    </div>
-                                    <div>
-                                        <span class="block text-xs font-bold text-slate-800 group-hover:text-brand-700">Pelanggan</span>
-                                        <span class="text-[11px] text-slate-500">Pesan & pantau cucian</span>
-                                    </div>
-                                </a>
-                                <a href="{{ route('admin.login') }}" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-100 group transition-colors">
-                                    <div class="w-9 h-9 rounded-xl bg-slate-100 text-slate-800 group-hover:bg-slate-900 group-hover:text-white flex items-center justify-center text-xs transition-colors shrink-0">
-                                        <i class="fa-solid fa-shield-halved"></i>
-                                    </div>
-                                    <div>
-                                        <span class="block text-xs font-bold text-slate-800 group-hover:text-slate-900">Administrator</span>
-                                        <span class="text-[11px] text-slate-500">Portal operasional laundry</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
+                @auth
+                    <div class="flex items-center gap-2">
+                        <a href="{{ route('user.dashboard') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md shadow-brand-600/20 transition-all">
+                            <i class="fa-solid fa-user text-xs"></i>
+                            <span>{{ Str::limit(auth()->user()->name, 14) }}</span>
+                        </a>
+                        <form action="{{ route('logout') }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" title="Keluar" aria-label="Keluar" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 flex items-center justify-center text-xs transition-colors border border-slate-200/60">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            </button>
+                        </form>
                     </div>
                 @endauth
             </div>
@@ -128,40 +83,23 @@
         </div>
 
         <div class="pt-3 border-t border-slate-100">
+            @guest
+                <a href="{{ route('user.login') }}" class="block p-2.5 text-center bg-brand-50 text-brand-700 font-semibold rounded-xl text-xs hover:bg-brand-100 transition-colors">
+                    <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i> Masuk
+                </a>
+            @endguest
+
             @auth
-                @if(auth()->user()->isAdmin())
-                    <div class="flex items-center justify-between gap-2">
-                        <a href="{{ route('admin.dashboard') }}" class="flex-1 p-2.5 text-center bg-slate-900 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-gauge"></i> Dashboard Admin
-                        </a>
-                        <form action="{{ route('logout') }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="p-2.5 bg-rose-50 text-rose-600 rounded-xl text-xs font-bold">
-                                Keluar
-                            </button>
-                        </form>
-                    </div>
-                @else
-                    <div class="flex items-center justify-between gap-2">
-                        <a href="{{ route('user.dashboard') }}" class="flex-1 p-2.5 text-center bg-brand-600 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-user"></i> Akun Saya
-                        </a>
-                        <form action="{{ route('logout') }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="p-2.5 bg-rose-50 text-rose-600 rounded-xl text-xs font-bold">
-                                Keluar
-                            </button>
-                        </form>
-                    </div>
-                @endif
-            @else
-                <div class="grid grid-cols-2 gap-2">
-                    <a href="{{ route('user.login') }}" class="p-2.5 text-center bg-brand-50 text-brand-700 font-semibold rounded-xl text-xs flex items-center justify-center gap-2 hover:bg-brand-100 transition-colors">
-                        <i class="fa-solid fa-user text-xs"></i> Masuk Pelanggan
+                <div class="flex items-center justify-between gap-2">
+                    <a href="{{ route('user.dashboard') }}" class="flex-1 p-2.5 text-center bg-brand-600 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-user"></i> Akun Saya
                     </a>
-                    <a href="{{ route('admin.login') }}" class="p-2.5 text-center bg-slate-100 text-slate-800 font-semibold rounded-xl text-xs flex items-center justify-center gap-2 hover:bg-slate-200 transition-colors">
-                        <i class="fa-solid fa-shield-halved text-xs"></i> Masuk Admin
-                    </a>
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="p-2.5 bg-rose-50 text-rose-600 rounded-xl text-xs font-bold">
+                            Keluar
+                        </button>
+                    </form>
                 </div>
             @endauth
         </div>
@@ -255,30 +193,6 @@
 </div>
 
 <script>
-    function toggleAuthDropdown() {
-        const menu = document.getElementById('auth-dropdown-menu');
-        const chevron = document.getElementById('auth-dropdown-chevron');
-        if (menu) {
-            menu.classList.toggle('hidden');
-            if (chevron) {
-                chevron.classList.toggle('rotate-180');
-            }
-        }
-    }
-
-    // Close auth dropdown when clicking outside
-    document.addEventListener('click', function (event) {
-        const wrapper = document.getElementById('auth-dropdown-wrapper');
-        const menu = document.getElementById('auth-dropdown-menu');
-        const chevron = document.getElementById('auth-dropdown-chevron');
-        if (wrapper && menu && !wrapper.contains(event.target)) {
-            menu.classList.add('hidden');
-            if (chevron) {
-                chevron.classList.remove('rotate-180');
-            }
-        }
-    });
-
     function openSearchModal() {
         const modal = document.getElementById('search-modal');
         const input = document.getElementById('global-search-input');

@@ -20,15 +20,15 @@ Route::get('/tracking', [HomeController::class, 'tracking'])->name('tracking');
 Route::get('/layanan', [HomeController::class, 'services'])->name('services');
 
 
-// Customer Auth
-Route::get('/user/login', [AuthController::class, 'showUserLogin'])->name('user.login');
-Route::post('/user/login', [AuthController::class, 'userLogin'])->name('user.login.submit');
+// Unified Login and Customer Registration
+Route::get('/user/login', [AuthController::class, 'showLogin'])->name('user.login');
+Route::post('/user/login', [AuthController::class, 'login'])->name('user.login.submit');
 Route::get('/user/register', [AuthController::class, 'showUserRegister'])->name('user.register');
 Route::post('/user/register', [AuthController::class, 'userRegister'])->name('user.register.submit');
 
-// Admin Auth
-Route::get('/admin/login', [AuthController::class, 'showAdminLogin'])->name('admin.login');
-Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.login.submit');
+// Keep admin login URLs as aliases for the unified login form.
+Route::get('/admin/login', [AuthController::class, 'showLogin'])->name('admin.login');
+Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login.submit');
 
 // Unified Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

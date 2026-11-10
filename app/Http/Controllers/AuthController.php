@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     /**
-     * Show Customer Login page
+     * Show the unified login page.
      */
-    public function showUserLogin()
+    public function showLogin()
     {
         if (Auth::check()) {
             return Auth::user()->isAdmin()
@@ -36,9 +36,9 @@ class AuthController extends Controller
     }
 
     /**
-     * Handle Customer Login
+     * Authenticate a user and redirect according to their role.
      */
-    public function userLogin(Request $request)
+    public function login(Request $request)
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
@@ -94,49 +94,6 @@ class AuthController extends Controller
     }
 
     /**
-     * Show Admin Login page
-     */
-    public function showAdminLogin()
-    {
-        if (Auth::check()) {
-            return Auth::user()->isAdmin()
-                ? redirect()->route('admin.dashboard')
-                : redirect()->route('user.dashboard');
-        }
-
-        return view('auth.admin-login');
-    }
-
-    /**
-     * Handle Admin Login
-     */
-    public function adminLogin(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
-
-            if (! Auth::user()->isAdmin()) {
-                Auth::logout();
-
-                return back()->withErrors([
-                    'email' => 'Akun ini bukan akun Administrator.',
-                ])->onlyInput('email');
-            }
-
-            return redirect()->intended(route('admin.dashboard'))->with('success', 'Berhasil login ke Portal Administrator Washora.');
-        }
-
-        return back()->withErrors([
-            'email' => 'Kredensial login admin tidak valid.',
-        ])->onlyInput('email');
-    }
-
-    /**
      * Handle Logout
      */
     public function logout(Request $request)
@@ -149,7 +106,7 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         if ($isAdmin) {
-            return redirect()->route('admin.login')->with('info', 'Anda telah berhasil keluar dari sesi Admin.');
+            return redirect()->route('admin.login')->with('info', 'Anda telah berhasil keluar.');
         }
 
         return redirect()->route('home')->with('info', 'Anda telah berhasil keluar.');
