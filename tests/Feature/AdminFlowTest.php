@@ -35,20 +35,23 @@ class AdminFlowTest extends TestCase
         $dashboard->assertSee('Dashboard Administrator');
     }
 
-    public function test_admin_login_url_displays_the_unified_login_form(): void
+    public function test_login_urls_display_the_unified_login_form(): void
     {
-        $response = $this->get(route('admin.login'));
+        foreach ([route('user.login'), route('admin.login')] as $loginRoute) {
+            $response = $this->get($loginRoute);
 
-        $response->assertOk()
-            ->assertSee('Selamat Datang Kembali')
-            ->assertSee('Masuk untuk mengelola dan memantau layanan laundry Anda.')
-            ->assertSee('Alamat Email')
-            ->assertSee('Kata Sandi')
-            ->assertSee('Ingat saya')
-            ->assertSee('action="'.route('user.login.submit').'"', false)
-            ->assertDontSee('Portal Masuk Pelanggan')
-            ->assertDontSee('Administrator / Petugas Laundry')
-            ->assertDontSee('Masuk ke Portal Administrator');
+            $response->assertOk()
+                ->assertSee('Selamat Datang Kembali')
+                ->assertSee('Masuk untuk mengelola dan memantau layanan laundry Anda.')
+                ->assertSee('Alamat Email')
+                ->assertSee('Kata Sandi')
+                ->assertSee('Ingat saya')
+                ->assertSee('Masuk')
+                ->assertSee('action="'.route('user.login.submit').'"', false)
+                ->assertDontSee('Portal Masuk Pelanggan')
+                ->assertDontSee('Administrator / Petugas Laundry')
+                ->assertDontSee('Masuk ke Portal Administrator');
+        }
     }
 
     public function test_users_cannot_access_the_other_role_dashboard(): void
@@ -65,15 +68,13 @@ class AdminFlowTest extends TestCase
             ->assertRedirect(route('admin.dashboard'));
     }
 
-    public function test_guests_receive_a_generic_message_for_protected_dashboards(): void
+    public function test_guests_are_redirected_to_the_unified_login_form(): void
     {
         $this->get(route('admin.dashboard'))
-            ->assertRedirect(route('admin.login'))
-            ->assertSessionHas('warning', 'Silakan masuk terlebih dahulu untuk melanjutkan.');
+            ->assertRedirect(route('user.login'));
 
         $this->get(route('user.dashboard'))
-            ->assertRedirect(route('user.login'))
-            ->assertSessionHas('warning', 'Silakan masuk terlebih dahulu untuk melanjutkan.');
+            ->assertRedirect(route('user.login'));
     }
 
     public function test_admin_can_verify_weight_and_confirm_order(): void
