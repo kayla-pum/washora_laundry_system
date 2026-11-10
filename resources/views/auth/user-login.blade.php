@@ -7,8 +7,7 @@
     <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <!-- Logo -->
         <a href="{{ route('home') }}" class="inline-flex items-center gap-2.5 mb-4 group">
-            <img src="{{ asset('images/washoralogo.png') }}" alt="Washora Logo" class="w-12 h-12">
-        </a>
+            <img src="{{ asset('images/washoralogo.png') }}" alt="Washora Logo" class="w-10 h-10 object-contain shink-0">
         <span class="text-3xl font-extrabold text-slate-900 tracking-tight">Washora</span>
     </a>
 
