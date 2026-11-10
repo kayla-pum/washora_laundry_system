@@ -15,7 +15,6 @@
                 <a href="{{ route('home') }}#beranda" class="px-4 py-2 rounded-full hover:text-brand-600 hover:bg-white transition-all">Beranda</a>
                 <a href="{{ route('home') }}#layanan" class="px-4 py-2 rounded-full hover:text-brand-600 hover:bg-white transition-all">Layanan</a>
                 <a href="{{ route('user.orders.create') }}" class="px-4 py-2 rounded-full hover:text-brand-600 hover:bg-white font-semibold transition-all flex items-center gap-1.5">
-                    <i class="fa-solid fa-calendar-check text-xs text-brand-600"></i>
                     <span>Reservasi</span>
                 </a>
                 <a href="{{ route('home') }}#cara-kerja" class="px-4 py-2 rounded-full hover:text-brand-600 hover:bg-white transition-all">Cara Kerja</a>
