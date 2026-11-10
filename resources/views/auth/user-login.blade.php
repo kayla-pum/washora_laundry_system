@@ -7,11 +7,10 @@
     <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <!-- Logo -->
         <a href="{{ route('home') }}" class="inline-flex items-center gap-2.5 mb-4 group">
-            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-cyan-400 text-white flex items-center justify-center shadow-lg shadow-brand-500/25 group-hover:scale-105 transition-transform">
-                <i class="fa-solid fa-shirt text-xl"></i>
-            </div>
-            <span class="text-3xl font-extrabold text-slate-900 tracking-tight">Washora</span>
+            <img src="{{ asset('images/washoralogo.png') }}" alt="Washora Logo" class="w-12 h-12">
         </a>
+        <span class="text-3xl font-extrabold text-slate-900 tracking-tight">Washora</span>
+    </a>
 
         <h2 class="text-xl font-bold text-slate-900">Selamat Datang Kembali</h2>
         <p class="text-xs text-slate-500 mt-1">Masuk untuk mengelola dan memantau layanan laundry Anda.</p>
