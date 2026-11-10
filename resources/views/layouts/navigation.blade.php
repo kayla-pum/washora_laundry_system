@@ -4,7 +4,7 @@
             <!-- Brand Logo -->
             <a href="{{ route('home') }}" class="flex items-center gap-3 group">
                 <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-600 via-brand-500 to-cyan-400 text-white flex items-center justify-center shadow-lg shadow-brand-500/25 group-hover:scale-105 transition-transform">
-                    <i class="fa-solid fa-shirt text-xl"></i>
+                    <img src="{{ asset('images/washoralogo.png') }}" alt="Washora Logo" class="w-10 h-10 object-contain">
                 </div>
                 <div>
                     <span class="text-2xl font-extrabold tracking-tight text-slate-900 flex items-center gap-1.5">
