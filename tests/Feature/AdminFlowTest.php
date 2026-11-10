@@ -65,6 +65,17 @@ class AdminFlowTest extends TestCase
             ->assertRedirect(route('admin.dashboard'));
     }
 
+    public function test_guests_receive_a_generic_message_for_protected_dashboards(): void
+    {
+        $this->get(route('admin.dashboard'))
+            ->assertRedirect(route('admin.login'))
+            ->assertSessionHas('warning', 'Silakan masuk terlebih dahulu untuk melanjutkan.');
+
+        $this->get(route('user.dashboard'))
+            ->assertRedirect(route('user.login'))
+            ->assertSessionHas('warning', 'Silakan masuk terlebih dahulu untuk melanjutkan.');
+    }
+
     public function test_admin_can_verify_weight_and_confirm_order(): void
     {
         $admin = User::where('role', 'admin')->first();
