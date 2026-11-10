@@ -4,14 +4,10 @@
             <!-- Brand Logo -->
             <a href="{{ route('home') }}" class="flex items-center gap-3 group">
                     <img src="{{ asset('images/washoralogo.png') }}" alt="Washora Logo" class="w-10 h-10 object-contain">
-                </div>
-                <div>
-                    <span class="text-2xl font-extrabold tracking-tight text-slate-900 flex items-center gap-1.5">
-                        Washora
-                        <span class="inline-block w-2 h-2 rounded-full bg-cyan-500"></span>
-                    </span>
-                    <p class="text-[11px] font-semibold text-slate-400 -mt-1 tracking-wider uppercase">Smart Laundry System</p>
-                </div>
+                    <div class="flex flex-col">
+                        <span class="text-lg font-extrabold text-slate-900 tracking-tight">Washora</span>
+                        <span class="text-[10px] text-slate-400 tracking-wider">Smart Laundry</span>
+                    </div>
             </a>
 
             <!-- Desktop Nav Links -->
