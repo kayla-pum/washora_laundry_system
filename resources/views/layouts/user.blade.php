@@ -9,11 +9,11 @@
                 <!-- Brand & Role Badge -->
                 <div class="flex items-center gap-4">
                     <a href="{{ route('home') }}" class="flex items-center gap-2.5 group">
-                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-cyan-400 text-white flex items-center justify-center shadow-md shadow-brand-500/20">
-                            <i class="fa-solid fa-shirt text-sm"></i>
-                        </div>
-                        <span class="text-xl font-bold text-slate-900 tracking-tight">Washora</span>
-                    </a>
+                       <!-- Logo -->
+        <a href="{{ route('home') }}" class="inline-flex items-center gap-2.5 mb-4 group">
+            <img src="{{ asset('images/washoralogo.png') }}" alt="Washora Logo" class="w-10 h-10 object-contain shink-0">
+        <span class="text-3xl font-extrabold text-slate-900 tracking-tight">Washora</span>
+    </a>
                     <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 bg-cyan-50 text-cyan-700 border border-cyan-200/80 rounded-full text-xs font-semibold">
                         <i class="fa-solid fa-user text-[10px]"></i>
                         Portal Pelanggan
