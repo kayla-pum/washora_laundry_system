@@ -4,9 +4,9 @@
             <!-- Brand Column -->
             <div class="lg:col-span-2 space-y-4">
                 <div class="flex items-center gap-3">
-                    <img src="{{ asset('images/washoralogo.png') }}" alt="Washora Logo" class="w-10 h-10 object-contain">
-                    </div>
+                    <img src="{{ asset('images/washoralogo.png') }}" alt="Washora Logo" class="w-10 h-10 object-contain shrink-0">
                     <span class="text-2xl font-extrabold tracking-tight text-white">Washora</span>
+                    </div>
                 </div>
                 <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
                     Sistem informasi dan layanan laundry modern terintegrasi. Bersih, wangi, higienis dengan tracking status pesanan secara real-time dan konfirmasi transparan via WhatsApp.
