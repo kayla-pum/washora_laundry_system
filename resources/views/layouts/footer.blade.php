@@ -39,7 +39,7 @@
 
             <!-- Akses Role Portal -->
             <div class="space-y-3">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-white">Akses Sistem Role</h4>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-white">Menu</h4>
                 <ul class="space-y-2 text-sm text-slate-400">
                     <li>
                         <a href="{{ route('user.login') }}" class="hover:text-cyan-400 flex items-center gap-2 transition-colors">
