@@ -22,7 +22,10 @@
 
             <!-- Right Actions: Search Icon + Simplified Auth -->
             <div class="hidden md:flex items-center gap-3">
-
+                 <!-- Search Icon (Pencarian Informasi & Cek Resi) -->
+                <button type="button" onclick="openSearchModal()" title="Pencarian & Cek Resi (Ctrl+K)" aria-label="Pencarian informasi dan cek status pesanan" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-brand-50 hover:text-brand-600 text-slate-600 flex items-center justify-center transition-all border border-slate-200/60 shadow-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20">
+                    <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                </button>
                 @guest
                     <a href="{{ route('user.login') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md shadow-brand-600/20 hover:shadow-brand-600/30 transition-all">
                         <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
