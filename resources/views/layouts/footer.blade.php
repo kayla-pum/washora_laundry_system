@@ -47,9 +47,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('user.register') }}" class="hover:text-cyan-400 flex items-center gap-2 transition-colors">
+                        <a href="{{ route('services') }}" class="hover:text-cyan-400 flex items-center gap-2 transition-colors">
                             <i class="fa-solid fa-user-plus text-xs text-brand-400"></i>
-                            Daftar Akun Baru
+                            Layanan
                         </a>
                     </li>
                     <li>
