@@ -6,9 +6,7 @@
     <aside class="hidden lg:flex flex-col w-64 bg-slate-900 text-slate-300 border-r border-slate-800 shrink-0">
         <!-- Sidebar Header -->
         <div class="h-20 flex items-center gap-3 px-6 border-b border-slate-800/80 bg-slate-950/40">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-brand-600 text-white flex items-center justify-center shadow-lg shadow-cyan-500/20">
-                <i class="fa-solid fa-shirt text-lg"></i>
-            </div>
+            <img src="{{ asset('images/washoralogo.png') }}" alt="Logo Washora" class="w-10 h-10 object-contain shrink-0">
             <div>
                 <h1 class="text-lg font-black text-white tracking-tight leading-none">Washora</h1>
                 <div class="flex items-center gap-1.5 mt-1">
