@@ -41,9 +41,9 @@
                 <h4 class="text-xs font-bold uppercase tracking-wider text-white">Menu</h4>
                 <ul class="space-y-2 text-sm text-slate-400">
                     <li>
-                        <a href="{{ route('user.login') }}" class="hover:text-cyan-400 flex items-center gap-2 transition-colors">
+                        <a href="{{ route('home') }}" class="hover:text-cyan-400 flex items-center gap-2 transition-colors">
                             <i class="fa-solid fa-user text-xs text-brand-400"></i>
-                            Portal Pelanggan (User)
+                            Beranda
                         </a>
                     </li>
                     <li>
