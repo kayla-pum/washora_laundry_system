@@ -18,10 +18,6 @@
                     <span>Reservasi</span>
                 </a>
                 <a href="{{ route('home') }}#cara-kerja" class="px-4 py-2 rounded-full hover:text-brand-600 hover:bg-white transition-all">Cara Kerja</a>
-                 <!-- Search Icon (Pencarian Informasi & Cek Resi) -->
-                <button type="button" onclick="openSearchModal()" title="Pencarian & Cek Resi (Ctrl+K)" aria-label="Pencarian informasi dan cek status pesanan" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-brand-50 hover:text-brand-600 text-slate-600 flex items-center justify-center transition-all border border-slate-200/60 shadow-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20">
-                    <i class="fa-solid fa-magnifying-glass text-sm"></i>
-                </button>
             </nav>
 
             <!-- Right Actions: Search Icon + Simplified Auth -->
