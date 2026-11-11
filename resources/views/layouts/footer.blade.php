@@ -4,9 +4,8 @@
             <!-- Brand Column -->
             <div class="lg:col-span-2 space-y-4">
                 <div class="flex items-center gap-3">
-                    <img src="{{ asset('images/washoralogo.png') }}" alt="Washora Logo" class="w-10 h-10 object-contain shrink-0">
+                        <img src="{{ asset('images/washoralogo.png') }}" alt= "Logo Washora" class="w-6 h-6 object-contain shrink-0">
                     <span class="text-2xl font-extrabold tracking-tight text-white">Washora</span>
-                    </div>
                 </div>
                 <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
                     Sistem informasi dan layanan laundry modern terintegrasi. Bersih, wangi, higienis dengan tracking status pesanan secara real-time dan konfirmasi transparan via WhatsApp.
@@ -39,12 +38,12 @@
 
             <!-- Akses Role Portal -->
             <div class="space-y-3">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-white">Menu</h4>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-white">Akses Sistem Role</h4>
                 <ul class="space-y-2 text-sm text-slate-400">
                     <li>
                         <a href="{{ route('user.login') }}" class="hover:text-cyan-400 flex items-center gap-2 transition-colors">
                             <i class="fa-solid fa-user text-xs text-brand-400"></i>
-                            Beranda
+                            Portal Pelanggan (User)
                         </a>
                     </li>
                     <li>
