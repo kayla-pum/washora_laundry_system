@@ -4,8 +4,7 @@
             <!-- Brand Column -->
             <div class="lg:col-span-2 space-y-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-500 to-cyan-400 text-white flex items-center justify-center shadow-lg shadow-brand-500/20">
-                        <i class="fa-solid fa-shirt text-lg"></i>
+                    
                     </div>
                     <span class="text-2xl font-extrabold tracking-tight text-white">Washora</span>
                 </div>
