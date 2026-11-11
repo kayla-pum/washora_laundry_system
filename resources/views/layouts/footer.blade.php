@@ -4,7 +4,7 @@
             <!-- Brand Column -->
             <div class="lg:col-span-2 space-y-4">
                 <div class="flex items-center gap-3">
-                    
+                    <img src="{{ asset('images/washoralogo.png') }}" alt="Washora Logo" class="w-10 h-10 object-contain">
                     </div>
                     <span class="text-2xl font-extrabold tracking-tight text-white">Washora</span>
                 </div>
