@@ -61,7 +61,7 @@
                     <li class="pt-2">
                         <a href="{{ route('admin.login') }}" class="hover:text-purple-400 flex items-center gap-2 transition-colors text-slate-400">
                             <i class="fa-solid fa-shield-halved text-xs text-purple-400"></i>
-                            Portal Administrator (Admin)
+                            Syarat & Ketentuan
                         </a>
                     </li>
                 </ul>
