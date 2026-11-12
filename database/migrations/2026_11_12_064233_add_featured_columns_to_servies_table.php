@@ -22,7 +22,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('servies', function (Blueprint $table) {
-            //
+            $table->boolean('is_featured')->default(false);
+        $table->unsignedInteger('featured_order')->nullable();
         });
     }
 };
