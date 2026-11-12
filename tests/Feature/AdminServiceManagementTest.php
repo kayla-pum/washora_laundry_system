@@ -252,3 +252,4 @@ class AdminServiceManagementTest extends TestCase
         $response->assertSee($firstFeatured->name);
     }
 }
+
