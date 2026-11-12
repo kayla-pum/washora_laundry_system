@@ -223,9 +223,9 @@
             </div>
 
             <div class="text-center mt-10">
-                <a href="{{ route('services') }}" class="inline-flex items-center gap-2 text-sm font-bold text-brand-600 hover:text-brand-700 hover:underline">
-                    <span>Lihat Semua Daftar Layanan & Kategori Lengkap</span>
-                    <i class="fa-solid fa-arrow-right"></i>
+                <a href="{{ route('services') }}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-white hover:bg-brand-50 text-brand-600 border border-brand-200 hover:border-brand-400 font-bold text-sm shadow-xs hover:shadow-md transition-all">
+                    <span>Lihat Selengkapnya</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
             </div>
         </div>

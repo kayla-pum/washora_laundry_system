@@ -18,9 +18,18 @@ class HomeController extends Controller
             ->get();
 
         $featuredServices = Service::where('status', 'active')
+            ->where('is_featured', true)
+            ->orderBy('featured_order', 'asc')
+            ->orderBy('id', 'asc')
             ->with('category')
-            ->take(8)
             ->get();
+
+        if ($featuredServices->isEmpty()) {
+            $featuredServices = Service::where('status', 'active')
+                ->with('category')
+                ->take(8)
+                ->get();
+        }
 
         $packages = Package::where('status', 'active')
             ->with('services')

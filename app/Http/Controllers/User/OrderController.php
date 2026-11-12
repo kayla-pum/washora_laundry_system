@@ -94,8 +94,11 @@ class OrderController extends Controller
 
             // Generate unique Order Code: WSH-YYYYMMDD-XXX
             $today = Carbon::now()->format('Ymd');
-            $countToday = Order::whereDate('created_at', Carbon::today())->count() + 1;
-            $orderCode = 'WSH-'.$today.'-'.str_pad($countToday, 3, '0', STR_PAD_LEFT);
+            $countToday = Order::where('order_code', 'like', 'WSH-'.$today.'-%')->count() + 1;
+            do {
+                $orderCode = 'WSH-'.$today.'-'.str_pad((string) $countToday, 3, '0', STR_PAD_LEFT);
+                $countToday++;
+            } while (Order::where('order_code', $orderCode)->exists());
 
             // Create Order with pending status (weight & final price are left null for Admin to verify)
             $order = Order::create([

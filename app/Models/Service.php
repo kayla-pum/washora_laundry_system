@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,8 @@ class Service extends Model
         'estimated_hours',
         'service_type',
         'status',
+        'is_featured',
+        'featured_order',
     ];
 
     protected function casts(): array
@@ -27,6 +30,8 @@ class Service extends Model
         return [
             'price' => 'decimal:2',
             'estimated_hours' => 'integer',
+            'is_featured' => 'boolean',
+            'featured_order' => 'integer',
         ];
     }
 
@@ -43,5 +48,38 @@ class Service extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class, 'service_id');
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('status', 'active');
+    }
+
+    public function scopeFeatured(Builder $query): Builder
+    {
+        return $query->where('status', 'active')
+            ->where('is_featured', true)
+            ->orderBy('featured_order', 'asc')
+            ->orderBy('id', 'asc');
+    }
+
+    public function getOrderTypeAttribute(): string
+    {
+        return $this->unit === 'kg' ? 'kiloan' : 'satuan';
+    }
+
+    public function getOrderTypeLabelAttribute(): string
+    {
+        return $this->unit === 'kg' ? 'Kiloan' : 'Satuan';
+    }
+
+    public function getUnitLabelAttribute(): string
+    {
+        return match ($this->unit) {
+            'kg' => 'Kg (Kilogram)',
+            'pcs' => 'Pcs (Satuan Buah)',
+            'pair' => 'Pasang',
+            default => strtoupper($this->unit),
+        };
     }
 }

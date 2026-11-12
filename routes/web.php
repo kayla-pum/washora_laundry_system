@@ -74,11 +74,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::put('/categories/{category}', [AdminCategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
 
-    // Services CRUD
+    // Services CRUD & Homepage Spotlight Management
     Route::get('/services', [AdminServiceController::class, 'index'])->name('services.index');
     Route::post('/services', [AdminServiceController::class, 'store'])->name('services.store');
     Route::put('/services/{service}', [AdminServiceController::class, 'update'])->name('services.update');
     Route::delete('/services/{service}', [AdminServiceController::class, 'destroy'])->name('services.destroy');
+    Route::patch('/services/{service}/status', [AdminServiceController::class, 'toggleStatus'])->name('services.status');
+    Route::patch('/services/{service}/featured', [AdminServiceController::class, 'toggleFeatured'])->name('services.featured.toggle');
+    Route::post('/services/featured', [AdminServiceController::class, 'addFeatured'])->name('services.featured.add');
+    Route::delete('/services/{service}/featured', [AdminServiceController::class, 'removeFeatured'])->name('services.featured.remove');
+    Route::post('/services/featured/reorder', [AdminServiceController::class, 'reorderFeatured'])->name('services.featured.reorder');
 
     // Packages CRUD
     Route::get('/packages', [AdminPackageController::class, 'index'])->name('packages.index');

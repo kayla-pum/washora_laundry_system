@@ -12,12 +12,12 @@
 
             <!-- Desktop Nav Links -->
             <nav class="hidden lg:flex items-center gap-1 bg-slate-100/70 p-1.5 rounded-full border border-slate-200/60 text-sm font-medium text-slate-600">
-                <a href="{{ route('home') }}#beranda" class="px-5 py-2 rounded-full hover:text-brand-600 hover:bg-white transition-all">Beranda</a>
-                <a href="{{ route('home') }}#layanan" class="px-5 py-2 rounded-full hover:text-brand-600 hover:bg-white transition-all">Layanan</a>
-                <a href="{{ route('user.orders.create') }}" class="px-5 py-2 rounded-full hover:text-brand-600 hover:bg-white font-semibold transition-all flex items-center gap-1.5">
+                <a href="{{ route('home') }}#beranda" class="px-4 py-2 rounded-full hover:text-brand-600 hover:bg-white transition-all">Beranda</a>
+                <a href="{{ route('home') }}#layanan" class="px-4 py-2 rounded-full hover:text-brand-600 hover:bg-white transition-all">Layanan</a>
+                <a href="{{ route('user.orders.create') }}" class="px-4 py-2 rounded-full hover:text-brand-600 hover:bg-white font-semibold transition-all flex items-center gap-1.5">
                     <span>Reservasi</span>
                 </a>
-                <a href="{{ route('home') }}#cara-kerja" class="px-5 py-2 rounded-full hover:text-brand-600 hover:bg-white transition-all">Cara Kerja</a>
+                <a href="{{ route('home') }}#cara-kerja" class="px-4 py-2 rounded-full hover:text-brand-600 hover:bg-white transition-all">Cara Kerja</a>
             </nav>
 
             <!-- Right Actions: Search Icon + Simplified Auth -->

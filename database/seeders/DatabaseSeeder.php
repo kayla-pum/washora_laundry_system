@@ -103,6 +103,8 @@ class DatabaseSeeder extends Seeder
             'estimated_hours' => 24,
             'service_type' => 'regular',
             'status' => 'active',
+            'is_featured' => true,
+            'featured_order' => 1,
         ]);
 
         $svcKiloanExp = Service::create([
@@ -114,6 +116,8 @@ class DatabaseSeeder extends Seeder
             'estimated_hours' => 6,
             'service_type' => 'express',
             'status' => 'active',
+            'is_featured' => true,
+            'featured_order' => 2,
         ]);
 
         $svcKiloanLipat = Service::create([
@@ -125,6 +129,8 @@ class DatabaseSeeder extends Seeder
             'estimated_hours' => 24,
             'service_type' => 'regular',
             'status' => 'active',
+            'is_featured' => true,
+            'featured_order' => 3,
         ]);
 
         $svcBedcoverKing = Service::create([
@@ -136,6 +142,8 @@ class DatabaseSeeder extends Seeder
             'estimated_hours' => 24,
             'service_type' => 'regular',
             'status' => 'active',
+            'is_featured' => true,
+            'featured_order' => 4,
         ]);
 
         $svcSelimut = Service::create([
@@ -147,6 +155,8 @@ class DatabaseSeeder extends Seeder
             'estimated_hours' => 24,
             'service_type' => 'regular',
             'status' => 'active',
+            'is_featured' => true,
+            'featured_order' => 5,
         ]);
 
         $svcSepatuSneaker = Service::create([
@@ -158,6 +168,8 @@ class DatabaseSeeder extends Seeder
             'estimated_hours' => 48,
             'service_type' => 'regular',
             'status' => 'active',
+            'is_featured' => true,
+            'featured_order' => 6,
         ]);
 
         $svcSepatuLeather = Service::create([
