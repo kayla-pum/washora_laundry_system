@@ -154,9 +154,24 @@ class OrderController extends Controller
                 'created_at' => Carbon::now(),
             ]);
 
-            return redirect()->route('user.orders.show', $order)
+            return redirect()->route('user.orders.success', $order)
                 ->with('success', 'Pesanan berhasil dibuat dengan kode #'.$order->order_code.'! Admin akan segera menimbang dan mengonfirmasi total biaya.');
         });
+    }
+
+    /**
+     * Show success page after order is created
+     */
+    public function success(Order $order)
+    {
+        // Authorize customer
+        if ($order->user_id !== Auth::id()) {
+            abort(403, 'Anda tidak memiliki akses ke pesanan ini.');
+        }
+
+        $order->load(['items.service', 'items.package', 'statusHistories.user']);
+
+        return view('user.orders.success', compact('order'));
     }
 
     /**

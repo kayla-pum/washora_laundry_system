@@ -14,11 +14,9 @@ use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\OrderController as UserOrderController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tracking', [HomeController::class, 'tracking'])->name('tracking');
 Route::get('/layanan', [HomeController::class, 'services'])->name('services');
-
 
 // Unified Login and Customer Registration
 Route::get('/user/login', [AuthController::class, 'showLogin'])->name('user.login');
@@ -48,6 +46,7 @@ Route::middleware(['auth', 'customer'])->prefix('user')->name('user.')->group(fu
     Route::get('/orders', [UserOrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/create', [UserOrderController::class, 'create'])->name('orders.create');
     Route::post('/orders', [UserOrderController::class, 'store'])->name('orders.store');
+    Route::get('/orders/{order}/success', [UserOrderController::class, 'success'])->name('orders.success');
     Route::get('/orders/{order}', [UserOrderController::class, 'show'])->name('orders.show');
     Route::post('/orders/{order}/cancel', [UserOrderController::class, 'cancel'])->name('orders.cancel');
 });

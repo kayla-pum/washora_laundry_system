@@ -55,6 +55,33 @@ class CustomerFlowTest extends TestCase
         $this->assertNull($order->total_weight); // User does NOT input weight
         $this->assertNull($order->total_price); // Admin verifies weight & confirms total price
 
-        $response->assertRedirect(route('user.orders.show', $order));
+        $response->assertRedirect(route('user.orders.success', $order));
+
+        $successResponse = $this->actingAs($user)->get(route('user.orders.success', $order));
+        $successResponse->assertStatus(200);
+        $successResponse->assertSee('Pesanan Berhasil Dikirim');
+        $successResponse->assertSee($order->order_code);
+    }
+
+    public function test_order_create_page_displays_three_steps_indicator(): void
+    {
+        $user = User::where('role', 'user')->first();
+
+        $response = $this->actingAs($user)->get(route('user.orders.create'));
+        $response->assertStatus(200);
+        $response->assertSee('Data Pelanggan');
+        $response->assertSee('Pilih Layanan');
+        $response->assertSee('Konfirmasi');
+        $response->assertSee('Tanpa Perlu Menimbang');
+    }
+
+    public function test_unauthorized_user_cannot_view_another_order_success_page(): void
+    {
+        $user1 = User::where('role', 'user')->first();
+        $user2 = User::where('role', 'user')->skip(1)->first();
+        $order = Order::where('user_id', $user1->id)->first();
+
+        $response = $this->actingAs($user2)->get(route('user.orders.success', $order));
+        $response->assertStatus(403);
     }
 }

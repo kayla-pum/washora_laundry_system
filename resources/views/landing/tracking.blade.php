@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Cek Resi & Status Laundry - Washora')
+@section('title', 'Lacak Status Pesanan - Washora')
 
 @section('content')
     @include('layouts.navigation')
@@ -9,10 +9,10 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="text-center space-y-3 mb-10">
-                <span class="px-3.5 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-bold">Public Order Tracking</span>
+                <span class="px-3.5 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-bold">Pelacakan Pesanan Resmi</span>
                 <h1 class="text-3xl font-extrabold text-slate-900">Lacak Status Pesanan Laundry</h1>
                 <p class="text-slate-500 text-sm max-w-xl mx-auto">
-                    Masukkan nomor kode pesanan Washora Anda (contoh: <strong>WSH-20260929-001</strong>) untuk melihat perkembangan proses cuci secara real-time.
+                    Masukkan nomor kode pemesanan Washora Anda (contoh: <strong>WSH-20261112-001</strong>) untuk memeriksa perkembangan proses cucian secara real-time.
                 </p>
 
                 <!-- Search Box -->
@@ -20,9 +20,9 @@
                     <div class="flex gap-2 p-2 bg-white rounded-2xl shadow-lg border border-slate-200">
                         <div class="relative flex-1">
                             <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400 text-sm"></i>
-                            <input type="text" name="code" value="{{ $code ?? '' }}" required placeholder="Masukkan Kode Pesanan..." class="w-full pl-11 pr-4 py-2.5 bg-transparent text-sm font-bold text-slate-800 focus:outline-none">
+                            <input type="text" name="code" value="{{ $code ?? '' }}" required placeholder="Ketik Kode Pesanan Anda..." class="w-full pl-11 pr-4 py-2.5 bg-transparent text-sm font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none">
                         </div>
-                        <button type="submit" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl shadow-md transition-all">
+                        <button type="submit" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl shadow-md transition-all shrink-0">
                             Cari Pesanan
                         </button>
                     </div>
@@ -38,7 +38,7 @@
                             <div>
                                 <span class="text-xs font-bold uppercase text-slate-400">Kode Pesanan</span>
                                 <h2 class="text-2xl font-black text-slate-900 tracking-tight">#{{ $order->order_code }}</h2>
-                                <p class="text-xs text-slate-500 mt-0.5">Dipesan pada: {{ $order->created_at->translatedFormat('d F Y, H:i WIB') }}</p>
+                                <p class="text-xs text-slate-500 mt-0.5">Tanggal Pemesanan: {{ $order->created_at->translatedFormat('d F Y, H:i WIB') }}</p>
                             </div>
 
                             @php
@@ -54,17 +54,17 @@
 
                         <!-- Visual Step Tracker Timeline -->
                         <div>
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Progress Pengerjaan Laundry</h3>
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Informasi Perkembangan Pesanan</h3>
                             
                             @php
                                 $steps = [
                                     ['key' => 'pending', 'label' => 'Menunggu Verifikasi', 'icon' => 'fa-clock'],
                                     ['key' => 'confirmed', 'label' => 'Terkonfirmasi & Timbang', 'icon' => 'fa-clipboard-check'],
-                                    ['key' => 'processing', 'label' => 'Penjemputan / Sortir', 'icon' => 'fa-truck'],
+                                    ['key' => 'processing', 'label' => 'Penjemputan & Sortir', 'icon' => 'fa-truck'],
                                     ['key' => 'washing', 'label' => 'Pencucian', 'icon' => 'fa-water'],
                                     ['key' => 'finishing', 'label' => 'Setrika & Packing', 'icon' => 'fa-wand-magic-sparkles'],
-                                    ['key' => 'ready', 'label' => 'Siap Diambil', 'icon' => 'fa-box-check'],
-                                    ['key' => 'completed', 'label' => 'Selesai', 'icon' => 'fa-circle-check'],
+                                    ['key' => 'ready', 'label' => 'Siap Diambil / Antar', 'icon' => 'fa-box-check'],
+                                    ['key' => 'completed', 'label' => 'Pesanan Selesai', 'icon' => 'fa-circle-check'],
                                 ];
 
                                 $currentStepOrder = [
@@ -119,7 +119,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
                             <!-- Left: Items and Weight -->
                             <div class="space-y-4">
-                                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Rincian Cucian</h3>
+                                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Layanan yang Dipilih</h3>
                                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-3">
                                     @foreach($order->items as $item)
                                         <div class="flex items-center justify-between text-xs pb-2 border-b border-slate-200/60 last:border-0 last:pb-0">
@@ -138,7 +138,7 @@
                                 <div class="p-4 bg-brand-50/60 rounded-2xl border border-brand-100 flex items-center justify-between">
                                     <div>
                                         <p class="text-xs text-slate-500 font-semibold">Total Berat Ditimbang:</p>
-                                        <p class="text-base font-black text-slate-900">{{ $order->total_weight ? $order->total_weight . ' Kg' : 'Menunggu Penimbangan' }}</p>
+                                        <p class="text-base font-black text-slate-900">{{ $order->total_weight ? $order->total_weight . ' Kg' : 'Menunggu Penimbangan Admin' }}</p>
                                     </div>
                                     <div class="text-right">
                                         <p class="text-xs text-slate-500 font-semibold">Total Biaya Akhir:</p>
@@ -147,22 +147,35 @@
                                 </div>
                             </div>
 
-                            <!-- Right: Time & Notes -->
+                            <!-- Right: Time & Operational Info (Protecting Customer Privacy) -->
                             <div class="space-y-4">
-                                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Informasi Pengerjaan & Alamat</h3>
+                                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Informasi Pengerjaan</h3>
                                 
                                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-3 text-xs">
                                     <div>
                                         <p class="text-slate-400 font-semibold">Estimasi Waktu Selesai:</p>
                                         <p class="font-bold text-slate-900 text-sm mt-0.5">
-                                            {{ $order->estimated_completed_at ? $order->estimated_completed_at->translatedFormat('l, d F Y - H:i WIB') : 'Menunggu konfirmasi admin' }}
+                                            {{ $order->estimated_completed_at ? $order->estimated_completed_at->translatedFormat('l, d F Y - H:i WIB') : 'Menunggu penimbangan & konfirmasi admin' }}
                                         </p>
                                     </div>
+
+                                    @php
+                                        $isOwnerOrAdmin = auth()->check() && (auth()->id() === $order->user_id || auth()->user()->isAdmin());
+                                    @endphp
+
                                     <div>
-                                        <p class="text-slate-400 font-semibold">Alamat Penjemputan / Antar:</p>
-                                        <p class="font-medium text-slate-800 mt-0.5">{{ $order->pickup_address }}</p>
+                                        <p class="text-slate-400 font-semibold">Alamat Penjemputan:</p>
+                                        @if($isOwnerOrAdmin)
+                                            <p class="font-medium text-slate-800 mt-0.5">{{ $order->pickup_address }}</p>
+                                        @else
+                                            <p class="font-medium text-slate-600 mt-0.5 flex items-center gap-1.5">
+                                                <i class="fa-solid fa-lock text-[10px] text-slate-400"></i>
+                                                <span>Alamat Terdaftar (Disamarkan demi privasi data pelanggan)</span>
+                                            </p>
+                                        @endif
                                     </div>
-                                    @if($order->customer_note)
+
+                                    @if($isOwnerOrAdmin && $order->customer_note)
                                         <div>
                                             <p class="text-slate-400 font-semibold">Catatan Khusus Pelanggan:</p>
                                             <p class="font-medium text-slate-700 italic mt-0.5">"{{ $order->customer_note }}"</p>
@@ -170,8 +183,7 @@
                                     @endif
                                 </div>
 
-                                <!-- WhatsApp Confirmation Button -->
-                                @if($order->status !== 'pending' && $order->status !== 'cancelled')
+                                @if($isOwnerOrAdmin && $order->status !== 'pending' && $order->status !== 'cancelled')
                                     <a href="{{ $order->whats_app_url }}" target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition-all">
                                         <i class="fa-brands fa-whatsapp text-base"></i>
                                         <span>Buka Notifikasi WhatsApp Pesanan Ini</span>
@@ -182,7 +194,7 @@
 
                         <!-- Status Timeline History -->
                         <div class="pt-4 border-t border-slate-100">
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Log Riwayat Status</h3>
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Log Riwayat Status Pengerjaan</h3>
                             <div class="space-y-2">
                                 @forelse($order->statusHistories as $log)
                                     <div class="flex items-start gap-3 p-3 bg-slate-50/80 rounded-xl text-xs border border-slate-100">
@@ -196,7 +208,7 @@
                                         </div>
                                     </div>
                                 @empty
-                                    <p class="text-xs text-slate-400 italic">Belum ada catatan log.</p>
+                                    <p class="text-xs text-slate-400 italic">Belum ada catatan log riwayat status.</p>
                                 @endforelse
                             </div>
                         </div>
@@ -209,7 +221,7 @@
                         </div>
                         <h3 class="text-lg font-bold text-slate-900">Pesanan Tidak Ditemukan</h3>
                         <p class="text-xs text-slate-500 max-w-md mx-auto">
-                            Kode pesanan <strong>"{{ $code }}"</strong> tidak ditemukan dalam sistem kami. Silakan periksa kembali format kode pesanan Anda.
+                            Kode pesanan <strong>"{{ $code }}"</strong> tidak ditemukan dalam sistem kami. Silakan pastikan nomor kode pesanan sudah benar (contoh: <em>WSH-20261112-001</em>).
                         </p>
                     </div>
                 @endif
