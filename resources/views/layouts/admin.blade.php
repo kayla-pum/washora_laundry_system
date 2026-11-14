@@ -66,6 +66,11 @@
                     <i class="fa-solid fa-boxes-packing w-5 text-center"></i>
                     <span>Paket Hemat</span>
                 </a>
+
+                <a href="{{ route('admin.reviews.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all {{ request()->routeIs('admin.reviews.*') ? 'bg-brand-600 text-white shadow-md shadow-brand-600/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
+                    <i class="fa-solid fa-star w-5 text-center text-amber-400"></i>
+                    <span>Testimoni Pelanggan</span>
+                </a>
             </div>
 
             <!-- Finance & Reports -->

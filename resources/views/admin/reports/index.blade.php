@@ -15,19 +15,26 @@
         <div class="flex flex-wrap items-center gap-2">
             <!-- Period Selector Tabs -->
             <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-2xl text-xs font-bold">
-                <a href="{{ route('admin.reports.index', ['period' => 'today']) }}" class="px-3 py-1.5 rounded-xl transition-all {{ $period === 'today' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900' }}">Hari Ini</a>
-                <a href="{{ route('admin.reports.index', ['period' => '7days']) }}" class="px-3 py-1.5 rounded-xl transition-all {{ $period === '7days' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900' }}">7 Hari</a>
-                <a href="{{ route('admin.reports.index', ['period' => '1month']) }}" class="px-3 py-1.5 rounded-xl transition-all {{ $period === '1month' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900' }}">1 Bulan</a>
+                <a href="{{ route('admin.reports.index', ['period' => 'today']) }}" class="px-3 py-1.5 rounded-xl transition-all {{ $period === 'today' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900' }}">Harian</a>
+                <a href="{{ route('admin.reports.index', ['period' => '7days']) }}" class="px-3 py-1.5 rounded-xl transition-all {{ $period === '7days' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900' }}">Mingguan</a>
+                <a href="{{ route('admin.reports.index', ['period' => '1month']) }}" class="px-3 py-1.5 rounded-xl transition-all {{ $period === '1month' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900' }}">Bulanan</a>
                 <a href="{{ route('admin.reports.index', ['period' => '3months']) }}" class="px-3 py-1.5 rounded-xl transition-all {{ $period === '3months' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900' }}">3 Bulan</a>
-                <a href="{{ route('admin.reports.index', ['period' => '6months']) }}" class="px-3 py-1.5 rounded-xl transition-all {{ $period === '6months' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900' }}">6 Bulan</a>
-                <a href="{{ route('admin.reports.index', ['period' => '1year']) }}" class="px-3 py-1.5 rounded-xl transition-all {{ $period === '1year' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900' }}">1 Tahun</a>
+                <a href="{{ route('admin.reports.index', ['period' => '7months']) }}" class="px-3 py-1.5 rounded-xl transition-all {{ $period === '7months' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900' }}">7 Bulan</a>
+                <a href="{{ route('admin.reports.index', ['period' => '1year']) }}" class="px-3 py-1.5 rounded-xl transition-all {{ $period === '1year' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900' }}">Tahunan</a>
             </div>
 
-            <!-- Print Report Button -->
-            <a href="{{ route('admin.reports.print', ['period' => $period]) }}" target="_blank" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5">
-                <i class="fa-solid fa-print"></i>
-                <span>Cetak Laporan</span>
-            </a>
+            <!-- Download PDF & Print Buttons -->
+            <div class="flex items-center gap-2">
+                <a href="{{ route('admin.reports.pdf', ['period' => $period]) }}" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold shadow-md shadow-brand-600/20 transition-all flex items-center gap-1.5">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>Download Rekap PDF</span>
+                </a>
+
+                <a href="{{ route('admin.reports.print', ['period' => $period]) }}" target="_blank" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-print"></i>
+                    <span>Cetak Laporan</span>
+                </a>
+            </div>
         </div>
     </div>
 

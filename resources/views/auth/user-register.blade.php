@@ -70,7 +70,10 @@
                     <label for="password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Kata Sandi</label>
                     <div class="relative">
                         <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-                        <input id="password" name="password" type="password" required placeholder="Minimal 6 karakter" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border @error('password') border-rose-400 @else border-slate-200 @enderror rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                        <input id="password" name="password" type="password" required placeholder="Minimal 6 karakter" class="w-full pl-10 pr-11 py-2.5 bg-slate-50 border @error('password') border-rose-400 @else border-slate-200 @enderror rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                        <button type="button" onclick="togglePasswordVisibility('password', 'password-eye-icon')" class="absolute right-3.5 top-3 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Tampilkan / Sembunyikan Kata Sandi">
+                            <i id="password-eye-icon" class="fa-solid fa-eye text-sm"></i>
+                        </button>
                     </div>
                     @error('password')
                         <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
@@ -82,7 +85,10 @@
                     <label for="password_confirmation" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Ulangi Kata Sandi</label>
                     <div class="relative">
                         <i class="fa-solid fa-lock-open absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-                        <input id="password_confirmation" name="password_confirmation" type="password" required placeholder="Ketik ulang kata sandi" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                        <input id="password_confirmation" name="password_confirmation" type="password" required placeholder="Ketik ulang kata sandi" class="w-full pl-10 pr-11 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                        <button type="button" onclick="togglePasswordVisibility('password_confirmation', 'password-confirm-eye-icon')" class="absolute right-3.5 top-3 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none" title="Tampilkan / Sembunyikan Konfirmasi Kata Sandi" aria-label="Tampilkan / Sembunyikan Konfirmasi Kata Sandi">
+                            <i id="password-confirm-eye-icon" class="fa-solid fa-eye text-sm"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -109,4 +115,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    function togglePasswordVisibility(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (!input || !icon) return;
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+</script>
 @endsection

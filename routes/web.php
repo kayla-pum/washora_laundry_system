@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\PackageController as AdminPackageController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\TransactionController as AdminTransactionController;
 use App\Http\Controllers\AuthController;
@@ -49,6 +50,7 @@ Route::middleware(['auth', 'customer'])->prefix('user')->name('user.')->group(fu
     Route::get('/orders/{order}/success', [UserOrderController::class, 'success'])->name('orders.success');
     Route::get('/orders/{order}', [UserOrderController::class, 'show'])->name('orders.show');
     Route::post('/orders/{order}/cancel', [UserOrderController::class, 'cancel'])->name('orders.cancel');
+    Route::post('/orders/{order}/review', [UserOrderController::class, 'storeReview'])->name('orders.review');
 });
 
 /*
@@ -60,6 +62,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [AdminDashboardController::class, 'profile'])->name('profile');
     Route::put('/profile', [AdminDashboardController::class, 'updateProfile'])->name('profile.update');
+    Route::put('/password', [AdminDashboardController::class, 'updatePassword'])->name('password.update');
 
     // Admin Orders Management & Verification
     Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
@@ -96,9 +99,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Transactions & Receipts
     Route::get('/transactions', [AdminTransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/export', [AdminTransactionController::class, 'exportPdf'])->name('transactions.export');
     Route::get('/transactions/{order}/print', [AdminTransactionController::class, 'printInvoice'])->name('transactions.print');
+
+    // Testimonials / Reviews Management
+    Route::get('/reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
+    Route::patch('/reviews/{review}/toggle', [AdminReviewController::class, 'toggle'])->name('reviews.toggle');
+    Route::delete('/reviews/{review}', [AdminReviewController::class, 'destroy'])->name('reviews.destroy');
 
     // Reports & Analytics
     Route::get('/reports', [AdminReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/print', [AdminReportController::class, 'print'])->name('reports.print');
+    Route::get('/reports/pdf', [AdminReportController::class, 'downloadPdf'])->name('reports.pdf');
 });

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Order;
+use App\Models\Review;
 use App\Models\User;
 use Carbon\Carbon;
 use Database\Seeders\DatabaseSeeder;
@@ -92,5 +93,55 @@ class AdminFlowTest extends TestCase
         $this->assertEquals('confirmed', $pendingOrder->status);
         $this->assertEquals($admin->id, $pendingOrder->confirmed_by);
         $this->assertNotNull($pendingOrder->total_price);
+    }
+
+    public function test_admin_can_download_report_pdf(): void
+    {
+        $admin = User::where('role', 'admin')->first();
+
+        foreach (['today', '7days', '1month', '3months', '7months', '1year'] as $period) {
+            $response = $this->actingAs($admin)->get(route('admin.reports.pdf', ['period' => $period]));
+            $response->assertStatus(200);
+            $response->assertHeader('content-type', 'application/pdf');
+        }
+    }
+
+    public function test_admin_can_export_transactions_pdf(): void
+    {
+        $admin = User::where('role', 'admin')->first();
+
+        $response = $this->actingAs($admin)->get(route('admin.transactions.export', ['period' => '7months']));
+        $response->assertStatus(200);
+        $response->assertHeader('content-type', 'application/pdf');
+    }
+
+    public function test_admin_can_moderate_customer_reviews(): void
+    {
+        $admin = User::where('role', 'admin')->first();
+        $user = User::where('role', 'user')->first();
+
+        $review = Review::create([
+            'user_id' => $user->id,
+            'customer_name' => $user->name,
+            'rating' => 5,
+            'comment' => 'Pelayanan cuci cepat dan sangat bersih!',
+            'is_published' => false,
+        ]);
+
+        // View reviews index
+        $indexResponse = $this->actingAs($admin)->get(route('admin.reviews.index'));
+        $indexResponse->assertStatus(200);
+        $indexResponse->assertSee($review->customer_name);
+
+        // Toggle approve
+        $toggleResponse = $this->actingAs($admin)->patch(route('admin.reviews.toggle', $review));
+        $toggleResponse->assertRedirect();
+        $review->refresh();
+        $this->assertTrue($review->is_published);
+
+        // Delete review
+        $deleteResponse = $this->actingAs($admin)->delete(route('admin.reviews.destroy', $review));
+        $deleteResponse->assertRedirect();
+        $this->assertDatabaseMissing('reviews', ['id' => $review->id]);
     }
 }

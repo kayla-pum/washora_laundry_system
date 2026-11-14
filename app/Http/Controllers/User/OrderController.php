@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatusHistory;
 use App\Models\Package;
+use App\Models\Review;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use Carbon\Carbon;
@@ -24,7 +25,7 @@ class OrderController extends Controller
         $status = $request->input('status', 'all');
 
         $query = Order::where('user_id', Auth::id())
-            ->with(['items', 'statusHistories'])
+            ->with(['items', 'statusHistories', 'review'])
             ->latest();
 
         if ($status !== 'all' && array_key_exists($status, Order::STATUSES)) {
@@ -53,6 +54,16 @@ class OrderController extends Controller
             ->with(['activeServices'])
             ->get();
 
+        $kiloanServices = Service::where('status', 'active')
+            ->whereRaw('LOWER(unit) = ?', ['kg'])
+            ->with('category')
+            ->get();
+
+        $satuanServices = Service::where('status', 'active')
+            ->whereRaw('LOWER(unit) != ?', ['kg'])
+            ->with('category')
+            ->get();
+
         $packages = Package::where('status', 'active')
             ->with('services')
             ->get();
@@ -60,7 +71,26 @@ class OrderController extends Controller
         $selectedServiceId = $request->input('service_id');
         $selectedPackageId = $request->input('package_id');
 
-        return view('user.orders.create', compact('categories', 'packages', 'selectedServiceId', 'selectedPackageId'));
+        // Determine default active tab: 'kiloan', 'satuan', or 'package'
+        $defaultType = 'kiloan';
+        if ($selectedPackageId) {
+            $defaultType = 'package';
+        } elseif ($selectedServiceId) {
+            $service = Service::find($selectedServiceId);
+            if ($service && strtolower($service->unit) !== 'kg') {
+                $defaultType = 'satuan';
+            }
+        }
+
+        return view('user.orders.create', compact(
+            'categories',
+            'kiloanServices',
+            'satuanServices',
+            'packages',
+            'selectedServiceId',
+            'selectedPackageId',
+            'defaultType'
+        ));
     }
 
     /**
@@ -69,19 +99,20 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'item_type' => ['required', 'in:service,package'],
-            'service_id' => ['required_if:item_type,service', 'nullable', 'exists:servies,id'],
+            'item_type' => ['required', 'in:kiloan,satuan,package,service'],
+            'service_id' => ['required_if:item_type,kiloan,satuan,service', 'nullable', 'exists:servies,id'],
             'package_id' => ['required_if:item_type,package', 'nullable', 'exists:packages,id'],
             'recipient_name' => ['required', 'string', 'max:100'],
             'whatsapp_number' => ['required', 'string', 'max:20'],
             'pickup_address' => ['required', 'string', 'min:5'],
             'customer_note' => ['nullable', 'string', 'max:500'],
         ], [
-            'item_type.required' => 'Silakan pilih jenis pesanan (Layanan atau Paket).',
+            'item_type.required' => 'Silakan tentukan jenis layanan (Paket Bundling, Layanan Satuan, atau Layanan Kiloan).',
             'service_id.required_if' => 'Silakan pilih layanan laundry yang diinginkan.',
             'package_id.required_if' => 'Silakan pilih paket laundry yang diinginkan.',
-            'pickup_address.required' => 'Alamat penjemputan wajib diisi.',
-            'whatsapp_number.required' => 'Nomor WhatsApp aktif wajib diisi.',
+            'recipient_name.required' => 'Nama lengkap pemesan wajib diisi.',
+            'pickup_address.required' => 'Alamat penjemputan cucian wajib diisi.',
+            'whatsapp_number.required' => 'Nomor WhatsApp / telepon aktif wajib diisi.',
         ]);
 
         return DB::transaction(function () use ($validated) {
@@ -115,21 +146,7 @@ class OrderController extends Controller
             ]);
 
             // Attach Order Item
-            if ($validated['item_type'] === 'service') {
-                $service = Service::findOrFail($validated['service_id']);
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'item_type' => 'service',
-                    'service_id' => $service->id,
-                    'package_id' => null,
-                    'item_name' => $service->name,
-                    'unit' => $service->unit,
-                    'quantity' => 1,
-                    'unit_price' => $service->price,
-                    'subtotal' => 0, // Akan dihitung admin setelah ditimbang
-                    'notes' => 'Menunggu penimbangan admin ('.$service->service_type.')',
-                ]);
-            } else {
+            if ($validated['item_type'] === 'package') {
                 $package = Package::findOrFail($validated['package_id']);
                 OrderItem::create([
                     'order_id' => $order->id,
@@ -141,7 +158,24 @@ class OrderController extends Controller
                     'quantity' => 1,
                     'unit_price' => $package->price,
                     'subtotal' => $package->price,
-                    'notes' => 'Paket: '.$package->name,
+                    'notes' => 'Paket Bundling: '.$package->name,
+                ]);
+            } else {
+                $service = Service::findOrFail($validated['service_id']);
+                $isKiloan = strtolower($service->unit) === 'kg';
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'item_type' => 'service',
+                    'service_id' => $service->id,
+                    'package_id' => null,
+                    'item_name' => $service->name,
+                    'unit' => $service->unit,
+                    'quantity' => 1,
+                    'unit_price' => $service->price,
+                    'subtotal' => $isKiloan ? 0 : $service->price,
+                    'notes' => $isKiloan
+                        ? 'Layanan Kiloan - Menunggu penimbangan admin ('.$service->service_type.')'
+                        : 'Layanan Satuan ('.$service->service_type.')',
                 ]);
             }
 
@@ -184,9 +218,49 @@ class OrderController extends Controller
             abort(403, 'Anda tidak memiliki akses ke pesanan ini.');
         }
 
-        $order->load(['items.service', 'items.package', 'statusHistories.user', 'confirmedBy']);
+        $order->load(['items.service', 'items.package', 'statusHistories.user', 'confirmedBy', 'review']);
 
         return view('user.orders.show', compact('order'));
+    }
+
+    /**
+     * Submit review / testimonial for completed order
+     */
+    public function storeReview(Request $request, Order $order)
+    {
+        if ($order->user_id !== Auth::id()) {
+            abort(403, 'Anda tidak memiliki akses ke pesanan ini.');
+        }
+
+        if ($order->status !== 'completed') {
+            return back()->with('error', 'Testimoni hanya dapat diberikan setelah pesanan selesai.');
+        }
+
+        if ($order->review()->exists()) {
+            return back()->with('error', 'Anda sudah memberikan testimoni untuk pesanan ini.');
+        }
+
+        $validated = $request->validate([
+            'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'comment' => ['required', 'string', 'min:5', 'max:1000'],
+        ], [
+            'rating.required' => 'Silakan pilih rating bintang.',
+            'rating.min' => 'Rating minimal 1 bintang.',
+            'rating.max' => 'Rating maksimal 5 bintang.',
+            'comment.required' => 'Tuliskan ulasan atau testimoni Anda.',
+            'comment.min' => 'Ulasan minimal 5 karakter.',
+        ]);
+
+        Review::create([
+            'user_id' => Auth::id(),
+            'order_id' => $order->id,
+            'customer_name' => Auth::user()->name,
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'],
+            'is_published' => false, // Menunggu persetujuan admin
+        ]);
+
+        return back()->with('success', 'Terima kasih atas ulasan Anda! Testimoni akan ditampilkan setelah disetujui oleh admin.');
     }
 
     /**

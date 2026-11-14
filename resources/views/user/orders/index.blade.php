@@ -66,6 +66,20 @@
                     </div>
 
                     <div class="flex items-center gap-2">
+                        @if($order->status === 'completed')
+                            @if($order->review)
+                                <a href="{{ route('user.orders.show', $order) }}" class="px-3 py-2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-xl text-xs font-bold transition-colors flex items-center gap-1">
+                                    <i class="fa-solid fa-star text-amber-500"></i>
+                                    <span>Ulasan ({{ $order->review->rating }}★)</span>
+                                </a>
+                            @else
+                                <a href="{{ route('user.orders.show', $order) }}" class="px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-xl text-xs font-bold transition-colors flex items-center gap-1">
+                                    <i class="fa-regular fa-star text-amber-500"></i>
+                                    <span>Beri Ulasan</span>
+                                </a>
+                            @endif
+                        @endif
+
                         <a href="{{ route('user.orders.show', $order) }}" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5">
                             <span>Lacak & Rincian</span>
                             <i class="fa-solid fa-arrow-right text-[10px]"></i>

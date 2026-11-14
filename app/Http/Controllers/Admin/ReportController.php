@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\ServiceCategory;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,36 +14,38 @@ class ReportController extends Controller
 {
     public function index(Request $request)
     {
-        $period = $request->input('period', '1month'); // 'today', '7days', '1month', '3months', '6months', '1year'
+        $period = $request->input('period', '1month'); // 'today', '7days', '1month', '3months', '7months', '1year'
 
         $now = Carbon::now();
 
         switch ($period) {
             case 'today':
                 $startDate = Carbon::today();
-                $periodLabel = 'Hari Ini ('.$now->translatedFormat('d F Y').')';
+                $periodLabel = 'Harian (Hari Ini, '.$now->translatedFormat('d F Y').')';
                 break;
             case '7days':
                 $startDate = Carbon::now()->subDays(6)->startOfDay();
-                $periodLabel = '7 Hari Terakhir';
+                $periodLabel = 'Mingguan (7 Hari Terakhir)';
                 break;
             case '3months':
                 $startDate = Carbon::now()->subMonths(3)->startOfDay();
                 $periodLabel = '3 Bulan Terakhir';
                 break;
+            case '7months':
             case '6months':
-                $startDate = Carbon::now()->subMonths(6)->startOfDay();
-                $periodLabel = '6 Bulan Terakhir';
+                $period = '7months';
+                $startDate = Carbon::now()->subMonths(7)->startOfDay();
+                $periodLabel = '7 Bulan Terakhir';
                 break;
             case '1year':
                 $startDate = Carbon::now()->subYear()->startOfDay();
-                $periodLabel = '1 Tahun Terakhir';
+                $periodLabel = 'Tahunan (1 Tahun Terakhir)';
                 break;
             case '1month':
             default:
                 $period = '1month';
                 $startDate = Carbon::now()->subMonth()->startOfDay();
-                $periodLabel = '1 Bulan Terakhir (30 Hari)';
+                $periodLabel = 'Bulanan (1 Bulan Terakhir)';
                 break;
         }
 
@@ -113,32 +116,34 @@ class ReportController extends Controller
         switch ($period) {
             case 'today':
                 $startDate = Carbon::today();
-                $periodLabel = 'Hari Ini';
+                $periodLabel = 'Harian (Hari Ini)';
                 break;
             case '7days':
                 $startDate = Carbon::now()->subDays(6)->startOfDay();
-                $periodLabel = '7 Hari Terakhir';
+                $periodLabel = 'Mingguan (7 Hari Terakhir)';
                 break;
             case '3months':
                 $startDate = Carbon::now()->subMonths(3)->startOfDay();
                 $periodLabel = '3 Bulan Terakhir';
                 break;
+            case '7months':
             case '6months':
-                $startDate = Carbon::now()->subMonths(6)->startOfDay();
-                $periodLabel = '6 Bulan Terakhir';
+                $startDate = Carbon::now()->subMonths(7)->startOfDay();
+                $periodLabel = '7 Bulan Terakhir';
                 break;
             case '1year':
                 $startDate = Carbon::now()->subYear()->startOfDay();
-                $periodLabel = '1 Tahun Terakhir';
+                $periodLabel = 'Tahunan (1 Tahun Terakhir)';
                 break;
             case '1month':
             default:
+                $period = '1month';
                 $startDate = Carbon::now()->subMonth()->startOfDay();
-                $periodLabel = '1 Bulan Terakhir';
+                $periodLabel = 'Bulanan (1 Bulan Terakhir)';
                 break;
         }
 
-        $orders = Order::with(['user', 'items'])
+        $orders = Order::with(['user', 'items.service', 'items.package'])
             ->where('created_at', '>=', $startDate)
             ->where('status', '!=', 'cancelled')
             ->latest()
@@ -149,5 +154,68 @@ class ReportController extends Controller
         $totalWeight = $orders->sum('total_weight') ?? 0;
 
         return view('admin.reports.print', compact('orders', 'periodLabel', 'totalRevenue', 'totalOrdersCount', 'totalWeight'));
+    }
+
+    /**
+     * Download transaction report as PDF.
+     */
+    public function downloadPdf(Request $request)
+    {
+        $period = $request->input('period', '1month');
+        $now = Carbon::now();
+
+        switch ($period) {
+            case 'today':
+                $startDate = Carbon::today();
+                $periodLabel = 'Harian (Hari Ini, '.$now->translatedFormat('d F Y').')';
+                break;
+            case '7days':
+                $startDate = Carbon::now()->subDays(6)->startOfDay();
+                $periodLabel = 'Mingguan (7 Hari Terakhir)';
+                break;
+            case '3months':
+                $startDate = Carbon::now()->subMonths(3)->startOfDay();
+                $periodLabel = '3 Bulan Terakhir';
+                break;
+            case '7months':
+            case '6months':
+                $period = '7months';
+                $startDate = Carbon::now()->subMonths(7)->startOfDay();
+                $periodLabel = '7 Bulan Terakhir';
+                break;
+            case '1year':
+                $startDate = Carbon::now()->subYear()->startOfDay();
+                $periodLabel = 'Tahunan (1 Tahun Terakhir)';
+                break;
+            case '1month':
+            default:
+                $period = '1month';
+                $startDate = Carbon::now()->subMonth()->startOfDay();
+                $periodLabel = 'Bulanan (1 Bulan Terakhir)';
+                break;
+        }
+
+        $orders = Order::with(['user', 'items.service', 'items.package'])
+            ->where('created_at', '>=', $startDate)
+            ->where('status', '!=', 'cancelled')
+            ->latest()
+            ->get();
+
+        $totalRevenue = $orders->sum('total_price') ?? 0;
+        $totalOrdersCount = $orders->count();
+        $totalWeight = $orders->sum('total_weight') ?? 0;
+
+        $pdf = Pdf::loadView('admin.reports.pdf', compact(
+            'orders',
+            'period',
+            'periodLabel',
+            'totalRevenue',
+            'totalOrdersCount',
+            'totalWeight'
+        ))->setPaper('a4', 'portrait');
+
+        $filename = 'Laporan-Transaksi-Washora-'.$period.'-'.date('YmdHis').'.pdf';
+
+        return $pdf->download($filename);
     }
 }

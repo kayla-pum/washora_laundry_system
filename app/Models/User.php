@@ -60,6 +60,11 @@ class User extends Authenticatable
         return $this->hasMany(Order::class, 'user_id')->latest();
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'user_id')->latest();
+    }
+
     public function confirmedOrders()
     {
         return $this->hasMany(Order::class, 'confirmed_by');

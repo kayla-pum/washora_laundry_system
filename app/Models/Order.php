@@ -124,6 +124,11 @@ class Order extends Model
         return $this->hasMany(OrderStatusHistory::class, 'order_id')->latest();
     }
 
+    public function review()
+    {
+        return $this->hasOne(Review::class, 'order_id');
+    }
+
     /**
      * Generate WhatsApp confirmation message link
      */

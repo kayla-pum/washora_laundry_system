@@ -27,14 +27,23 @@
     </div>
 
     <!-- Filter & Search Bar -->
-    <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
             <h2 class="text-base font-bold text-slate-900">Daftar Nota & Transaksi</h2>
-            <p class="text-xs text-slate-400">Pencarian transaksi, nota pembayaran dan cetak struk</p>
+            <p class="text-xs text-slate-400">Pencarian transaksi, nota pembayaran, dan unduh laporan transaksi resmi.</p>
         </div>
 
         <form action="{{ route('admin.transactions.index') }}" method="GET" class="flex flex-wrap items-center gap-2 text-xs">
             <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari kode / nama..." class="px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:ring-2 focus:ring-brand-500">
+            <select name="period" class="px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl font-medium">
+                <option value="all" {{ ($period ?? 'all') === 'all' ? 'selected' : '' }}>Semua Periode</option>
+                <option value="today" {{ ($period ?? '') === 'today' ? 'selected' : '' }}>Harian</option>
+                <option value="7days" {{ ($period ?? '') === '7days' ? 'selected' : '' }}>Mingguan</option>
+                <option value="1month" {{ ($period ?? '') === '1month' ? 'selected' : '' }}>Bulanan</option>
+                <option value="3months" {{ ($period ?? '') === '3months' ? 'selected' : '' }}>3 Bulan</option>
+                <option value="7months" {{ ($period ?? '') === '7months' ? 'selected' : '' }}>7 Bulan</option>
+                <option value="1year" {{ ($period ?? '') === '1year' ? 'selected' : '' }}>Tahunan</option>
+            </select>
             <select name="status" class="px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl font-medium">
                 <option value="all">Semua Status</option>
                 <option value="confirmed" {{ $status === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
@@ -42,7 +51,13 @@
                 <option value="ready" {{ $status === 'ready' ? 'selected' : '' }}>Ready</option>
                 <option value="completed" {{ $status === 'completed' ? 'selected' : '' }}>Completed</option>
             </select>
-            <button type="submit" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold">Filter</button>
+            <button type="submit" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition-colors">
+                Filter
+            </button>
+            <a href="{{ route('admin.transactions.export', request()->query()) }}" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition-all flex items-center gap-1.5 shadow-md shadow-brand-600/20">
+                <i class="fa-solid fa-file-pdf"></i>
+                <span>Download Rekap PDF</span>
+            </a>
         </form>
     </div>
 

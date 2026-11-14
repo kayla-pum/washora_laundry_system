@@ -224,5 +224,88 @@
             @endforelse
         </div>
     </div>
+
+    @if($order->status === 'completed')
+        <!-- Testimonial Section for Completed Order -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-star text-amber-500"></i>
+                    <span>Ulasan & Testimoni Pelanggan</span>
+                </h2>
+                @if($order->review)
+                    <span class="px-3 py-1 rounded-full text-[11px] font-bold {{ $order->review->is_published ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800' }}">
+                        {{ $order->review->is_published ? 'Disetujui Admin (Tampil di Beranda)' : 'Menunggu Persetujuan Admin' }}
+                    </span>
+                @endif
+            </div>
+
+            @if($order->review)
+                <!-- Existing Review Display -->
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-3 text-xs">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-1 text-amber-400 text-sm">
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= $order->review->rating)
+                                    <i class="fa-solid fa-star"></i>
+                                @else
+                                    <i class="fa-regular fa-star text-slate-300"></i>
+                                @endif
+                            @endfor
+                            <span class="text-slate-700 font-extrabold text-xs ml-1">{{ $order->review->rating }}.0 / 5.0</span>
+                        </div>
+                        <span class="text-[11px] text-slate-400">{{ $order->review->created_at->translatedFormat('d M Y, H:i') }} WIB</span>
+                    </div>
+                    <p class="text-slate-700 italic leading-relaxed text-sm">
+                        "{{ $order->review->comment }}"
+                    </p>
+                    <p class="text-[11px] text-slate-500">
+                        Oleh: <strong class="text-slate-800">{{ $order->review->customer_name }}</strong> &bull; Pesanan #{{ $order->order_code }}
+                    </p>
+                </div>
+            @else
+                <!-- Review Form -->
+                <form action="{{ route('user.orders.review', $order) }}" method="POST" class="space-y-4">
+                    @csrf
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Bagikan pengalaman Anda menggunakan layanan Washora pada pesanan ini. Testimoni Anda akan dipublikasikan setelah ditinjau oleh tim admin.
+                    </p>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Beri Nilai Bintang (Rating) <span class="text-rose-500">*</span></label>
+                        <div class="flex items-center gap-2">
+                            @for($i = 5; $i >= 1; $i--)
+                                <label class="cursor-pointer group flex items-center gap-1 px-3 py-1.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50 transition-all">
+                                    <input type="radio" name="rating" value="{{ $i }}" class="peer sr-only" {{ $i === 5 ? 'checked' : '' }}>
+                                    <span class="text-xs font-bold text-slate-700 peer-checked:text-amber-600 flex items-center gap-1">
+                                        <i class="fa-solid fa-star text-amber-400"></i>
+                                        <span>{{ $i }}</span>
+                                    </span>
+                                </label>
+                            @endfor
+                        </div>
+                        @error('rating')
+                            <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="review_comment" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tulis Ulasan / Testimoni <span class="text-rose-500">*</span></label>
+                        <textarea id="review_comment" name="comment" rows="3" required placeholder="Ceritakan bagaimana hasil cucian, ketepatan waktu, dan pelayanan kami..." class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">{{ old('comment') }}</textarea>
+                        @error('comment')
+                            <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit" class="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-md shadow-amber-500/20 transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                            <span>Kirim Testimoni</span>
+                        </button>
+                    </div>
+                </form>
+            @endif
+        </div>
+    @endif
 </div>
 @endsection

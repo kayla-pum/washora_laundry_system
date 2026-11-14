@@ -53,5 +53,78 @@
             </div>
         </form>
     </div>
+
+    <!-- Change Password Card -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
+        <div>
+            <h2 class="text-base font-bold text-slate-900">Ubah Kata Sandi Administrator</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Perbarui kata sandi akun untuk menjaga keamanan akses dashboard.</p>
+        </div>
+
+        <form action="{{ route('admin.password.update') }}" method="POST" class="space-y-4 text-xs">
+            @csrf
+            @method('PUT')
+
+            <div>
+                <label for="admin_current_password" class="block font-bold text-slate-700 uppercase tracking-wider mb-1">Kata Sandi Saat Ini</label>
+                <div class="relative">
+                    <input type="password" id="admin_current_password" name="current_password" required placeholder="••••••••" class="w-full pl-4 pr-11 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                    <button type="button" onclick="togglePasswordVisibility('admin_current_password', 'admin-current-eye')" class="absolute right-3.5 top-2.5 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Tampilkan / Sembunyikan Kata Sandi">
+                        <i id="admin-current-eye" class="fa-solid fa-eye text-sm"></i>
+                    </button>
+                </div>
+                @error('current_password')
+                    <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label for="admin_password" class="block font-bold text-slate-700 uppercase tracking-wider mb-1">Kata Sandi Baru</label>
+                <div class="relative">
+                    <input type="password" id="admin_password" name="password" required placeholder="Minimal 6 karakter" class="w-full pl-4 pr-11 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                    <button type="button" onclick="togglePasswordVisibility('admin_password', 'admin-new-eye')" class="absolute right-3.5 top-2.5 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Tampilkan / Sembunyikan Kata Sandi">
+                        <i id="admin-new-eye" class="fa-solid fa-eye text-sm"></i>
+                    </button>
+                </div>
+                @error('password')
+                    <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label for="admin_password_confirmation" class="block font-bold text-slate-700 uppercase tracking-wider mb-1">Ulangi Kata Sandi Baru</label>
+                <div class="relative">
+                    <input type="password" id="admin_password_confirmation" name="password_confirmation" required placeholder="Ketik ulang kata sandi baru" class="w-full pl-4 pr-11 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                    <button type="button" onclick="togglePasswordVisibility('admin_password_confirmation', 'admin-confirm-eye')" class="absolute right-3.5 top-2.5 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Tampilkan / Sembunyikan Kata Sandi">
+                        <i id="admin-confirm-eye" class="fa-solid fa-eye text-sm"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-3">
+                <button type="submit" class="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-all shadow-xs">
+                    Perbarui Kata Sandi Admin
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
+
+<script>
+    function togglePasswordVisibility(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (!input || !icon) return;
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+</script>
 @endsection

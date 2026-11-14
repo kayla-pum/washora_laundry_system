@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Order;
+use App\Models\Review;
 use App\Models\Service;
 use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
@@ -69,10 +70,73 @@ class CustomerFlowTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('user.orders.create'));
         $response->assertStatus(200);
-        $response->assertSee('Data Pelanggan');
         $response->assertSee('Pilih Layanan');
+        $response->assertSee('Isi Data Diri');
         $response->assertSee('Konfirmasi');
-        $response->assertSee('Tanpa Perlu Menimbang');
+        $response->assertSee('Paket Bundling');
+        $response->assertSee('Layanan Satuan');
+        $response->assertSee('Layanan Kiloan');
+    }
+
+    public function test_customer_can_submit_review_for_completed_order(): void
+    {
+        $user = User::where('role', 'user')->first();
+        $order = Order::where('user_id', $user->id)->first();
+        $order->update(['status' => 'completed']);
+
+        $response = $this->actingAs($user)->post(route('user.orders.review', $order), [
+            'rating' => 5,
+            'comment' => 'Pakaian sangat wangi dan rapi luar biasa!',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('reviews', [
+            'order_id' => $order->id,
+            'user_id' => $user->id,
+            'rating' => 5,
+            'is_published' => false, // Requires admin approval
+        ]);
+    }
+
+    public function test_customer_cannot_review_pending_order(): void
+    {
+        $user = User::where('role', 'user')->first();
+        $order = Order::where('user_id', $user->id)->first();
+        $order->update(['status' => 'pending']);
+
+        $response = $this->actingAs($user)->post(route('user.orders.review', $order), [
+            'rating' => 5,
+            'comment' => 'Mencoba review sebelum selesai.',
+        ]);
+
+        $response->assertRedirect();
+        $response->assertSessionHas('error');
+    }
+
+    public function test_customer_cannot_submit_duplicate_review(): void
+    {
+        $user = User::where('role', 'user')->first();
+        $order = Order::where('user_id', $user->id)->first();
+        $order->update(['status' => 'completed']);
+
+        // First review
+        Review::create([
+            'user_id' => $user->id,
+            'order_id' => $order->id,
+            'customer_name' => $user->name,
+            'rating' => 4,
+            'comment' => 'Review pertama.',
+            'is_published' => false,
+        ]);
+
+        // Second review attempt
+        $response = $this->actingAs($user)->post(route('user.orders.review', $order), [
+            'rating' => 5,
+            'comment' => 'Review kedua yang harusnya ditolak.',
+        ]);
+
+        $response->assertRedirect();
+        $response->assertSessionHas('error');
     }
 
     public function test_unauthorized_user_cannot_view_another_order_success_page(): void
