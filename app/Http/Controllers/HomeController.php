@@ -79,4 +79,9 @@ class HomeController extends Controller
 
         return view('landing.services', compact('categories', 'packages'));
     }
+
+    public function terms()
+    {
+        return view('landing.syaratketentuan');
+    }
 }

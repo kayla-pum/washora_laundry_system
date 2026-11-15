@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tracking', [HomeController::class, 'tracking'])->name('tracking');
 Route::get('/layanan', [HomeController::class, 'services'])->name('services');
+Route::get('/syarat-ketentuan', [HomeController::class, 'terms'])->name('terms');
 
 // Unified Login and Customer Registration
 Route::get('/user/login', [AuthController::class, 'showLogin'])->name('user.login');

@@ -36,32 +36,47 @@
                 </ul>
             </div>
 
-            <!-- Akses Role Portal -->
+            <!-- Menu Navigasi Footer -->
             <div class="space-y-3">
                 <h4 class="text-xs font-bold uppercase tracking-wider text-white">Menu</h4>
-                <ul class="space-y-2 text-sm text-slate-400">
+                <ul class="space-y-2.5 text-sm text-slate-400">
                     <li>
-                        <a href="{{ route('home') }}" class="hover:text-cyan-400 flex items-center gap-2 transition-colors">
-                            <i class="fa-solid fa-user text-xs text-brand-400"></i>
-                            Beranda
+                        <a href="{{ route('home') }}" class="group hover:text-cyan-400 flex items-center gap-2.5 transition-colors">
+                            <svg class="w-4 h-4 text-brand-400 group-hover:text-cyan-400 transition-colors shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <polyline points="9 22 9 12 15 12 15 22"/>
+                            </svg>
+                            <span>Beranda</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('services') }}" class="hover:text-cyan-400 flex items-center gap-2 transition-colors">
-                            <i class="fa-solid fa-user-plus text-xs text-brand-400"></i>
-                            Layanan
+                        <a href="{{ route('services') }}" class="group hover:text-cyan-400 flex items-center gap-2.5 transition-colors">
+                            <svg class="w-4 h-4 text-brand-400 group-hover:text-cyan-400 transition-colors shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 6h18"/>
+                                <path d="M16 6a1 1 0 1 0 2 0 1 1 0 0 0-2 0"/>
+                                <path d="M12 18a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z"/>
+                                <path d="M12 15a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                <rect width="18" height="20" x="3" y="2" rx="2"/>
+                            </svg>
+                            <span>Layanan</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('tracking') }}" class="hover:text-cyan-400 flex items-center gap-2 transition-colors">
-                            <i class="fa-solid fa-magnifying-glass text-xs text-cyan-400"></i>
-                            Cek Resi & Status Laundry
+                        <a href="{{ route('tracking') }}" class="group hover:text-cyan-400 flex items-center gap-2.5 transition-colors">
+                            <svg class="w-4 h-4 text-brand-400 group-hover:text-cyan-400 transition-colors shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="m21 21-4.3-4.3"/>
+                            </svg>
+                            <span>Cek Resi & Status Laundry</span>
                         </a>
                     </li>
-                    <li class="pt-2">
-                        <a href="{{ route('admin.login') }}" class="hover:text-purple-400 flex items-center gap-2 transition-colors text-slate-400">
-                            <i class="fa-solid fa-shield-halved text-xs text-purple-400"></i>
-                            Syarat & Ketentuan
+                    <li>
+                        <a href="{{ route('terms') }}" class="group hover:text-cyan-400 flex items-center gap-2.5 transition-colors">
+                            <svg class="w-4 h-4 text-brand-400 group-hover:text-cyan-400 transition-colors shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                                <path d="m9 12 2 2 4-4"/>
+                            </svg>
+                            <span>Syarat & Ketentuan</span>
                         </a>
                     </li>
                 </ul>
@@ -89,8 +104,9 @@
 
         <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
             <p>&copy; {{ date('Y') }} Washora Laundry Information System. All rights reserved.</p>
-            <div class="flex items-center gap-6">
+            <div class="flex flex-wrap items-center gap-4 sm:gap-6">
                 <span>Clean &bull; Fresh &bull; Fast</span>
+                <a href="{{ route('terms') }}" class="hover:text-cyan-400 transition-colors">Syarat & Ketentuan</a>
                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Sistem Online
                 </span>

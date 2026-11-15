@@ -108,4 +108,46 @@ class PublicPagesTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Pesanan Tidak Ditemukan');
     }
+
+    public function test_terms_and_conditions_page_loads_successfully_without_auth(): void
+    {
+        $response = $this->get('/syarat-ketentuan');
+
+        $response->assertStatus(200);
+        $response->assertSee('Syarat & Ketentuan Layanan Washora', false);
+        $response->assertSee('Waktu Pengerjaan Layanan', false);
+        $response->assertSee('Kondisi Barang Sebelum Proses Pencucian', false);
+        $response->assertSee('Ketentuan Khusus Layanan Kiloan & Satuan', false);
+        $response->assertSee('Barang yang Tidak Dapat Diterima', false);
+        $response->assertSee('Tanggung Jawab Terhadap Barang', false);
+        $response->assertSee('Ketentuan Pengajuan Komplain', false);
+        $response->assertSee('Kebijakan Ganti Rugi Kerusakan atau Kehilangan', false);
+        $response->assertSee('Barang yang Tidak Diambil', false);
+        $response->assertSee('Kembali ke Beranda', false);
+    }
+
+    public function test_footer_contains_terms_route_and_menu_links(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+        $response->assertSee(route('terms'));
+        $response->assertSee(route('home'));
+        $response->assertSee(route('services'));
+        $response->assertSee(route('tracking'));
+        $response->assertSee('Syarat & Ketentuan', false);
+        $response->assertSee('Cek Resi & Status Laundry', false);
+    }
+
+    public function test_keunggulan_section_displays_five_core_benefits(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+        $response->assertSee('Pelayanan Praktis Tanpa Timbang', false);
+        $response->assertSee('Pilihan Fleksibel Reguler & Express', false);
+        $response->assertSee('Pakaian Terorganisir & Higienis', false);
+        $response->assertSee('Informasi Status Pesanan Realtime', false);
+        $response->assertSee('Layanan Antar-Jemput Mudah', false);
+    }
 }

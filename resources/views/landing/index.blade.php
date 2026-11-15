@@ -156,71 +156,126 @@
          2. KEUNGGULAN SECTION (#keunggulan)
          (Wajib Tepat Setelah Hero)
          ========================================== -->
-    <section id="keunggulan" class="py-20 bg-white border-b border-slate-100">
+    <section id="keunggulan" class="py-16 sm:py-20 bg-white border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-extrabold uppercase tracking-wider text-brand-600">Kenapa Memilih Kami</span>
-                <h2 class="text-3xl font-extrabold text-slate-900 mt-2">Keunggulan Standar Premium Washora</h2>
-                <p class="text-slate-600 text-sm mt-2">Komitmen kami memberikan pengalaman laundry terbaik, mudah, transparan, dan terpercaya bagi Anda.</p>
+            <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-14 space-y-2.5">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-bold border border-brand-100">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-600"></span>
+                    Keunggulan Washora
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Standar Layanan Laundry Modern</h2>
+                <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">Komitmen kami menghadirkan perawatan pakaian terbaik, transparan, higienis, dan terpercaya bagi setiap pelanggan.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- 1. Pelayanan Praktis -->
-                <div class="bg-slate-50 hover:bg-white p-7 rounded-3xl border border-slate-200/80 hover:border-brand-300 hover:shadow-xl hover:-translate-y-1 transition-all space-y-3.5 group">
-                    <div class="w-12 h-12 rounded-2xl bg-brand-100 text-brand-600 group-hover:bg-brand-600 group-hover:text-white flex items-center justify-center text-xl transition-colors">
-                        <i class="fa-solid fa-scale-balanced"></i>
-                    </div>
-                    <h3 class="text-base font-bold text-slate-900">Pelayanan Praktis Tanpa Timbang</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        Anda tidak perlu repot menimbang sendiri dari rumah. Kurir kami menjemput dan tim profesional Washora menimbang secara presisi di outlet.
-                    </p>
-                </div>
-
-                <!-- 2. Pilihan Reguler & Express -->
-                <div class="bg-slate-50 hover:bg-white p-7 rounded-3xl border border-slate-200/80 hover:border-brand-300 hover:shadow-xl hover:-translate-y-1 transition-all space-y-3.5 group">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 group-hover:bg-amber-500 group-hover:text-white flex items-center justify-center text-xl transition-colors">
-                        <i class="fa-solid fa-bolt"></i>
-                    </div>
-                    <h3 class="text-base font-bold text-slate-900">Pilihan Fleksibel Reguler & Express</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        Pilihan waktu pengerjaan fleksibel mulai dari pengerjaan hemat reguler hingga express kilat 3 - 6 jam untuk kebutuhan mendesak Anda.
-                    </p>
-                </div>
-
-                <!-- 3. Penanganan Terorganisir & Higienis -->
-                <div class="bg-slate-50 hover:bg-white p-7 rounded-3xl border border-slate-200/80 hover:border-brand-300 hover:shadow-xl hover:-translate-y-1 transition-all space-y-3.5 group">
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white flex items-center justify-center text-xl transition-colors">
-                        <i class="fa-solid fa-hands-bubbles"></i>
-                    </div>
-                    <h3 class="text-base font-bold text-slate-900">Pakaian Terorganisir & 100% Higienis</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        Prinsip 1 mesin 1 pelanggan memastikan pakaian tidak pernah dicampur atau tertukar. Dicuci detergen antibakteri ramah serat kain.
-                    </p>
-                </div>
-
-                <!-- 4. Informasi Status Realtime -->
-                <div class="bg-slate-50 hover:bg-white p-7 rounded-3xl border border-slate-200/80 hover:border-brand-300 hover:shadow-xl hover:-translate-y-1 transition-all space-y-3.5 group">
-                    <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-cyan-600 group-hover:bg-cyan-600 group-hover:text-white flex items-center justify-center text-xl transition-colors">
-                        <i class="fa-solid fa-route"></i>
-                    </div>
-                    <h3 class="text-base font-bold text-slate-900">Informasi Status Pesanan Realtime</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        Pantau progres cucian Anda dari penjemputan, pencucian, setrika, hingga selesai melalui kode pesanan dan konfirmasi WhatsApp.
-                    </p>
-                </div>
-
-                <!-- 5. Layanan Penjemputan Pakaian -->
-                <div class="bg-slate-50 hover:bg-white p-7 rounded-3xl border border-slate-200/80 hover:border-brand-300 hover:shadow-xl hover:-translate-y-1 transition-all space-y-3.5 group md:col-span-2 lg:col-span-2">
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                        <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white flex items-center justify-center text-xl transition-colors shrink-0">
-                            <i class="fa-solid fa-truck-fast"></i>
+            <!-- Balanced 5-Column Grid on Desktop, Centered on Tablet, Responsive on Mobile -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5">
+                <!-- 1. Pelayanan Praktis Tanpa Timbang -->
+                <div class="group bg-white rounded-2xl p-5 border border-slate-200/80 hover:border-brand-400 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 border border-brand-100/70 group-hover:bg-brand-600 group-hover:text-white flex items-center justify-center text-base transition-colors duration-200">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <span class="text-[11px] font-black text-slate-300 group-hover:text-brand-500 transition-colors">01</span>
                         </div>
-                        <div>
-                            <h3 class="text-base font-bold text-slate-900">Layanan Antar-Jemput Mudah</h3>
-                            <p class="text-xs text-slate-500 leading-relaxed mt-1">
-                                Cukup isi formulir pemesanan online dari rumah atau kantor. Kurir Washora siap menjemput cucian kotor dan mengantarkannya kembali dalam keadaan rapi, wangi, dan siap pakai.
-                            </p>
+                        <h3 class="text-sm font-bold text-slate-900 group-hover:text-brand-700 transition-colors leading-snug">
+                            Pelayanan Praktis Tanpa Timbang
+                        </h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            Tidak perlu repot menimbang sendiri. Penimbangan dilakukan akurat di outlet dengan timbangan digital terkalibrasi.
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center gap-1 text-[11px] font-semibold text-brand-600">
+                        <span>Akurat di Outlet</span>
+                        <i class="fa-solid fa-check text-[10px]"></i>
+                    </div>
+                </div>
+
+                <!-- 2. Pilihan Fleksibel Reguler & Express -->
+                <div class="group bg-white rounded-2xl p-5 border border-slate-200/80 hover:border-brand-400 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 border border-amber-100/70 group-hover:bg-amber-500 group-hover:text-white flex items-center justify-center text-base transition-colors duration-200">
+                                <i class="fa-solid fa-bolt-lightning"></i>
+                            </div>
+                            <span class="text-[11px] font-black text-slate-300 group-hover:text-amber-500 transition-colors">02</span>
                         </div>
+                        <h3 class="text-sm font-bold text-slate-900 group-hover:text-brand-700 transition-colors leading-snug">
+                            Pilihan Fleksibel Reguler & Express
+                        </h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            Durasi pengerjaan fleksibel mulai dari paket hemat reguler hingga express kilat 3 - 6 jam untuk cucian mendesak.
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center gap-1 text-[11px] font-semibold text-amber-600">
+                        <span>Kilat 3-6 Jam</span>
+                        <i class="fa-solid fa-bolt text-[10px]"></i>
+                    </div>
+                </div>
+
+                <!-- 3. Pakaian Terorganisir & Higienis -->
+                <div class="group bg-white rounded-2xl p-5 border border-slate-200/80 hover:border-brand-400 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100/70 group-hover:bg-emerald-600 group-hover:text-white flex items-center justify-center text-base transition-colors duration-200">
+                                <i class="fa-solid fa-hands-bubbles"></i>
+                            </div>
+                            <span class="text-[11px] font-black text-slate-300 group-hover:text-emerald-500 transition-colors">03</span>
+                        </div>
+                        <h3 class="text-sm font-bold text-slate-900 group-hover:text-brand-700 transition-colors leading-snug">
+                            Pakaian Terorganisir & Higienis
+                        </h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            Prinsip 1 mesin 1 pelanggan menjamin pakaian tidak dicampur. Dicuci detergen antibakteri dan air filtrasi bersih.
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center gap-1 text-[11px] font-semibold text-emerald-600">
+                        <span>1 Mesin 1 Pelanggan</span>
+                        <i class="fa-solid fa-shield text-[10px]"></i>
+                    </div>
+                </div>
+
+                <!-- 4. Informasi Status Pesanan Realtime -->
+                <div class="group bg-white rounded-2xl p-5 border border-slate-200/80 hover:border-brand-400 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 border border-cyan-100/70 group-hover:bg-cyan-600 group-hover:text-white flex items-center justify-center text-base transition-colors duration-200">
+                                <i class="fa-solid fa-satellite-dish"></i>
+                            </div>
+                            <span class="text-[11px] font-black text-slate-300 group-hover:text-cyan-500 transition-colors">04</span>
+                        </div>
+                        <h3 class="text-sm font-bold text-slate-900 group-hover:text-brand-700 transition-colors leading-snug">
+                            Informasi Status Pesanan Realtime
+                        </h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            Pantau tahapan pencucian secara langsung melalui kode pelacakan di website dan rincian konfirmasi WhatsApp.
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center gap-1 text-[11px] font-semibold text-cyan-600">
+                        <span>Live Web & WA</span>
+                        <i class="fa-solid fa-signal text-[10px]"></i>
+                    </div>
+                </div>
+
+                <!-- 5. Layanan Antar-Jemput Mudah -->
+                <div class="group bg-white rounded-2xl p-5 border border-slate-200/80 hover:border-brand-400 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4 sm:col-span-2 lg:col-span-1 sm:max-w-md sm:mx-auto lg:max-w-none w-full">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100/70 group-hover:bg-indigo-600 group-hover:text-white flex items-center justify-center text-base transition-colors duration-200">
+                                <i class="fa-solid fa-truck-fast"></i>
+                            </div>
+                            <span class="text-[11px] font-black text-slate-300 group-hover:text-indigo-500 transition-colors">05</span>
+                        </div>
+                        <h3 class="text-sm font-bold text-slate-900 group-hover:text-brand-700 transition-colors leading-snug">
+                            Layanan Antar-Jemput Mudah
+                        </h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            Pemesanan online praktis dari rumah. Kurir sigap menjemput dan mengantar kembali pakaian rapi dan wangi.
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center gap-1 text-[11px] font-semibold text-indigo-600">
+                        <span>Langsung ke Lokasi</span>
+                        <i class="fa-solid fa-location-dot text-[10px]"></i>
                     </div>
                 </div>
             </div>
