@@ -3,30 +3,30 @@
 @section('title', 'Masuk Akun - Washora')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-brand-50 via-white to-slate-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <!-- Logo -->
-        <a href="{{ route('home') }}" class="inline-flex items-center gap-2.5 mb-4 group">
-            <img src="{{ asset('images/washoralogo.png') }}" alt="Washora Logo" class="w-10 h-10 object-contain shink-0">
-        <span class="text-3xl font-extrabold text-slate-900 tracking-tight">Washora</span>
-    </a>
+        <a href="{{ route('home') }}" class="inline-flex items-center gap-2.5 mb-3 group">
+            <img src="{{ asset('images/washoralogo.png') }}" alt="Washora Logo" class="w-10 h-10 object-contain shrink-0">
+            <span class="text-2xl font-bold text-slate-900 tracking-tight">Washora</span>
+        </a>
 
-        <h2 class="text-xl font-bold text-slate-900">Selamat Datang Kembali</h2>
-        <p class="text-xs text-slate-500 mt-1">Masuk untuk mengelola dan memantau layanan laundry Anda.</p>
+        <h2 class="text-lg font-bold text-slate-900">Selamat Datang Kembali</h2>
+        <p class="text-xs text-slate-500 mt-0.5">Masuk untuk mengelola dan memantau layanan laundry Anda.</p>
     </div>
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
-        <div class="bg-white py-8 px-6 sm:px-10 rounded-3xl shadow-xl shadow-slate-200/80 border border-slate-200/80 space-y-6">
+    <div class="mt-6 sm:mx-auto sm:w-full sm:max-w-md px-4">
+        <div class="bg-white py-7 px-6 sm:px-8 rounded-xl shadow-xs border border-slate-200 space-y-5">
             <!-- Login Form -->
             <form action="{{ route('user.login.submit') }}" method="POST" class="space-y-4">
                 @csrf
 
                 <!-- Email -->
                 <div>
-                    <label for="email" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Alamat Email</label>
+                    <label for="email" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Alamat Email</label>
                     <div class="relative">
-                        <i class="fa-solid fa-envelope absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-                        <input id="email" name="email" type="email" autocomplete="email" required value="{{ old('email') }}" placeholder="nama@email.com" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border @error('email') border-rose-400 bg-rose-50/30 @else border-slate-200 @enderror rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                        <i class="fa-solid fa-envelope absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                        <input id="email" name="email" type="email" autocomplete="email" required value="{{ old('email') }}" placeholder="nama@email.com" class="w-full pl-9 pr-3 py-2 bg-slate-50 border @error('email') border-rose-400 bg-rose-50/30 @else border-slate-300 @enderror rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white transition-all">
                     </div>
                     @error('email')
                         <p class="text-rose-600 text-xs mt-1 font-medium">{{ $message }}</p>
@@ -35,11 +35,11 @@
 
                 <!-- Password -->
                 <div>
-                    <label for="password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Kata Sandi</label>
+                    <label for="password" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Kata Sandi</label>
                     <div class="relative">
-                        <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-                        <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" class="w-full pl-10 pr-11 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
-                        <button type="button" onclick="togglePasswordVisibility('password', 'password-eye-icon')" class="absolute right-3.5 top-3 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Tampilkan / Sembunyikan Kata Sandi">
+                        <i class="fa-solid fa-lock absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" class="w-full pl-9 pr-10 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white transition-all">
+                        <button type="button" onclick="togglePasswordVisibility('password', 'password-eye-icon')" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Tampilkan / Sembunyikan Kata Sandi">
                             <i id="password-eye-icon" class="fa-solid fa-eye text-sm"></i>
                         </button>
                     </div>
@@ -54,7 +54,7 @@
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="w-full py-3 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-lg shadow-brand-600/25 hover:shadow-brand-600/35 transition-all flex items-center justify-center gap-2">
+                <button type="submit" class="w-full py-2.5 px-4 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs shadow-xs transition-colors flex items-center justify-center gap-2">
                     <i class="fa-solid fa-right-to-bracket text-xs"></i>
                     <span>Masuk</span>
                 </button>

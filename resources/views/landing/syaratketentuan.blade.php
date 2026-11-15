@@ -25,25 +25,25 @@
             </div>
 
             <!-- Header Halaman -->
-            <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-xs mb-8">
-                <div class="max-w-3xl space-y-3">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-bold border border-brand-100">
+            <div class="bg-white rounded-xl p-6 sm:p-8 border border-slate-200 shadow-xs mb-6">
+                <div class="max-w-3xl space-y-2.5">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-brand-50 text-brand-700 text-xs font-semibold border border-brand-200">
                         <i class="fa-solid fa-file-contract text-brand-600"></i>
                         <span>Ketentuan Layanan Resmi</span>
                     </div>
-                    <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">
                         Syarat & Ketentuan Layanan Washora
                     </h1>
                     <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
-                        Selamat datang di Washora Laundry System. Halaman ini memuat syarat dan ketentuan resmi penggunaan seluruh jasa layanan laundry Washora, baik layanan Kiloan, Satuan, maupun Paket Bundling. Harap membaca ketentuan ini secara seksama demi kenyamanan, transparansi, dan keamanan pakaian Anda.
+                        Halaman ini memuat syarat dan ketentuan resmi penggunaan seluruh jasa layanan laundry Washora, baik layanan Kiloan, Satuan, maupun Paket Bundling. Harap membaca ketentuan ini secara seksama demi kenyamanan, transparansi, dan keamanan pakaian Anda.
                     </p>
-                    <div class="pt-2 flex flex-wrap items-center gap-4 text-xs text-slate-400">
+                    <div class="pt-2 flex flex-wrap items-center gap-4 text-xs text-slate-500">
                         <span class="flex items-center gap-1.5">
-                            <i class="fa-regular fa-calendar-check text-brand-500"></i>
+                            <i class="fa-regular fa-calendar-check text-brand-600"></i>
                             Berlaku Efektif: 15 November 2026
                         </span>
                         <span class="flex items-center gap-1.5">
-                            <i class="fa-solid fa-shield-halved text-emerald-500"></i>
+                            <i class="fa-solid fa-shield-halved text-emerald-600"></i>
                             Standar Operasional Higienis
                         </span>
                     </div>
@@ -51,12 +51,12 @@
             </div>
 
             <!-- Callout PENTING: Pemeriksaan Saku & Barang Berharga -->
-            <div class="bg-amber-50 border-l-4 border-amber-500 rounded-2xl p-5 sm:p-6 mb-8 text-amber-950 shadow-2xs">
-                <div class="flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 text-lg shadow-sm">
+            <div class="bg-amber-50 border-l-4 border-amber-500 rounded-lg p-5 mb-6 text-amber-950 shadow-2xs">
+                <div class="flex items-start gap-3.5">
+                    <div class="w-9 h-9 rounded-md bg-amber-500 text-white flex items-center justify-center shrink-0 text-base">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                     </div>
-                    <div class="space-y-1.5 flex-1">
+                    <div class="space-y-1 flex-1">
                         <h2 class="text-sm sm:text-base font-bold text-amber-950">
                             PENTING: Harap Periksa Seluruh Isi Saku Pakaian Anda
                         </h2>
@@ -68,7 +68,7 @@
             </div>
 
             <!-- Navigasi Ringkas (Daftar Isi) -->
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs mb-8">
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-2xs mb-6">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
                     <i class="fa-solid fa-list-ol text-brand-600"></i>
                     Daftar Ketentuan Layanan
@@ -345,22 +345,22 @@
             </div>
 
             <!-- Bantuan & Layanan Pelanggan Card -->
-            <div class="mt-10 bg-gradient-to-r from-slate-900 to-brand-950 rounded-3xl p-6 sm:p-8 text-white border border-slate-800 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-6">
-                <div class="space-y-2 text-center sm:text-left">
-                    <span class="px-3 py-1 rounded-full bg-brand-500/20 text-cyan-300 text-[11px] font-bold border border-cyan-400/30">
+            <div class="mt-8 bg-slate-900 rounded-xl p-6 sm:p-7 text-white border border-slate-800 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-5">
+                <div class="space-y-1.5 text-center sm:text-left">
+                    <span class="px-2.5 py-0.5 rounded bg-slate-800 text-cyan-300 text-[11px] font-semibold border border-slate-700">
                         Pusat Bantuan Washora
                     </span>
-                    <h3 class="text-lg sm:text-xl font-bold text-white">Ada Pertanyaan Mengenai Ketentuan Layanan?</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 max-w-xl">
-                        Tim Customer Service kami siap membantu Anda setiap hari pukul 07.00 - 21.00 WIB untuk konsultasi jenis bahan, jadwal penjemputan, maupun informasi nota.
+                    <h3 class="text-base sm:text-lg font-bold text-white">Ada Pertanyaan Mengenai Ketentuan Layanan?</h3>
+                    <p class="text-xs text-slate-300 max-w-lg leading-relaxed">
+                        Tim Customer Service kami siap membantu Anda setiap hari pukul 07.00 - 21.00 WIB untuk konsultasi jenis bahan, penjemputan, maupun rincian nota.
                     </p>
                 </div>
-                <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
-                    <a href="https://wa.me/6281234567890?text=Halo%20Washora%2C%20saya%20ingin%20bertanya%20seputar%20syarat%20dan%20ketentuan%20layanan" target="_blank" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-emerald-500/20 transition-all">
+                <div class="flex flex-col sm:flex-row items-center gap-2.5 shrink-0 w-full sm:w-auto">
+                    <a href="https://wa.me/6281234567890?text=Halo%20Washora%2C%20saya%20ingin%20bertanya%20seputar%20syarat%20dan%20ketentuan%20layanan" target="_blank" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-colors">
                         <i class="fa-brands fa-whatsapp text-sm"></i>
                         <span>Hubungi WhatsApp</span>
                     </a>
-                    <a href="{{ route('home') }}" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold flex items-center justify-center gap-2 border border-white/20 transition-all">
+                    <a href="{{ route('home') }}" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center justify-center gap-2 border border-slate-700 transition-colors">
                         <i class="fa-solid fa-house text-xs"></i>
                         <span>Beranda</span>
                     </a>

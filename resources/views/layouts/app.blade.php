@@ -53,25 +53,16 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-        }
-        .gradient-brand {
-            background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
-        }
-        .gradient-dark {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        }
-        /* Custom scrollbar */
+        /* Clean standard scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f5f9;
+            background: #f8fafc;
         }
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;

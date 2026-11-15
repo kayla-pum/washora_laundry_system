@@ -17,38 +17,38 @@
     </div>
 
     <!-- Stepper Navigation Indicator: 01 Pilih Layanan → 02 Isi Data Diri → 03 Konfirmasi -->
-    <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-xs">
-        <div class="grid grid-cols-3 gap-2 sm:gap-4">
+    <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 shadow-xs">
+        <div class="grid grid-cols-3 gap-2 sm:gap-3">
             <!-- Step 1 Tab -->
-            <div id="step-tab-1" class="step-tab flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-2xl bg-brand-50 border-2 border-brand-600 text-brand-700 transition-all shadow-xs">
-                <div class="w-8 h-8 rounded-xl bg-brand-600 text-white flex items-center justify-center text-xs font-black shrink-0 shadow-xs">
+            <div id="step-tab-1" class="step-tab flex items-center gap-2 sm:gap-3 p-2.5 rounded-lg bg-brand-50 border border-brand-600 text-brand-700 transition-colors">
+                <div class="w-7 h-7 rounded-md bg-brand-600 text-white flex items-center justify-center text-xs font-bold shrink-0">
                     01
                 </div>
                 <div class="min-w-0">
-                    <p class="text-[10px] uppercase font-bold text-brand-500 tracking-wider">Tahap 1</p>
-                    <p class="text-xs sm:text-sm font-extrabold truncate text-slate-900">Pilih Layanan</p>
+                    <p class="text-[10px] uppercase font-semibold text-brand-600 tracking-wider">Tahap 1</p>
+                    <p class="text-xs sm:text-sm font-bold truncate text-slate-900">Pilih Layanan</p>
                 </div>
             </div>
 
             <!-- Step 2 Tab -->
-            <div id="step-tab-2" class="step-tab flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-400 transition-all">
-                <div class="w-8 h-8 rounded-xl bg-slate-200 text-slate-600 flex items-center justify-center text-xs font-black shrink-0">
+            <div id="step-tab-2" class="step-tab flex items-center gap-2 sm:gap-3 p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 transition-colors">
+                <div class="w-7 h-7 rounded-md bg-slate-200 text-slate-600 flex items-center justify-center text-xs font-bold shrink-0">
                     02
                 </div>
                 <div class="min-w-0">
-                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Tahap 2</p>
-                    <p class="text-xs sm:text-sm font-extrabold truncate text-slate-500">Isi Data Diri</p>
+                    <p class="text-[10px] uppercase font-semibold text-slate-400 tracking-wider">Tahap 2</p>
+                    <p class="text-xs sm:text-sm font-semibold truncate text-slate-500">Isi Data Diri</p>
                 </div>
             </div>
 
             <!-- Step 3 Tab -->
-            <div id="step-tab-3" class="step-tab flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-400 transition-all">
-                <div class="w-8 h-8 rounded-xl bg-slate-200 text-slate-600 flex items-center justify-center text-xs font-black shrink-0">
+            <div id="step-tab-3" class="step-tab flex items-center gap-2 sm:gap-3 p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 transition-colors">
+                <div class="w-7 h-7 rounded-md bg-slate-200 text-slate-600 flex items-center justify-center text-xs font-bold shrink-0">
                     03
                 </div>
                 <div class="min-w-0">
-                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Tahap 3</p>
-                    <p class="text-xs sm:text-sm font-extrabold truncate text-slate-500">Konfirmasi</p>
+                    <p class="text-[10px] uppercase font-semibold text-slate-400 tracking-wider">Tahap 3</p>
+                    <p class="text-xs sm:text-sm font-semibold truncate text-slate-500">Konfirmasi</p>
                 </div>
             </div>
         </div>
