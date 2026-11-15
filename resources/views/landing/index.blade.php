@@ -15,11 +15,6 @@
                 
                 <!-- Left Column: Copy & CTAs -->
                 <div class="lg:col-span-7 space-y-5 text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-brand-50 border border-brand-200 text-brand-700 text-xs font-semibold">
-                        <i class="fa-solid fa-store text-brand-600"></i>
-                        <span>Layanan Laundry Antar-Jemput Profesional</span>
-                    </div>
-
                     <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
                         Perawatan Pakaian Bersih, Rapi, & Higienis Tanpa Ribet
                     </h1>
