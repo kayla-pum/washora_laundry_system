@@ -7,9 +7,6 @@
     <!-- Welcome Header Banner -->
     <div class="bg-white rounded-xl p-5 sm:p-6 border border-slate-200 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div class="space-y-1">
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-medium">
-                Portal Pelanggan
-            </span>
             <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">Halo, {{ $user->name }}</h1>
             <p class="text-xs sm:text-sm text-slate-500 max-w-lg leading-relaxed">
                 Pantau proses cucian Anda secara real-time atau buat pesanan penjemputan baru ke alamat Anda.

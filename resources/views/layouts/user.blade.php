@@ -101,7 +101,7 @@
     <!-- Minimal Customer Footer -->
     <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400">
         <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <p>&copy; {{ date('Y') }} Washora Smart Laundry - Portal Pelanggan</p>
+            <p>&copy; {{ date('Y') }} Washora Smart Laundry</p>
             <p class="flex items-center gap-1 text-slate-500">
                 <i class="fa-solid fa-shield-heart text-cyan-500"></i> Cucian Bersih, Higienis & Terpercaya
             </p>
