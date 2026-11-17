@@ -45,9 +45,7 @@ class OrderController extends Controller
         return view('user.orders.index', compact('orders', 'status', 'statusCounts'));
     }
 
-    /**
-     * Show form to create a new laundry order
-     */
+    
     public function create(Request $request)
     {
         $categories = ServiceCategory::where('status', 'active')
