@@ -16,6 +16,8 @@ class Order extends Model
         'user_id',
         'pickup_address',
         'customer_note',
+        'has_valuable_items',
+        'has_color_bleeding_risk',
         'total_weight',
         'total_price',
         'estimated_completed_at',
@@ -27,6 +29,8 @@ class Order extends Model
     protected function casts(): array
     {
         return [
+            'has_valuable_items' => 'boolean',
+            'has_color_bleeding_risk' => 'boolean',
             'total_weight' => 'decimal:2',
             'total_price' => 'decimal:2',
             'estimated_completed_at' => 'datetime',

@@ -105,6 +105,8 @@ class OrderController extends Controller
             'recipient_name' => ['required', 'string', 'max:100'],
             'whatsapp_number' => ['required', 'string', 'regex:/^[0-9]{8,20}$/'],
             'pickup_address' => ['required', 'string', 'min:5'],
+            'has_valuable_items' => ['required', 'boolean'],
+            'has_color_bleeding_risk' => ['required', 'boolean'],
             'customer_note' => ['nullable', 'string', 'max:500'],
         ], [
             'item_type.required' => 'Silakan tentukan jenis layanan (Paket Bundling, Layanan Satuan, atau Layanan Kiloan).',
@@ -112,6 +114,8 @@ class OrderController extends Controller
             'package_id.required_if' => 'Silakan pilih paket laundry yang diinginkan.',
             'recipient_name.required' => 'Nama lengkap pemesan wajib diisi.',
             'pickup_address.required' => 'Alamat penjemputan cucian wajib diisi.',
+            'has_valuable_items.required' => 'Silakan jawab apakah terdapat barang berharga.',
+            'has_color_bleeding_risk.required' => 'Silakan jawab apakah terdapat bahan atau warna yang mudah luntur.',
             'whatsapp_number.required' => 'Nomor WhatsApp / telepon aktif wajib diisi.',
             'whatsapp_number.regex' => 'Nomor telepon hanya boleh berisi angka 0–9 (minimal 8 digit, tanpa huruf atau simbol).',
         ]);
@@ -137,6 +141,8 @@ class OrderController extends Controller
                 'order_code' => $orderCode,
                 'user_id' => $user->id,
                 'pickup_address' => $validated['pickup_address'],
+                'has_valuable_items' => $validated['has_valuable_items'],
+                'has_color_bleeding_risk' => $validated['has_color_bleeding_risk'],
                 'customer_note' => $validated['customer_note'] ?? null,
                 'total_weight' => null,
                 'total_price' => null,

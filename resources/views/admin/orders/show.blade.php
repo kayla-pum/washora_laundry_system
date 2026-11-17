@@ -237,12 +237,33 @@
                     <span class="text-slate-400 font-semibold block">Alamat Penjemputan:</span>
                     <p class="font-medium text-slate-800 leading-relaxed">{{ $order->pickup_address }}</p>
                 </div>
-                @if($order->customer_note)
-                    <div class="p-3 bg-amber-50 rounded-xl border border-amber-200">
-                        <span class="text-amber-800 font-bold block mb-0.5">Catatan Pelanggan:</span>
-                        <p class="text-amber-900 italic">"{{ $order->customer_note }}"</p>
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 space-y-2">
+                    <span class="text-amber-800 font-bold block">Informasi Tambahan:</span>
+                    <div>
+                        <span class="text-amber-800 font-semibold block">Barang berharga:</span>
+                        <p class="text-amber-900">
+                            @if(is_null($order->has_valuable_items))
+                                -
+                            @else
+                                {{ $order->has_valuable_items ? 'Ya' : 'Tidak' }}
+                            @endif
+                        </p>
                     </div>
-                @endif
+                    <div>
+                        <span class="text-amber-800 font-semibold block">Bahan atau warna mudah luntur:</span>
+                        <p class="text-amber-900">
+                            @if(is_null($order->has_color_bleeding_risk))
+                                -
+                            @else
+                                {{ $order->has_color_bleeding_risk ? 'Ya' : 'Tidak' }}
+                            @endif
+                        </p>
+                    </div>
+                    <div>
+                        <span class="text-amber-800 font-semibold block">Catatan tambahan:</span>
+                        <p class="text-amber-900 italic">{{ blank($order->customer_note) ? '-' : $order->customer_note }}</p>
+                    </div>
+                </div>
             </div>
         </div>
 

@@ -284,6 +284,55 @@
 
                 <p id="err-selection" class="text-rose-600 text-xs font-semibold hidden"></p>
 
+                <div class="pt-4 border-t border-slate-100 space-y-4">
+                    <div>
+                        <h3 class="text-sm font-extrabold text-slate-900">Informasi Tambahan</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Sampaikan kondisi barang agar tim kami dapat menanganinya dengan tepat.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label for="has_valuable_items" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                Apakah terdapat barang berharga? <span class="text-rose-500">*</span>
+                            </label>
+                            <select id="has_valuable_items" name="has_valuable_items" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                                <option value="">Pilih jawaban</option>
+                                <option value="1" {{ old('has_valuable_items') === '1' ? 'selected' : '' }}>Ya</option>
+                                <option value="0" {{ old('has_valuable_items') === '0' ? 'selected' : '' }}>Tidak</option>
+                            </select>
+                            <p id="err-has_valuable_items" class="text-rose-600 text-xs mt-1 hidden"></p>
+                            @error('has_valuable_items')
+                                <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="has_color_bleeding_risk" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                Apakah terdapat bahan atau warna yang mudah luntur? <span class="text-rose-500">*</span>
+                            </label>
+                            <select id="has_color_bleeding_risk" name="has_color_bleeding_risk" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                                <option value="">Pilih jawaban</option>
+                                <option value="1" {{ old('has_color_bleeding_risk') === '1' ? 'selected' : '' }}>Ya</option>
+                                <option value="0" {{ old('has_color_bleeding_risk') === '0' ? 'selected' : '' }}>Tidak</option>
+                            </select>
+                            <p id="err-has_color_bleeding_risk" class="text-rose-600 text-xs mt-1 hidden"></p>
+                            @error('has_color_bleeding_risk')
+                                <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="customer_note" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                            Catatan Tambahan (Opsional)
+                        </label>
+                        <textarea id="customer_note" name="customer_note" rows="3" maxlength="500" placeholder="Tuliskan catatan atau instruksi khusus untuk pesanan Anda..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">{{ old('customer_note') }}</textarea>
+                        @error('customer_note')
+                            <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
                 <!-- Action Button Tahap 1 -->
                 <div class="pt-4 border-t border-slate-100 flex justify-end">
                     <button type="button" onclick="validateStep1AndProceed()" class="w-full sm:w-auto px-8 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm rounded-2xl shadow-lg shadow-brand-600/25 transition-all flex items-center justify-center gap-2">
@@ -296,7 +345,7 @@
 
         <!-- ==========================================
              TAHAP 2: ISI DATA DIRI
-             (Nama, No. Telepon Aktif, Alamat Penjemputan, Catatan)
+             (Nama, No. Telepon Aktif, Alamat Penjemputan)
              ========================================== -->
         <div id="step-content-2" class="space-y-6 hidden">
             <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-6">
@@ -348,17 +397,6 @@
                     <textarea id="pickup_address" name="pickup_address" rows="3" required placeholder="Tuliskan nama jalan, nomor rumah, RT/RW, kelurahan, dan patokan (misal: Rumah pagar hitam samping toko)" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">{{ old('pickup_address') }}</textarea>
                     <p id="err-pickup_address" class="text-rose-600 text-xs mt-1 hidden"></p>
                     @error('pickup_address')
-                        <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Catatan Tambahan (Opsional) -->
-                <div>
-                    <label for="customer_note" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                        Catatan Tambahan untuk Laundry (Opsional)
-                    </label>
-                    <input type="text" id="customer_note" name="customer_note" value="{{ old('customer_note') }}" placeholder="Contoh: Pisahkan pakaian putih, penjemputan jam 2 siang" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
-                    @error('customer_note')
                         <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
@@ -418,6 +456,21 @@
                                 <span id="summary-item-price" class="font-black text-slate-900 text-base">-</span>
                             </div>
                         </div>
+                        <div class="pt-3 border-t border-slate-200/60 space-y-2 text-xs">
+                            <span class="text-slate-400 block text-[10px] uppercase font-bold">Informasi Tambahan:</span>
+                            <div>
+                                <span class="text-slate-400 block text-[10px] uppercase font-bold">Barang berharga:</span>
+                                <span id="summary-has-valuable-items" class="font-semibold text-slate-700">-</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block text-[10px] uppercase font-bold">Bahan atau warna mudah luntur:</span>
+                                <span id="summary-has-color-bleeding-risk" class="font-semibold text-slate-700">-</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block text-[10px] uppercase font-bold">Catatan tambahan:</span>
+                                <span id="summary-customer-note" class="italic text-slate-600 block break-words">-</span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- 2. Data Diri & Penjemputan -->
@@ -438,10 +491,6 @@
                             <div>
                                 <span class="text-slate-400 block text-[10px] uppercase font-bold">Alamat Lengkap Penjemputan:</span>
                                 <span id="summary-customer-address" class="font-medium text-slate-700 leading-relaxed block">-</span>
-                            </div>
-                            <div id="summary-customer-note-wrapper" class="hidden">
-                                <span class="text-slate-400 block text-[10px] uppercase font-bold">Catatan Tambahan:</span>
-                                <span id="summary-customer-note" class="italic text-slate-600 block">-</span>
                             </div>
                         </div>
                     </div>
@@ -579,14 +628,36 @@
     function validateStep1AndProceed() {
         const { itemType, selected } = getSelectedItem();
         const errSelection = document.getElementById('err-selection');
+        const valuableItemsInput = document.getElementById('has_valuable_items');
+        const colorBleedingRiskInput = document.getElementById('has_color_bleeding_risk');
+        let isValid = true;
 
         if (!selected) {
             errSelection.textContent = 'Silakan pilih salah satu paket atau layanan laundry terlebih dahulu.';
             errSelection.classList.remove('hidden');
+            isValid = false;
+        } else {
+            errSelection.classList.add('hidden');
+        }
+
+        const valuableItemsError = document.getElementById('err-has_valuable_items');
+        valuableItemsError.classList.toggle('hidden', valuableItemsInput.value !== '');
+        if (valuableItemsInput.value === '') {
+            valuableItemsError.textContent = 'Silakan pilih jawaban untuk barang berharga.';
+            isValid = false;
+        }
+
+        const colorBleedingRiskError = document.getElementById('err-has_color_bleeding_risk');
+        colorBleedingRiskError.classList.toggle('hidden', colorBleedingRiskInput.value !== '');
+        if (colorBleedingRiskInput.value === '') {
+            colorBleedingRiskError.textContent = 'Silakan pilih jawaban untuk bahan atau warna yang mudah luntur.';
+            isValid = false;
+        }
+
+        if (!isValid) {
             return;
         }
 
-        errSelection.classList.add('hidden');
         goToStep(2);
     }
 
@@ -657,18 +728,16 @@
             }
         }
 
+        document.getElementById('summary-has-valuable-items').textContent =
+            document.getElementById('has_valuable_items').value === '1' ? 'Ya' : 'Tidak';
+        document.getElementById('summary-has-color-bleeding-risk').textContent =
+            document.getElementById('has_color_bleeding_risk').value === '1' ? 'Ya' : 'Tidak';
         document.getElementById('summary-customer-name').textContent = document.getElementById('recipient_name').value.trim();
         document.getElementById('summary-customer-phone').textContent = document.getElementById('whatsapp_number').value.trim();
         document.getElementById('summary-customer-address').textContent = document.getElementById('pickup_address').value.trim();
 
         const note = document.getElementById('customer_note').value.trim();
-        const noteWrapper = document.getElementById('summary-customer-note-wrapper');
-        if (note) {
-            document.getElementById('summary-customer-note').textContent = `"${note}"`;
-            noteWrapper.classList.remove('hidden');
-        } else {
-            noteWrapper.classList.add('hidden');
-        }
+        document.getElementById('summary-customer-note').textContent = note || '-';
     }
 
     document.getElementById('order-form').addEventListener('submit', function (e) {
@@ -685,9 +754,6 @@
 
     // Make completed tabs clickable
     document.getElementById('step-tab-1').addEventListener('click', () => goToStep(1));
-    document.getElementById('step-tab-2').addEventListener('click', () => {
-        const { selected } = getSelectedItem();
-        if (selected) goToStep(2);
-    });
+    document.getElementById('step-tab-2').addEventListener('click', () => validateStep1AndProceed());
 </script>
 @endsection

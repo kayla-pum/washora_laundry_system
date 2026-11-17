@@ -63,6 +63,8 @@ class CustomerFlowTest extends TestCase
             'recipient_name' => $user->name,
             'whatsapp_number' => '081234567890',
             'pickup_address' => 'Jl. Kebon Jeruk No. 15, RT 01/RW 03',
+            'has_valuable_items' => '1',
+            'has_color_bleeding_risk' => '0',
             'customer_note' => 'Pisahkan baju berwarna putih',
         ]);
 
@@ -71,6 +73,12 @@ class CustomerFlowTest extends TestCase
         $this->assertEquals('pending', $order->status);
         $this->assertNull($order->total_weight); // User does NOT input weight
         $this->assertNull($order->total_price); // Admin verifies weight & confirms total price
+        $this->assertDatabaseHas('orders', [
+            'id' => $order->id,
+            'has_valuable_items' => 1,
+            'has_color_bleeding_risk' => 0,
+            'customer_note' => 'Pisahkan baju berwarna putih',
+        ]);
 
         $response->assertRedirect(route('user.orders.success', $order));
 
@@ -78,6 +86,62 @@ class CustomerFlowTest extends TestCase
         $successResponse->assertStatus(200);
         $successResponse->assertSee('Pesanan Berhasil Dikirim');
         $successResponse->assertSee($order->order_code);
+
+        $admin = User::where('role', 'admin')->first();
+        $adminResponse = $this->actingAs($admin)->get(route('admin.orders.show', $order));
+        $adminResponse->assertStatus(200);
+        $adminResponse->assertSeeInOrder([
+            'Barang berharga:',
+            'Ya',
+            'Bahan atau warna mudah luntur:',
+            'Tidak',
+            'Catatan tambahan:',
+            'Pisahkan baju berwarna putih',
+        ]);
+    }
+
+    public function test_customer_must_answer_additional_care_questions_and_note_is_optional(): void
+    {
+        $user = User::where('role', 'user')->first();
+        $service = Service::first();
+        $orderCount = Order::count();
+
+        $missingAnswersResponse = $this->actingAs($user)->post('/user/orders', [
+            'item_type' => 'service',
+            'service_id' => $service->id,
+            'recipient_name' => $user->name,
+            'whatsapp_number' => '081234567890',
+            'pickup_address' => 'Jl. Kebon Jeruk No. 15, RT 01/RW 03',
+        ]);
+
+        $missingAnswersResponse->assertSessionHasErrors([
+            'has_valuable_items',
+            'has_color_bleeding_risk',
+        ]);
+        $this->assertSame($orderCount, Order::count());
+
+        $validResponse = $this->actingAs($user)->post('/user/orders', [
+            'item_type' => 'service',
+            'service_id' => $service->id,
+            'recipient_name' => $user->name,
+            'whatsapp_number' => '081234567890',
+            'pickup_address' => 'Jl. Kebon Jeruk No. 15, RT 01/RW 03',
+            'has_valuable_items' => '0',
+            'has_color_bleeding_risk' => '1',
+        ]);
+
+        $order = Order::where('user_id', $user->id)->latest()->first();
+        $validResponse->assertRedirect(route('user.orders.success', $order));
+        $this->assertDatabaseHas('orders', [
+            'id' => $order->id,
+            'has_valuable_items' => 0,
+            'has_color_bleeding_risk' => 1,
+            'customer_note' => null,
+        ]);
+
+        $admin = User::where('role', 'admin')->first();
+        $adminResponse = $this->actingAs($admin)->get(route('admin.orders.show', $order));
+        $adminResponse->assertSee('<p class="text-amber-900 italic">-</p>', false);
     }
 
     public function test_order_create_page_displays_three_steps_indicator(): void
@@ -92,6 +156,10 @@ class CustomerFlowTest extends TestCase
         $response->assertSee('Paket Bundling');
         $response->assertSee('Layanan Satuan');
         $response->assertSee('Layanan Kiloan');
+        $response->assertSee('Apakah terdapat barang berharga?');
+        $response->assertSee('Apakah terdapat bahan atau warna yang mudah luntur?');
+        $response->assertSee('Pilih jawaban');
+        $response->assertSee('Tuliskan catatan atau instruksi khusus untuk pesanan Anda...');
     }
 
     public function test_customer_can_submit_review_for_completed_order(): void
