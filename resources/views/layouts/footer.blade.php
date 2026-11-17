@@ -107,9 +107,6 @@
             <div class="flex flex-wrap items-center gap-4 sm:gap-6">
                 <span>Clean &bull; Fresh &bull; Fast</span>
                 <a href="{{ route('terms') }}" class="hover:text-cyan-400 transition-colors">Syarat & Ketentuan</a>
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Sistem Online
-                </span>
             </div>
         </div>
     </div>
