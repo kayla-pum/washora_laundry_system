@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    /**
-     * Display a listing of customer testimonials.
-     */
+  
     public function index(Request $request)
     {
         $status = $request->input('status', 'all');
@@ -45,9 +43,7 @@ class ReviewController extends Controller
         return view('admin.reviews.index', compact('reviews', 'status', 'search', 'stats'));
     }
 
-    /**
-     * Toggle the publish approval status of a review.
-     */
+   
     public function toggle(Review $review)
     {
         $review->update([
@@ -61,9 +57,7 @@ class ReviewController extends Controller
         return back()->with('success', $message);
     }
 
-    /**
-     * Remove the specified review from storage.
-     */
+    
     public function destroy(Review $review)
     {
         $review->delete();
