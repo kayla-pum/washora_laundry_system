@@ -91,9 +91,7 @@ class OrderController extends Controller
         ));
     }
 
-    /**
-     * Store new customer order
-     */
+    
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -198,9 +196,7 @@ class OrderController extends Controller
         });
     }
 
-    /**
-     * Show success page after order is created
-     */
+   
     public function success(Order $order)
     {
         // Authorize customer
@@ -213,9 +209,7 @@ class OrderController extends Controller
         return view('user.orders.success', compact('order'));
     }
 
-    /**
-     * Show detail order page for customer
-     */
+    
     public function show(Order $order)
     {
         // Authorize customer
@@ -268,9 +262,7 @@ class OrderController extends Controller
         return back()->with('success', 'Terima kasih atas ulasan Anda! Testimoni Anda telah berhasil dikirim dan kini tampil di halaman beranda.');
     }
 
-    /**
-     * Submit review / testimonial from customer dashboard
-     */
+    
     public function storeDashboardReview(Request $request)
     {
         $validated = $request->validate([
@@ -311,9 +303,7 @@ class OrderController extends Controller
         return back()->with('success', 'Terima kasih atas ulasan Anda! Testimoni Anda telah berhasil dikirim dan kini tampil di halaman beranda.');
     }
 
-    /**
-     * Cancel pending order
-     */
+    
     public function cancel(Order $order, Request $request)
     {
         if ($order->user_id !== Auth::id()) {

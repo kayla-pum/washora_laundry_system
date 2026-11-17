@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    /**
-     * Show the unified login page.
-     */
+   
     public function showLogin()
     {
         if (Auth::check()) {
@@ -24,9 +22,7 @@ class AuthController extends Controller
         return view('auth.user-login');
     }
 
-    /**
-     * Show Customer Register page
-     */
+    
     public function showUserRegister()
     {
         if (Auth::check()) {
@@ -36,9 +32,7 @@ class AuthController extends Controller
         return view('auth.user-register');
     }
 
-    /**
-     * Authenticate a user and redirect according to their role.
-     */
+    
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -74,9 +68,7 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    /**
-     * Handle Customer Registration
-     */
+    
     public function userRegister(Request $request)
     {
         $validated = $request->validate([
@@ -107,9 +99,7 @@ class AuthController extends Controller
         return redirect()->route('user.dashboard')->with('success', 'Akun berhasil didaftarkan! Selamat datang di Washora.');
     }
 
-    /**
-     * Handle Logout
-     */
+    
     public function logout(Request $request)
     {
         $isAdmin = Auth::check() && Auth::user()->isAdmin();
