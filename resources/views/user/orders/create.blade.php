@@ -291,34 +291,38 @@
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div>
-                            <label for="has_valuable_items" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                                Apakah terdapat barang berharga? <span class="text-rose-500">*</span>
+                        <div class="flex flex-col justify-between">
+                            <label for="has_valuable_items" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 sm:h-9 flex items-start">
+                                <span>Apakah terdapat barang berharga? <span class="text-rose-500">*</span></span>
                             </label>
-                            <select id="has_valuable_items" name="has_valuable_items" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
-                                <option value="">Pilih jawaban</option>
-                                <option value="1" {{ old('has_valuable_items') === '1' ? 'selected' : '' }}>Ya</option>
-                                <option value="0" {{ old('has_valuable_items') === '0' ? 'selected' : '' }}>Tidak</option>
-                            </select>
-                            <p id="err-has_valuable_items" class="text-rose-600 text-xs mt-1 hidden"></p>
-                            @error('has_valuable_items')
-                                <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
-                            @enderror
+                            <div>
+                                <select id="has_valuable_items" name="has_valuable_items" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                                    <option value="">Pilih jawaban</option>
+                                    <option value="1" {{ old('has_valuable_items') === '1' ? 'selected' : '' }}>Ya</option>
+                                    <option value="0" {{ old('has_valuable_items') === '0' ? 'selected' : '' }}>Tidak</option>
+                                </select>
+                                <p id="err-has_valuable_items" class="text-rose-600 text-xs mt-1 hidden"></p>
+                                @error('has_valuable_items')
+                                    <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
                         </div>
 
-                        <div>
-                            <label for="has_color_bleeding_risk" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                                Apakah terdapat bahan atau warna yang mudah luntur? <span class="text-rose-500">*</span>
+                        <div class="flex flex-col justify-between">
+                            <label for="has_color_bleeding_risk" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 sm:h-9 flex items-start">
+                                <span>Apakah terdapat bahan atau warna yang mudah luntur? <span class="text-rose-500">*</span></span>
                             </label>
-                            <select id="has_color_bleeding_risk" name="has_color_bleeding_risk" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
-                                <option value="">Pilih jawaban</option>
-                                <option value="1" {{ old('has_color_bleeding_risk') === '1' ? 'selected' : '' }}>Ya</option>
-                                <option value="0" {{ old('has_color_bleeding_risk') === '0' ? 'selected' : '' }}>Tidak</option>
-                            </select>
-                            <p id="err-has_color_bleeding_risk" class="text-rose-600 text-xs mt-1 hidden"></p>
-                            @error('has_color_bleeding_risk')
-                                <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
-                            @enderror
+                            <div>
+                                <select id="has_color_bleeding_risk" name="has_color_bleeding_risk" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                                    <option value="">Pilih jawaban</option>
+                                    <option value="1" {{ old('has_color_bleeding_risk') === '1' ? 'selected' : '' }}>Ya</option>
+                                    <option value="0" {{ old('has_color_bleeding_risk') === '0' ? 'selected' : '' }}>Tidak</option>
+                                </select>
+                                <p id="err-has_color_bleeding_risk" class="text-rose-600 text-xs mt-1 hidden"></p>
+                                @error('has_color_bleeding_risk')
+                                    <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
                         </div>
                     </div>
 

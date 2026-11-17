@@ -72,10 +72,10 @@
 
             <div>
                 <label for="current_password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Kata Sandi Saat Ini</label>
-                <div class="relative">
+                <div class="relative flex items-center">
                     <input type="password" id="current_password" name="current_password" required placeholder="••••••••" class="w-full pl-4 pr-11 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
-                    <button type="button" onclick="togglePasswordVisibility('current_password', 'current-password-eye')" class="absolute right-3.5 top-2.5 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Tampilkan / Sembunyikan Kata Sandi">
-                        <i id="current-password-eye" class="fa-solid fa-eye text-sm"></i>
+                    <button type="button" onclick="togglePasswordVisibility('current_password', 'current-password-eye')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors focus:outline-none cursor-pointer" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Tampilkan / Sembunyikan Kata Sandi">
+                        <i id="current-password-eye" class="fa-solid fa-eye text-sm leading-none"></i>
                     </button>
                 </div>
                 @error('current_password')
@@ -85,10 +85,10 @@
 
             <div>
                 <label for="password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Kata Sandi Baru</label>
-                <div class="relative">
+                <div class="relative flex items-center">
                     <input type="password" id="password" name="password" required placeholder="Minimal 6 karakter" class="w-full pl-4 pr-11 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
-                    <button type="button" onclick="togglePasswordVisibility('password', 'new-password-eye')" class="absolute right-3.5 top-2.5 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Tampilkan / Sembunyikan Kata Sandi">
-                        <i id="new-password-eye" class="fa-solid fa-eye text-sm"></i>
+                    <button type="button" onclick="togglePasswordVisibility('password', 'new-password-eye')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors focus:outline-none cursor-pointer" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Tampilkan / Sembunyikan Kata Sandi">
+                        <i id="new-password-eye" class="fa-solid fa-eye text-sm leading-none"></i>
                     </button>
                 </div>
                 @error('password')
@@ -98,10 +98,10 @@
 
             <div>
                 <label for="password_confirmation" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Ulangi Kata Sandi Baru</label>
-                <div class="relative">
+                <div class="relative flex items-center">
                     <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Ketik ulang kata sandi baru" class="w-full pl-4 pr-11 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
-                    <button type="button" onclick="togglePasswordVisibility('password_confirmation', 'confirm-password-eye')" class="absolute right-3.5 top-2.5 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Tampilkan / Sembunyikan Kata Sandi">
-                        <i id="confirm-password-eye" class="fa-solid fa-eye text-sm"></i>
+                    <button type="button" onclick="togglePasswordVisibility('password_confirmation', 'confirm-password-eye')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors focus:outline-none cursor-pointer" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Tampilkan / Sembunyikan Kata Sandi">
+                        <i id="confirm-password-eye" class="fa-solid fa-eye text-sm leading-none"></i>
                     </button>
                 </div>
             </div>
