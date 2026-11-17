@@ -36,6 +36,22 @@ class CustomerFlowTest extends TestCase
         $dashboardResponse->assertSee($user->name);
     }
 
+    public function test_customer_can_login_with_remember_me(): void
+    {
+        $user = User::where('role', 'user')->first();
+
+        $response = $this->post('/user/login', [
+            'email' => $user->email,
+            'password' => 'password',
+            'remember' => '1',
+        ]);
+
+        $response->assertRedirect(route('user.dashboard'));
+        $this->assertAuthenticatedAs($user);
+        $user->refresh();
+        $this->assertNotNull($user->getRememberToken());
+    }
+
     public function test_customer_can_create_pending_order_without_weight(): void
     {
         $user = User::where('role', 'user')->first();

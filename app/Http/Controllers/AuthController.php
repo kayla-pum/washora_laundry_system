@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -45,7 +46,20 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        $remember = $request->boolean('remember');
+
+        try {
+            $authenticated = Auth::attempt($credentials, $remember);
+        } catch (QueryException $e) {
+            // Fallback in case remember_token column is missing in an unmigrated database
+            if (str_contains($e->getMessage(), 'remember_token')) {
+                $authenticated = Auth::attempt($credentials, false);
+            } else {
+                throw $e;
+            }
+        }
+
+        if ($authenticated) {
             $request->session()->regenerate();
 
             if (Auth::user()->isAdmin()) {
