@@ -63,9 +63,7 @@ class TransactionController extends Controller
         return view('admin.transactions.invoice', compact('order'));
     }
 
-    /**
-     * Export transaction recap report as PDF.
-     */
+    
     public function exportPdf(Request $request)
     {
         $period = $request->input('period', '1month');
