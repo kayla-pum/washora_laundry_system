@@ -16,9 +16,9 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Recent orders
+        // Recent orders with items and review loaded
         $recentOrders = Order::where('user_id', $user->id)
-            ->with(['items'])
+            ->with(['items', 'review'])
             ->latest()
             ->take(5)
             ->get();
@@ -37,10 +37,20 @@ class DashboardController extends Controller
             'total_spent' => Order::where('user_id', $user->id)->where('status', 'completed')->sum('total_price'),
         ];
 
+        $completedOrdersCount = $stats['completed_orders'];
+
+        // Completed orders eligible to be reviewed
+        $unreviewedOrders = Order::where('user_id', $user->id)
+            ->where('status', 'completed')
+            ->doesntHave('review')
+            ->with(['items'])
+            ->latest()
+            ->get();
+
         $popularServices = Service::where('status', 'active')->take(4)->get();
         $packages = Package::where('status', 'active')->take(2)->get();
 
-        return view('user.dashboard', compact('user', 'recentOrders', 'activeOrder', 'stats', 'popularServices', 'packages'));
+        return view('user.dashboard', compact('user', 'recentOrders', 'activeOrder', 'stats', 'popularServices', 'packages', 'unreviewedOrders', 'completedOrdersCount'));
     }
 
     public function profile()

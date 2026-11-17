@@ -94,7 +94,7 @@ class CustomerFlowTest extends TestCase
             'order_id' => $order->id,
             'user_id' => $user->id,
             'rating' => 5,
-            'is_published' => false, // Requires admin approval
+            'is_published' => true, // Directly published to homepage without admin approval
         ]);
     }
 
@@ -147,5 +147,81 @@ class CustomerFlowTest extends TestCase
 
         $response = $this->actingAs($user2)->get(route('user.orders.success', $order));
         $response->assertStatus(403);
+    }
+
+    public function test_order_creation_rejects_alphabetic_and_invalid_phone_number(): void
+    {
+        $user = User::where('role', 'user')->first();
+        $service = Service::first();
+
+        // Attempt order creation with alphabetic phone number
+        $response = $this->actingAs($user)->post('/user/orders', [
+            'item_type' => 'service',
+            'service_id' => $service->id,
+            'recipient_name' => $user->name,
+            'whatsapp_number' => '0812abcdEFGH',
+            'pickup_address' => 'Jl. Mawar No. 12',
+        ]);
+
+        $response->assertSessionHasErrors(['whatsapp_number']);
+
+        // Attempt order creation with phone number containing symbols
+        $responseSymbols = $this->actingAs($user)->post('/user/orders', [
+            'item_type' => 'service',
+            'service_id' => $service->id,
+            'recipient_name' => $user->name,
+            'whatsapp_number' => '+62-812-3456-7890',
+            'pickup_address' => 'Jl. Mawar No. 12',
+        ]);
+
+        $responseSymbols->assertSessionHasErrors(['whatsapp_number']);
+    }
+
+    public function test_order_success_page_displays_direct_payment_information(): void
+    {
+        $user = User::where('role', 'user')->first();
+        $order = Order::where('user_id', $user->id)->first();
+
+        $response = $this->actingAs($user)->get(route('user.orders.success', $order));
+        $response->assertStatus(200);
+        $response->assertSee('Pembayaran dilakukan secara langsung melalui admin setelah pesanan diperiksa dan harga akhir ditentukan.');
+        $response->assertSee('Admin akan menghubungi Anda melalui WhatsApp untuk memberikan informasi lebih lanjut mengenai total biaya dan metode pembayaran.');
+    }
+
+    public function test_customer_can_submit_review_from_dashboard_and_appears_immediately_on_homepage(): void
+    {
+        $user = User::where('role', 'user')->first();
+        $uniqueComment = 'Pelayanan super cepat dan wangi tahan lama '.uniqid();
+
+        $response = $this->actingAs($user)->post(route('user.reviews.store'), [
+            'rating' => 5,
+            'comment' => $uniqueComment,
+        ]);
+
+        $response->assertRedirect();
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('reviews', [
+            'user_id' => $user->id,
+            'customer_name' => $user->name,
+            'rating' => 5,
+            'comment' => $uniqueComment,
+            'is_published' => true,
+        ]);
+
+        // Review must appear on the homepage immediately without admin approval
+        $homeResponse = $this->get(route('home'));
+        $homeResponse->assertStatus(200);
+        $homeResponse->assertSee($uniqueComment);
+        $homeResponse->assertSee($user->name);
+    }
+
+    public function test_footer_displays_official_whatsapp_number_and_instagram_link(): void
+    {
+        $response = $this->get(route('home'));
+        $response->assertStatus(200);
+        $response->assertSee('https://wa.me/6288906296474', false);
+        $response->assertSee('https://www.instagram.com/space.kays/', false);
+        $response->assertSee('0889-0629-6474');
     }
 }

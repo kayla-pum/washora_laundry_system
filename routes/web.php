@@ -52,6 +52,7 @@ Route::middleware(['auth', 'customer'])->prefix('user')->name('user.')->group(fu
     Route::get('/orders/{order}', [UserOrderController::class, 'show'])->name('orders.show');
     Route::post('/orders/{order}/cancel', [UserOrderController::class, 'cancel'])->name('orders.cancel');
     Route::post('/orders/{order}/review', [UserOrderController::class, 'storeReview'])->name('orders.review');
+    Route::post('/reviews', [UserOrderController::class, 'storeDashboardReview'])->name('reviews.store');
 });
 
 /*

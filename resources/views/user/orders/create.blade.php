@@ -330,9 +330,9 @@
                             <span class="absolute left-4 top-3.5 text-xs font-bold text-slate-400">
                                 <i class="fa-brands fa-whatsapp text-emerald-500 text-sm"></i>
                             </span>
-                            <input type="tel" id="whatsapp_number" name="whatsapp_number" required value="{{ old('whatsapp_number', auth()->user()->phone ?? '') }}" placeholder="08xxxxxxxxxx" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                            <input type="tel" id="whatsapp_number" name="whatsapp_number" required inputmode="numeric" pattern="[0-9]*" maxlength="20" oninput="this.value = this.value.replace(/[^0-9]/g, '')" value="{{ old('whatsapp_number', auth()->user()->phone ?? '') }}" placeholder="08xxxxxxxxxx" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
                         </div>
-                        <p class="text-[11px] text-slate-400 mt-1">Konfirmasi timbangan dan rincian biaya akan dikirimkan ke nomor ini.</p>
+                        <p class="text-[11px] text-slate-400 mt-1">Hanya angka 0–9. Konfirmasi timbangan dan rincian biaya akan dikirimkan ke nomor ini.</p>
                         <p id="err-whatsapp_number" class="text-rose-600 text-xs mt-1 hidden"></p>
                         @error('whatsapp_number')
                             <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
@@ -447,15 +447,19 @@
                     </div>
                 </div>
 
-                <!-- Explanation Note on Weighing -->
+                <!-- Explanation Note on Weighing & Payment -->
                 <div class="p-5 bg-brand-50/70 border border-brand-200/80 rounded-3xl space-y-2">
                     <h4 class="text-xs font-extrabold uppercase tracking-wider text-brand-700 flex items-center gap-2">
                         <i class="fa-solid fa-circle-check"></i>
-                        Informasi Penimbangan & Konfirmasi Biaya Akhir
+                        Informasi Penimbangan & Pembayaran
                     </h4>
-                    <p class="text-xs text-brand-900 leading-relaxed">
-                        1. <strong>Tanpa Input Berat:</strong> Untuk layanan kiloan, Anda tidak perlu menginputkan berat cucian. Pakaian akan ditimbang secara akurat dan transparan oleh tim admin Washora di outlet.<br>
-                        2. <strong>Konfirmasi WhatsApp:</strong> Total harga resmi dan rincian berat aktual akan dikonfirmasikan langsung melalui pesan WhatsApp sebelum proses pencucian dimulai.
+                    <p class="text-xs text-brand-900 leading-relaxed space-y-1">
+                        <span class="block">1. <strong>Tanpa Input Berat:</strong> Untuk layanan kiloan, Anda tidak perlu menginputkan berat cucian. Pakaian akan ditimbang secara akurat dan transparan oleh tim admin Washora di outlet.</span>
+                        <span class="block">2. <strong>Konfirmasi WhatsApp:</strong> Total harga resmi dan rincian berat aktual akan dikonfirmasikan langsung melalui pesan WhatsApp sebelum proses pencucian dimulai.</span>
+                        <span class="block text-amber-900 bg-amber-100/70 p-2 rounded-xl border border-amber-200 mt-2">
+                            <i class="fa-solid fa-info-circle mr-1 text-amber-700"></i>
+                            <strong>Pembayaran:</strong> Pembayaran dilakukan secara langsung melalui admin setelah pesanan diperiksa dan harga akhir ditentukan. Admin akan menghubungi Anda melalui WhatsApp untuk memberikan informasi lebih lanjut mengenai total biaya dan metode pembayaran.
+                        </span>
                     </p>
                 </div>
 
@@ -610,9 +614,14 @@
             err.textContent = 'Nomor telepon / WhatsApp aktif wajib diisi.';
             err.classList.remove('hidden');
             isValid = false;
-        } else if (phoneVal.length < 8) {
+        } else if (!/^[0-9]+$/.test(phoneVal)) {
             const err = document.getElementById('err-whatsapp_number');
-            err.textContent = 'Nomor telepon tidak valid (minimal 8 digit).';
+            err.textContent = 'Nomor telepon hanya boleh berisi angka (0–9) tanpa huruf atau simbol.';
+            err.classList.remove('hidden');
+            isValid = false;
+        } else if (phoneVal.length < 8 || phoneVal.length > 20) {
+            const err = document.getElementById('err-whatsapp_number');
+            err.textContent = 'Nomor telepon tidak valid (minimal 8 digit dan maksimal 20 digit angka).';
             err.classList.remove('hidden');
             isValid = false;
         }

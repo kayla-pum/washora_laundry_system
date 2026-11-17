@@ -192,7 +192,7 @@
                 <p class="text-xs text-emerald-100 leading-relaxed">
                     Hubungi Customer Care Washora melalui WhatsApp jika memiliki instruksi tambahan untuk pesanan ini.
                 </p>
-                <a href="https://api.whatsapp.com/send?phone=6281234567890&text={{ urlencode('Halo Admin Washora, saya ingin bertanya mengenai pesanan #' . $order->order_code) }}" target="_blank" class="w-full py-2.5 bg-white text-emerald-800 hover:bg-slate-50 font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-xs transition-all">
+                <a href="https://wa.me/6288906296474?text={{ urlencode('Halo Admin Washora, saya ingin bertanya mengenai pesanan #' . $order->order_code) }}" target="_blank" class="w-full py-2.5 bg-white text-emerald-800 hover:bg-slate-50 font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-xs transition-all">
                     <i class="fa-brands fa-whatsapp text-sm"></i>
                     <span>Chat CS Washora</span>
                 </a>
@@ -234,8 +234,8 @@
                     <span>Ulasan & Testimoni Pelanggan</span>
                 </h2>
                 @if($order->review)
-                    <span class="px-3 py-1 rounded-full text-[11px] font-bold {{ $order->review->is_published ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800' }}">
-                        {{ $order->review->is_published ? 'Disetujui Admin (Tampil di Beranda)' : 'Menunggu Persetujuan Admin' }}
+                    <span class="px-3 py-1 rounded-full text-[11px] font-bold {{ $order->review->is_published ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-700' }}">
+                        {{ $order->review->is_published ? 'Tampil di Halaman Beranda' : 'Disembunyikan dari Publik' }}
                     </span>
                 @endif
             </div>
@@ -268,7 +268,7 @@
                 <form action="{{ route('user.orders.review', $order) }}" method="POST" class="space-y-4">
                     @csrf
                     <p class="text-xs text-slate-500 leading-relaxed">
-                        Bagikan pengalaman Anda menggunakan layanan Washora pada pesanan ini. Testimoni Anda akan dipublikasikan setelah ditinjau oleh tim admin.
+                        Bagikan pengalaman Anda menggunakan layanan Washora pada pesanan ini. Ulasan Anda akan langsung dipublikasikan dan ditampilkan di halaman beranda.
                     </p>
 
                     <div>

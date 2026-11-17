@@ -39,7 +39,7 @@
         <div class="text-center space-y-1 pb-4 border-b-2 border-dashed border-slate-200">
             <h1 class="text-2xl font-black text-slate-900 tracking-tight">WASHORA LAUNDRY</h1>
             <p class="text-xs text-slate-500">Smart & Modern Laundry Services</p>
-            <p class="text-[11px] text-slate-400">Jl. Pelajar Pejuang 45 No. 88 &bull; Telp / WA: 0812-3456-7890</p>
+            <p class="text-[11px] text-slate-400">Jl. Pelajar Pejuang 45 No. 88 &bull; Telp / WA: 0889-0629-6474</p>
         </div>
 
         <!-- Receipt Metadata -->

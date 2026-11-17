@@ -105,9 +105,9 @@
                             <div class="p-3 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-between text-xs">
                                 <div>
                                     <p class="font-bold text-slate-800">Butuh Bantuan atau Konsultasi?</p>
-                                    <p class="text-[11px] text-slate-500">Hubungi CS kami di 0812-3456-7890</p>
+                                    <p class="text-[11px] text-slate-500">Hubungi CS kami di 0889-0629-6474</p>
                                 </div>
-                                <a href="https://wa.me/6281234567890?text=Halo%20Washora%2C%20saya%20ingin%20bertanya%20layanan%20laundry" target="_blank" class="px-3 py-1.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs flex items-center gap-1.5 transition-colors shrink-0">
+                                <a href="https://wa.me/6288906296474?text=Halo%20Washora%2C%20saya%20ingin%20bertanya%20layanan%20laundry" target="_blank" class="px-3 py-1.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs flex items-center gap-1.5 transition-colors shrink-0">
                                     <i class="fa-brands fa-whatsapp"></i>
                                     <span>Chat WA</span>
                                 </a>

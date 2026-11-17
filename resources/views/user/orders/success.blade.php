@@ -91,6 +91,19 @@
                     </ul>
                 </div>
 
+                <!-- Informasi Pembayaran -->
+                <div class="text-left bg-amber-50/90 p-5 rounded-3xl border border-amber-200/80 flex items-start gap-3.5">
+                    <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 text-sm mt-0.5">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="text-xs font-extrabold uppercase tracking-wider text-amber-950">Informasi Pembayaran</h4>
+                        <p class="text-xs text-amber-900 leading-relaxed">
+                            Pembayaran dilakukan secara langsung melalui admin setelah pesanan diperiksa dan harga akhir ditentukan. Admin akan menghubungi Anda melalui WhatsApp untuk memberikan informasi lebih lanjut mengenai total biaya dan metode pembayaran.
+                        </p>
+                    </div>
+                </div>
+
                 <!-- Action Buttons: Kembali ke Beranda & Lacak Pesanan -->
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                     <a href="{{ route('home') }}" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs border border-slate-200 shadow-xs hover:border-slate-300 transition-all flex items-center justify-center gap-2">

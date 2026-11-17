@@ -145,6 +145,94 @@
         </div>
     </div>
 
+    <!-- Bagian Ulasan Pelanggan / Testimonial Section -->
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-xs">
+        @if(isset($unreviewedOrders) && $unreviewedOrders->isNotEmpty())
+            {{-- Kondisi: Ada pesanan selesai yang siap diulas --}}
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-500 border border-amber-200 flex items-center justify-center text-base shrink-0">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h2 class="text-sm font-bold text-slate-900">Tulis Ulasan Anda</h2>
+                            <span class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 text-[10px] font-bold">
+                                {{ $unreviewedOrders->count() }} Pesanan Siap Diulas
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-600 max-w-2xl leading-relaxed">
+                            Bagikan pengalaman mencuci Anda bersama Washora. Ulasan dan rating Anda akan langsung tampil di halaman beranda dan membantu kami menjaga mutu pelayanan.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="shrink-0">
+                    <button type="button" onclick="openReviewModal()" class="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs shadow-xs transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-xs"></i>
+                        <span>Tulis Ulasan Anda</span>
+                    </button>
+                </div>
+            </div>
+
+        @elseif(($completedOrdersCount ?? 0) === 0)
+            {{-- Kondisi: Belum memiliki pesanan selesai --}}
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-lg bg-slate-100 text-slate-500 border border-slate-200 flex items-center justify-center text-base shrink-0">
+                        <i class="fa-regular fa-comment-dots"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h2 class="text-sm font-bold text-slate-900">Tulis Ulasan Anda</h2>
+                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-medium border border-slate-200">
+                                Info Ulasan
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 max-w-2xl leading-relaxed">
+                            Bagikan pengalaman Anda menggunakan layanan Washora. Anda dapat memberikan ulasan dan rating bintang setelah pesanan cucian Anda selesai dikerjakan, atau tulis pengalaman Anda sekarang.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="shrink-0">
+                    <button type="button" onclick="openReviewModal()" class="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-white hover:bg-slate-50 text-brand-600 border border-slate-300 font-semibold text-xs shadow-xs transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-xs"></i>
+                        <span>Tulis Ulasan Anda</span>
+                    </button>
+                </div>
+            </div>
+
+        @else
+            {{-- Kondisi: Seluruh pesanan selesai sudah diulas --}}
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center text-base shrink-0">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h2 class="text-sm font-bold text-slate-900">Terima Kasih atas Ulasan Anda!</h2>
+                            <span class="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold">
+                                Semua Pesanan Selesai Telah Diulas
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-600 max-w-2xl leading-relaxed">
+                            Seluruh pesanan laundry Anda yang telah selesai sudah berhasil diulas dan ditampilkan pada halaman beranda. Masukan Anda sangat berarti bagi tim Washora.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="shrink-0">
+                    <button type="button" onclick="openReviewModal()" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-medium text-xs transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-plus text-xs text-slate-500"></i>
+                        <span>Tulis Ulasan Baru</span>
+                    </button>
+                </div>
+            </div>
+        @endif
+    </div>
+
     <!-- Recent Orders Table Section -->
     <div class="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
         <div class="p-5 border-b border-slate-100 flex items-center justify-between">
@@ -197,9 +285,24 @@
                                 </span>
                             </td>
                             <td class="py-3.5 px-5 text-right">
-                                <a href="{{ route('user.orders.show', $order) }}" class="px-2.5 py-1.5 rounded-md bg-slate-100 hover:bg-brand-600 hover:text-white text-slate-700 font-semibold transition-colors text-[11px]">
-                                    Detail
-                                </a>
+                                <div class="inline-flex items-center gap-1.5 justify-end">
+                                    @if($order->status === 'completed')
+                                        @if($order->review)
+                                            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold" title="Pesanan ini sudah diulas">
+                                                <i class="fa-solid fa-star text-amber-500 text-[9px]"></i>
+                                                <span>Diulas</span>
+                                            </span>
+                                        @else
+                                            <button type="button" onclick="openReviewModal({{ $order->id }})" class="px-2.5 py-1.5 rounded-md bg-amber-500 hover:bg-amber-600 text-white font-semibold text-[11px] transition-colors flex items-center gap-1">
+                                                <i class="fa-solid fa-pen-to-square text-[10px]"></i>
+                                                <span>Ulas</span>
+                                            </button>
+                                        @endif
+                                    @endif
+                                    <a href="{{ route('user.orders.show', $order) }}" class="px-2.5 py-1.5 rounded-md bg-slate-100 hover:bg-brand-600 hover:text-white text-slate-700 font-semibold transition-colors text-[11px]">
+                                        Detail
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @empty
@@ -215,4 +318,147 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Formulir Testimoni / Ulasan -->
+<div id="reviewModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="modalReviewTitle">
+    <div class="bg-white rounded-xl shadow-xl border border-slate-200 max-w-lg w-full p-6 space-y-5 my-8 relative">
+        <div class="flex items-start justify-between pb-3 border-b border-slate-100">
+            <div>
+                <h3 id="modalReviewTitle" class="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-star text-amber-500"></i>
+                    <span>Tulis Ulasan Anda</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">
+                    Testimoni Anda akan langsung tersimpan dan ditampilkan di halaman beranda Washora.
+                </p>
+            </div>
+            <button type="button" onclick="closeReviewModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg transition-colors" aria-label="Tutup">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <form action="{{ route('user.reviews.store') }}" method="POST" class="space-y-4">
+            @csrf
+
+            @if(isset($unreviewedOrders) && $unreviewedOrders->isNotEmpty())
+                <div>
+                    <label for="review_order_id" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Pilih Pesanan Selesai yang Diulas
+                    </label>
+                    <select id="review_order_id" name="order_id" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium text-slate-800 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white transition-all">
+                        <option value="">-- Ulasan Umum Layanan Washora --</option>
+                        @foreach($unreviewedOrders as $unreviewed)
+                            <option value="{{ $unreviewed->id }}" {{ old('order_id') == $unreviewed->id ? 'selected' : '' }}>
+                                #{{ $unreviewed->order_code }} - {{ $unreviewed->items->first()->item_name ?? 'Layanan Laundry' }} (Selesai {{ $unreviewed->updated_at->translatedFormat('d M Y') }})
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('order_id')
+                        <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+            @endif
+
+            <!-- Rating Bintang -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+                    Rating Bintang <span class="text-rose-500">*</span>
+                </label>
+                <div class="flex items-center gap-2 flex-wrap">
+                    @for($i = 5; $i >= 1; $i--)
+                        <label class="cursor-pointer group flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition-colors">
+                            <input type="radio" name="rating" value="{{ $i }}" class="peer sr-only" {{ old('rating', '5') == $i ? 'checked' : '' }} required>
+                            <span class="text-xs font-bold text-slate-700 peer-checked:text-amber-600 flex items-center gap-1">
+                                <i class="fa-solid fa-star text-amber-400"></i>
+                                <span>{{ $i }} Bintang</span>
+                            </span>
+                        </label>
+                    @endfor
+                </div>
+                @error('rating')
+                    <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Komentar / Isi Ulasan -->
+            <div>
+                <label for="review_comment" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Isi Ulasan atau Pengalaman Anda <span class="text-rose-500">*</span>
+                </label>
+                <textarea id="review_comment" name="comment" rows="4" required minlength="5" maxlength="1000" placeholder="Ceritakan kepuasan Anda mengenai kebersihan cucian, aroma wangi, ketepatan waktu, dan keramahan pelayanan Washora..." class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium text-slate-800 placeholder:text-slate-400 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white transition-all">{{ old('comment') }}</textarea>
+                <div class="flex items-center justify-between text-[11px] text-slate-400 mt-1">
+                    <span>Minimal 5 karakter</span>
+                    <span>Maksimal 1000 karakter</span>
+                </div>
+                @error('comment')
+                    <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Info Identitas -->
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-[11px] text-slate-500 flex items-center justify-between">
+                <span class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-check text-brand-600"></i>
+                    <span>Mengirim sebagai: <strong class="text-slate-800">{{ $user->name }}</strong></span>
+                </span>
+                <span class="text-emerald-600 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-bolt text-xs"></i>
+                    Langsung Ditampilkan di Beranda
+                </span>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-100">
+                <button type="button" onclick="closeReviewModal()" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors">
+                    Batal
+                </button>
+                <button type="submit" class="px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs shadow-xs transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                    <span>Kirim Ulasan</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openReviewModal(orderId = null) {
+        const modal = document.getElementById('reviewModal');
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        if (orderId) {
+            const select = document.getElementById('review_order_id');
+            if (select) {
+                select.value = orderId;
+            }
+        }
+    }
+
+    function closeReviewModal() {
+        const modal = document.getElementById('reviewModal');
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeReviewModal();
+        }
+    });
+
+    document.addEventListener('click', function(e) {
+        const modal = document.getElementById('reviewModal');
+        if (modal && e.target === modal) {
+            closeReviewModal();
+        }
+    });
+
+    @if($errors->any() && (old('order_id') || old('rating') || old('comment')))
+        document.addEventListener('DOMContentLoaded', function() {
+            openReviewModal();
+        });
+    @endif
+</script>
 @endsection

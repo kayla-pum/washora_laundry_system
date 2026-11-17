@@ -103,7 +103,7 @@ class OrderController extends Controller
             'service_id' => ['required_if:item_type,kiloan,satuan,service', 'nullable', 'exists:servies,id'],
             'package_id' => ['required_if:item_type,package', 'nullable', 'exists:packages,id'],
             'recipient_name' => ['required', 'string', 'max:100'],
-            'whatsapp_number' => ['required', 'string', 'max:20'],
+            'whatsapp_number' => ['required', 'string', 'regex:/^[0-9]{8,20}$/'],
             'pickup_address' => ['required', 'string', 'min:5'],
             'customer_note' => ['nullable', 'string', 'max:500'],
         ], [
@@ -113,6 +113,7 @@ class OrderController extends Controller
             'recipient_name.required' => 'Nama lengkap pemesan wajib diisi.',
             'pickup_address.required' => 'Alamat penjemputan cucian wajib diisi.',
             'whatsapp_number.required' => 'Nomor WhatsApp / telepon aktif wajib diisi.',
+            'whatsapp_number.regex' => 'Nomor telepon hanya boleh berisi angka 0–9 (minimal 8 digit, tanpa huruf atau simbol).',
         ]);
 
         return DB::transaction(function () use ($validated) {
@@ -257,10 +258,53 @@ class OrderController extends Controller
             'customer_name' => Auth::user()->name,
             'rating' => $validated['rating'],
             'comment' => $validated['comment'],
-            'is_published' => false, // Menunggu persetujuan admin
+            'is_published' => true, // Langsung dipublikasikan ke halaman beranda tanpa menunggu persetujuan admin
         ]);
 
-        return back()->with('success', 'Terima kasih atas ulasan Anda! Testimoni akan ditampilkan setelah disetujui oleh admin.');
+        return back()->with('success', 'Terima kasih atas ulasan Anda! Testimoni Anda telah berhasil dikirim dan kini tampil di halaman beranda.');
+    }
+
+    /**
+     * Submit review / testimonial from customer dashboard
+     */
+    public function storeDashboardReview(Request $request)
+    {
+        $validated = $request->validate([
+            'order_id' => ['nullable', 'integer', 'exists:orders,id'],
+            'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'comment' => ['required', 'string', 'min:5', 'max:1000'],
+        ], [
+            'order_id.exists' => 'Pesanan tidak ditemukan.',
+            'rating.required' => 'Silakan pilih rating bintang 1–5.',
+            'rating.min' => 'Rating minimal 1 bintang.',
+            'rating.max' => 'Rating maksimal 5 bintang.',
+            'comment.required' => 'Isi ulasan atau pengalaman Anda wajib diisi.',
+            'comment.min' => 'Ulasan minimal 5 karakter.',
+        ]);
+
+        $order = null;
+        if (! empty($validated['order_id'])) {
+            $order = Order::findOrFail($validated['order_id']);
+
+            if ($order->user_id !== Auth::id()) {
+                abort(403, 'Anda tidak memiliki akses ke pesanan ini.');
+            }
+
+            if ($order->review()->exists()) {
+                return back()->with('error', 'Anda sudah memberikan ulasan untuk pesanan ini.');
+            }
+        }
+
+        Review::create([
+            'user_id' => Auth::id(),
+            'order_id' => $order?->id,
+            'customer_name' => Auth::user()->name,
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'],
+            'is_published' => true, // Langsung tampil di beranda
+        ]);
+
+        return back()->with('success', 'Terima kasih atas ulasan Anda! Testimoni Anda telah berhasil dikirim dan kini tampil di halaman beranda.');
     }
 
     /**

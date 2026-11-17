@@ -208,7 +208,7 @@
                 <h1 class="brand-title">WASHORA LAUNDRY SYSTEM</h1>
                 <div class="brand-subtitle">Smart Laundry System &bull; Layanan Cuci Kiloan, Satuan & Paket Bundling</div>
                 <div class="company-contact">
-                    Jl. Pelajar Pejuang 45 No. 88 &bull; WhatsApp: 0812-3456-7890 &bull; Email: cs@washora.com
+                    Jl. Pelajar Pejuang 45 No. 88 &bull; WhatsApp: 0889-0629-6474 &bull; Email: cs@washora.com
                 </div>
             </td>
             <td class="header-right">

@@ -11,13 +11,13 @@
                     Sistem informasi dan layanan laundry modern terintegrasi. Bersih, wangi, higienis dengan tracking status pesanan secara real-time dan konfirmasi transparan via WhatsApp.
                 </p>
                 <div class="flex items-center gap-3 pt-2">
-                    <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-brand-600 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+                    <a href="https://wa.me/6288906296474" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Washora" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-emerald-600 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
                         <i class="fa-brands fa-whatsapp"></i>
                     </a>
-                    <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-brand-600 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+                    <a href="https://www.instagram.com/space.kays/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Washora" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-pink-600 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
-                    <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-brand-600 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+                    <a href="#" aria-label="Facebook Washora" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-brand-600 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
                         <i class="fa-brands fa-facebook"></i>
                     </a>
                 </div>
@@ -92,7 +92,7 @@
                 <div class="pt-2 text-sm text-slate-400 space-y-1">
                     <p class="flex items-center gap-2">
                         <i class="fa-solid fa-phone text-xs text-emerald-400"></i>
-                        0812-3456-7890
+                        <a href="https://wa.me/6288906296474" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors">0889-0629-6474</a>
                     </p>
                     <p class="flex items-center gap-2">
                         <i class="fa-solid fa-location-dot text-xs text-rose-400"></i>

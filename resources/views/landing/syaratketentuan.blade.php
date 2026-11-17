@@ -356,7 +356,7 @@
                     </p>
                 </div>
                 <div class="flex flex-col sm:flex-row items-center gap-2.5 shrink-0 w-full sm:w-auto">
-                    <a href="https://wa.me/6281234567890?text=Halo%20Washora%2C%20saya%20ingin%20bertanya%20seputar%20syarat%20dan%20ketentuan%20layanan" target="_blank" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-colors">
+                    <a href="https://wa.me/6288906296474?text=Halo%20Washora%2C%20saya%20ingin%20bertanya%20seputar%20syarat%20dan%20ketentuan%20layanan" target="_blank" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-colors">
                         <i class="fa-brands fa-whatsapp text-sm"></i>
                         <span>Hubungi WhatsApp</span>
                     </a>
