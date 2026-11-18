@@ -171,4 +171,242 @@ Akun berikut disediakan oleh seeder proyek:
 
 Washora dikembangkan sebagai proyek tugas akhir pembelajaran Rekayasa Perangkat Lunak (RPL).
 
-Dokumentasi database dan alur sistem tersedia di [`docs/`](docs/).
+## ERD Sistem
+
+ERD berikut dirangkum dari migration pada `database/migrations/` dan relasi Eloquent pada `app/Models/`. Nama tabel mempertahankan nama aktual proyek, termasuk tabel `servies`.
+
+```mermaid
+erDiagram
+    USERS o|--o{ ORDERS : pelanggan
+    USERS o|--o{ ORDERS : mengonfirmasi
+    USERS o|--o{ ORDER_STATUS_HISTORIES : mengubah
+    USERS o|--o{ REVIEWS : menulis
+    SERVICE_CATEGORIES ||--o{ SERVIES : mengelompokkan
+    PACKAGES ||--o{ PACKAGE_ITEMS : berisi
+    SERVIES ||--o{ PACKAGE_ITEMS : dicantumkan
+    ORDERS ||--o{ ORDER_ITEMS : memiliki
+    SERVIES o|--o{ ORDER_ITEMS : dipilih
+    PACKAGES o|--o{ ORDER_ITEMS : dipesan
+    ORDERS ||--o{ ORDER_STATUS_HISTORIES : mencatat
+    ORDERS o|--o{ REVIEWS : diulas
+
+    USERS {
+        int id PK
+        string name
+        string email UK
+        string password
+        string phone
+        enum role
+        string remember_token
+        timestamp created_at
+        timestamp updated_at
+    }
+    SERVICE_CATEGORIES {
+        int id PK
+        string name
+        text description
+        enum status
+        timestamp created_at
+        timestamp updated_at
+    }
+    SERVIES {
+        int id PK
+        int category_id FK
+        string name
+        text description
+        decimal price
+        enum unit
+        int estimated_hours
+        enum service_type
+        enum status
+        boolean is_featured
+        int featured_order
+        timestamp created_at
+        timestamp updated_at
+    }
+    PACKAGES {
+        int id PK
+        string name
+        text description
+        decimal price
+        int estimated_hours
+        enum status
+        timestamp created_at
+        timestamp updated_at
+    }
+    PACKAGE_ITEMS {
+        int id PK
+        int package_id FK
+        int service_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    ORDERS {
+        int id PK
+        string order_code UK
+        int user_id FK
+        string customer_name
+        string customer_phone
+        text pickup_address
+        boolean has_valuable_items
+        boolean has_color_bleeding_risk
+        text customer_note
+        decimal total_weight
+        decimal total_price
+        datetime estimated_completed_at
+        enum status
+        datetime confirmed_at
+        int confirmed_by FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    ORDER_ITEMS {
+        int id PK
+        int order_id FK
+        enum item_type
+        int service_id FK
+        int package_id FK
+        string item_name
+        string unit
+        decimal quantity
+        decimal unit_price
+        decimal subtotal
+        text notes
+        timestamp created_at
+        timestamp updated_at
+    }
+    ORDER_STATUS_HISTORIES {
+        int id PK
+        int order_id FK
+        string status
+        text note
+        int changed_by FK
+        timestamp created_at
+    }
+    REVIEWS {
+        int id PK
+        int user_id FK
+        int order_id FK
+        string customer_name
+        tinyint rating
+        text comment
+        boolean is_published
+        timestamp created_at
+        timestamp updated_at
+    }
+```
+
+### Penjelasan tabel utama
+
+| Tabel | Fungsi |
+|---|---|
+| `users` | Menyimpan akun pelanggan dan administrator. `role` membedakan hak akses, dan tabel ini menjadi pemesan, pengonfirmasi, penulis ulasan, serta pencatat status. |
+| `service_categories` | Mengelompokkan layanan laundry. Satu kategori memiliki banyak layanan. |
+| `servies` | Menyimpan katalog layanan, satuan, jenis regular/express, estimasi pengerjaan, status, dan pengaturan layanan unggulan. |
+| `packages` | Menyimpan paket bundling beserta harga dan estimasi pengerjaan. |
+| `package_items` | Menghubungkan paket dengan satu atau beberapa layanan. |
+| `orders` | Menyimpan pesanan utama, alamat penjemputan, berat, harga, estimasi selesai, status, dan administrator pengonfirmasi. |
+| `order_items` | Menyimpan rincian layanan atau paket pada pesanan beserta jumlah, harga satuan, subtotal, dan catatan. |
+| `order_status_histories` | Mencatat perubahan status beserta pengguna yang mengubahnya. |
+| `reviews` | Menyimpan ulasan pelanggan, rating, dan status publikasi testimoni. |
+
+Harga dan subtotal menggunakan `decimal(12,2)`, sedangkan berat dan jumlah menggunakan `decimal(8,2)`. `users.email` dan `orders.order_code` bersifat unik. Kolom `user_id` pada pesanan dan ulasan dapat bernilai `null`, sedangkan pesanan aktif tetap memerlukan akun pelanggan pada alur pemesanan. `orders.customer_name` dan `orders.customer_phone` tersedia pada database, tetapi proses pemesanan saat ini belum mengisinya. Relasi pesanan dengan ulasan berbentuk one-to-one pada model, tetapi migration tidak memberikan constraint unik pada `reviews.order_id`.
+
+### Tabel pendukung Laravel
+
+| Tabel | Fungsi |
+|---|---|
+| `password_reset_tokens` | Menyimpan token reset kata sandi berdasarkan email. |
+| `sessions` | Menyimpan sesi pengguna dan aktivitas. |
+| `cache` | Menyimpan nilai cache dan waktu kedaluwarsa. |
+| `cache_locks` | Menyimpan lock untuk cache database. |
+| `jobs` | Menyimpan pekerjaan antrean. |
+| `job_batches` | Menyimpan metadata batch antrean. |
+| `failed_jobs` | Menyimpan antrean yang gagal dijalankan. |
+| `migrations` | Dicatat oleh Laravel sebagai daftar migration yang telah dijalankan. |
+
+## Flowchart Pemesanan Pelanggan
+
+Alur berikut sesuai dengan route pelanggan yang dilindungi middleware `auth` dan `customer`, serta `User\OrderController`.
+
+```mermaid
+flowchart TD
+    mulai([Mulai]) --> buka["Pelanggan membuka website"]
+    buka --> katalog["Sistem menampilkan layanan dan paket aktif"]
+    katalog --> pilih["Pelanggan memilih Pesan Laundry"]
+    pilih --> login{"Sudah login sebagai pelanggan?"}
+    login -- "Belum" --> masuk["Login atau registrasi pelanggan"]
+    masuk --> form
+    login -- "Sudah" --> form["Sistem menampilkan formulir pemesanan"]
+    form --> tipe{"Jenis pilihan"}
+    tipe -- "Kiloan" --> layanan["Pilih layanan kiloan"]
+    tipe -- "Satuan" --> layananSatuan["Pilih layanan satuan"]
+    tipe -- "Paket" --> paket["Pilih paket"]
+    layanan --> data
+    layananSatuan --> jumlah["Masukkan jumlah buah atau pasang"]
+    jumlah --> data["Isi nama, nomor telepon/WhatsApp, alamat, informasi barang, dan catatan opsional"]
+    paket --> data
+    data --> kirim[/Kirim formulir pemesanan/]
+    kirim --> validasi{"Validasi server berhasil?"}
+    validasi -- "Tidak" --> error[/Tampilkan pesan validasi pada formulir/]
+    error --> data
+    validasi -- "Ya" --> simpan["Dalam transaksi database: perbarui nomor telepon akun; buat pesanan pending, item, dan riwayat status"]
+    simpan --> biaya["Berat, total harga akhir, dan estimasi selesai menunggu konfirmasi administrator"]
+    biaya --> hasil[/Tampilkan konfirmasi dan kode pesanan/]
+    hasil --> selesai([Selesai])
+```
+
+Pelanggan harus login untuk mengirim pesanan. Layanan kiloan belum memiliki subtotal akhir dan menunggu penimbangan admin, sedangkan layanan satuan menyimpan jumlah dan subtotal awal. Paket menyimpan satu item paket beserta harga paket.
+
+## Flowchart Pengelolaan Pesanan Administrator
+
+Alur berikut sesuai dengan route administrator, middleware `auth` dan `admin`, serta `Admin\OrderController`.
+
+```mermaid
+flowchart TD
+    mulai([Mulai]) --> buka["Administrator membuka halaman login"]
+    buka --> kirimLogin[/Kirim email dan kata sandi/]
+    kirimLogin --> validLogin{"Autentikasi berhasil sebagai administrator?"}
+    validLogin -- "Tidak" --> loginGagal[/Tampilkan kesalahan login/]
+    loginGagal --> buka
+    validLogin -- "Ya" --> daftar["Buka daftar pesanan"]
+    daftar --> detail["Pilih dan periksa detail pesanan"]
+    detail --> pending{"Status pesanan pending?"}
+    pending -- "Ya" --> timbang["Masukkan berat atau jumlah aktual, harga satuan, estimasi selesai, dan catatan opsional"]
+    timbang --> validasiKonfirmasi{"Validasi konfirmasi berhasil?"}
+    validasiKonfirmasi -- "Tidak" --> errorKonfirmasi[/Tampilkan kesalahan validasi/]
+    errorKonfirmasi --> timbang
+    validasiKonfirmasi -- "Ya" --> konfirmasi["Dalam transaksi database: perbarui item dan total pesanan; ubah status menjadi confirmed; catat riwayat"]
+    konfirmasi --> lihatProgress["Admin memilih status proses dan catatan opsional"]
+    pending -- "Tidak" --> lihatProgress
+    lihatProgress --> validasiStatus{"Status termasuk pilihan yang diizinkan?"}
+    validasiStatus -- "Tidak" --> errorStatus[/Tampilkan kesalahan validasi/]
+    errorStatus --> lihatProgress
+    validasiStatus -- "Ya" --> simpanStatus["Simpan status pesanan dan catatan riwayat status"]
+    simpanStatus --> pelanggan["Pelanggan melihat status melalui detail pesanan atau halaman pelacakan"]
+    pelanggan --> selesai([Selesai])
+```
+
+Setelah pesanan dikonfirmasi, administrator dapat memilih status `confirmed`, `processing`, `washing`, `finishing`, `ready`, `completed`, atau `cancelled`. Setiap perubahan dicatat dalam riwayat status. Tautan WhatsApp dibuka oleh administrator dan tidak dikirim otomatis oleh sistem.
+
+## Flowchart Pelacakan Pesanan
+
+Pelacakan tersedia untuk umum pada route `GET /tracking`.
+
+```mermaid
+flowchart TD
+    mulai([Mulai]) --> halaman["Pelanggan membuka halaman tracking"]
+    halaman --> masukkan[/Masukkan kode pesanan/]
+    masukkan --> cari[/Kirim pencarian/]
+    cari --> kosong{"Kode tidak kosong?"}
+    kosong -- "Tidak" --> halaman
+    kosong -- "Ya" --> validasi["Sistem membersihkan spasi dan mencari kode pesanan"]
+    validasi --> ditemukan{"Pesanan ditemukan?"}
+    ditemukan -- "Ya" --> tampil["Tampilkan status, rincian item, progres, dan biaya/estimasi yang tersedia"]
+    tampil --> privasi["Alamat penjemputan dan catatan hanya ditampilkan kepada pemilik atau administrator"]
+    privasi --> selesai([Selesai])
+    ditemukan -- "Tidak" --> tidakAda[/Tampilkan Pesanan Tidak Ditemukan/]
+    tidakAda --> selesai
+```
+
+Kode pesanan dicari setelah spasi di awal dan akhir dihapus. Alamat penjemputan serta catatan pelanggan disamarkan bagi pengunjung yang bukan pemilik pesanan atau administrator.
