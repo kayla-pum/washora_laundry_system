@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Review;
 use App\Models\Service;
 use App\Models\User;
+use Carbon\Carbon;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -307,5 +308,74 @@ class CustomerFlowTest extends TestCase
         $response->assertSee('https://wa.me/6288906296474', false);
         $response->assertSee('https://www.instagram.com/space.kays/', false);
         $response->assertSee('0889-0629-6474');
+    }
+
+    public function test_customer_can_order_satuan_with_piece_quantity_and_admin_sees_it(): void
+    {
+        $user = User::where('role', 'user')->first();
+        $satuanService = Service::where('unit', 'pcs')->first();
+        $this->assertNotNull($satuanService);
+
+        // 1. Customer places a satuan order with 4 pcs
+        $response = $this->actingAs($user)->post('/user/orders', [
+            'item_type' => 'satuan',
+            'service_id' => $satuanService->id,
+            'piece_quantity' => 4,
+            'recipient_name' => $user->name,
+            'whatsapp_number' => '081234567890',
+            'pickup_address' => 'Jl. Kebon Jeruk No. 15, RT 01/RW 03',
+            'has_valuable_items' => '0',
+            'has_color_bleeding_risk' => '0',
+            'customer_note' => '4 pcs bedcover harap dipisah',
+        ]);
+
+        $order = Order::where('user_id', $user->id)->latest()->first();
+        $this->assertNotNull($order);
+        $this->assertEquals('pending', $order->status);
+
+        $orderItem = $order->items->first();
+        $this->assertNotNull($orderItem);
+        $this->assertEquals(4, (int) $orderItem->quantity);
+        $this->assertEquals(4 * $satuanService->price, (float) $orderItem->subtotal);
+
+        $response->assertRedirect(route('user.orders.success', $order));
+
+        // 2. Customer sees pcs quantity in order success and detail page
+        $successResponse = $this->actingAs($user)->get(route('user.orders.success', $order));
+        $successResponse->assertStatus(200);
+        $successResponse->assertSee('4 pcs');
+
+        $userOrderResponse = $this->actingAs($user)->get(route('user.orders.show', $order));
+        $userOrderResponse->assertStatus(200);
+        $userOrderResponse->assertSee('4 pcs');
+
+        // 3. Admin sees the customer quantity in order details & order index
+        $admin = User::where('role', 'admin')->first();
+        $adminShowResponse = $this->actingAs($admin)->get(route('admin.orders.show', $order));
+        $adminShowResponse->assertStatus(200);
+        $adminShowResponse->assertSee('Banyaknya Pesanan Pelanggan:');
+        $adminShowResponse->assertSee('4 pcs');
+        $adminShowResponse->assertSee('Banyaknya Pesanan (Satuan):');
+
+        $adminIndexResponse = $this->actingAs($admin)->get(route('admin.orders.index'));
+        $adminIndexResponse->assertStatus(200);
+        $adminIndexResponse->assertSee('4 pcs');
+
+        // 4. Admin confirms the order with the verified quantity
+        $confirmResponse = $this->actingAs($admin)->post('/admin/orders/'.$order->id.'/confirm', [
+            'item_quantities' => [
+                $orderItem->id => 4,
+            ],
+            'item_prices' => [
+                $orderItem->id => $satuanService->price,
+            ],
+            'estimated_completed_at' => Carbon::now()->addHours(24)->format('Y-m-d H:i:s'),
+            'admin_note' => 'Jumlah barang sesuai 4 pcs.',
+        ]);
+
+        $confirmResponse->assertRedirect();
+        $order->refresh();
+        $this->assertEquals('confirmed', $order->status);
+        $this->assertEquals(4 * $satuanService->price, (float) $order->total_price);
     }
 }

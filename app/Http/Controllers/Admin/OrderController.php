@@ -118,14 +118,16 @@ class OrderController extends Controller
                 // Default calculation if single service
                 $firstItem = $order->items->first();
                 if ($firstItem) {
-                    $qty = $totalWeight > 0 ? $totalWeight : 1;
+                    $qty = $totalWeight > 0 ? $totalWeight : ($firstItem->quantity > 0 ? $firstItem->quantity : 1);
                     $subtotal = $qty * $firstItem->unit_price;
                     $totalPrice = $subtotal;
 
                     $firstItem->update([
                         'quantity' => $qty,
                         'subtotal' => $subtotal,
-                        'notes' => 'Telah ditimbang admin: '.$qty.' '.$firstItem->unit,
+                        'notes' => strtolower($firstItem->unit) === 'kg'
+                            ? 'Telah ditimbang admin: '.$qty.' '.$firstItem->unit
+                            : 'Telah dikonfirmasi admin: '.$qty.' '.$firstItem->unit,
                     ]);
                 }
             }

@@ -125,8 +125,16 @@
             <!-- Price Summary Box -->
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200/70 space-y-2 text-xs">
                 <div class="flex justify-between text-slate-600">
-                    <span>Total Berat Ditimbang:</span>
-                    <span class="font-bold text-slate-900">{{ $order->total_weight ? $order->total_weight . ' Kg' : 'Menunggu konfirmasi admin' }}</span>
+                    <span>{{ $order->total_weight ? 'Total Berat Ditimbang:' : 'Banyaknya Pesanan:' }}</span>
+                    <span class="font-bold text-slate-900">
+                        @if($order->total_weight)
+                            {{ $order->total_weight }} Kg
+                        @elseif($order->items->first() && strtolower($order->items->first()->unit) !== 'kg')
+                            {{ $order->items->first()->quantity }} {{ $order->items->first()->unit }}
+                        @else
+                            Menunggu konfirmasi admin
+                        @endif
+                    </span>
                 </div>
                 <div class="flex justify-between text-slate-600">
                     <span>Estimasi Waktu Selesai:</span>
@@ -177,6 +185,15 @@
                         <span class="text-slate-400 font-semibold block">Alamat Pengambilan:</span>
                         <p class="font-medium text-slate-800 leading-relaxed">{{ $order->pickup_address }}</p>
                     </div>
+                    @php
+                        $firstItem = $order->items->first();
+                    @endphp
+                    @if($firstItem && strtolower($firstItem->unit) !== 'kg')
+                        <div>
+                            <span class="text-slate-400 font-semibold block">Banyaknya Pesanan:</span>
+                            <p class="font-extrabold text-brand-700 text-sm">{{ $firstItem->quantity }} {{ $firstItem->unit }}</p>
+                        </div>
+                    @endif
                     @if($order->customer_note)
                         <div>
                             <span class="text-slate-400 font-semibold block">Catatan Khusus:</span>

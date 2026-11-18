@@ -52,6 +52,9 @@
                             @foreach($order->items as $item)
                                 <div class="font-bold text-slate-900 text-sm mt-0.5">
                                     {{ $item->item_name }}
+                                    @if(strtolower($item->unit) !== 'kg')
+                                        <span class="text-xs font-bold text-brand-700">({{ $item->quantity }} {{ $item->unit }})</span>
+                                    @endif
                                     <span class="text-xs font-medium text-slate-500">(Rp {{ number_format($item->unit_price, 0, ',', '.') }} / {{ $item->unit }})</span>
                                 </div>
                             @endforeach

@@ -112,7 +112,13 @@
                             </td>
 
                             <td class="py-4 px-6 font-bold">
-                                {{ $order->total_weight ? $order->total_weight . ' Kg' : '-' }}
+                                @if($order->total_weight)
+                                    {{ $order->total_weight }} Kg
+                                @elseif($order->items->first())
+                                    {{ $order->items->first()->quantity }} {{ $order->items->first()->unit }}
+                                @else
+                                    -
+                                @endif
                             </td>
 
                             <td class="py-4 px-6 font-bold text-slate-900">

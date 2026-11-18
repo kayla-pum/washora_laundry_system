@@ -284,6 +284,49 @@
 
                 <p id="err-selection" class="text-rose-600 text-xs font-semibold hidden"></p>
 
+                <!-- Pertanyaan Berapa Pcs untuk Pemesanan Satuan -->
+                <div id="container-piece-quantity" class="{{ $defaultType === 'satuan' ? '' : 'hidden' }} p-5 bg-brand-50/70 border border-brand-200/90 rounded-3xl space-y-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                        <label for="piece_quantity" class="block text-xs font-extrabold text-slate-800 uppercase tracking-wider">
+                            Berapa Pcs untuk Pemesanan Satuan? <span class="text-rose-500">*</span>
+                        </label>
+                        <span id="badge-satuan-unit" class="text-[11px] font-bold text-brand-700 px-3 py-1 bg-brand-100 rounded-full w-fit">
+                            Satuan / Pcs
+                        </span>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="adjustPieceQty(-1)" class="w-11 h-11 rounded-2xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-black text-base flex items-center justify-center transition-all active:scale-95 shadow-xs">
+                                <i class="fa-solid fa-minus text-xs"></i>
+                            </button>
+                            <div class="relative w-28">
+                                <input type="number" id="piece_quantity" name="piece_quantity" min="1" max="999" step="1"
+                                    value="{{ old('piece_quantity', 1) }}"
+                                    class="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-2xl text-center text-base font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
+                                    oninput="onPieceQuantityChange()">
+                            </div>
+                            <button type="button" onclick="adjustPieceQty(1)" class="w-11 h-11 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-black text-base flex items-center justify-center transition-all active:scale-95 shadow-xs shadow-brand-500/25">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                            <span class="text-xs font-bold text-slate-600 ml-1" id="label-qty-unit">Pcs</span>
+                        </div>
+
+                        <div class="text-xs text-slate-600 sm:ml-auto">
+                            <span class="text-slate-400 block text-[10px] uppercase font-bold">Estimasi Subtotal:</span>
+                            <span id="satuan-calc-preview" class="font-extrabold text-brand-700 text-sm">Rp 0</span>
+                        </div>
+                    </div>
+
+                    <p class="text-[11px] text-slate-500 leading-relaxed">
+                        Masukkan banyaknya pakaian atau barang satuan yang ingin dicuci untuk layanan ini.
+                    </p>
+                    <p id="err-piece_quantity" class="text-rose-600 text-xs font-semibold mt-1 hidden"></p>
+                    @error('piece_quantity')
+                        <p class="text-rose-600 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <div class="pt-4 border-t border-slate-100 space-y-4">
                     <div>
                         <h3 class="text-sm font-extrabold text-slate-900">Informasi Tambahan</h3>
@@ -451,6 +494,10 @@
                                 <span class="text-slate-400 block text-[10px] uppercase font-bold">Nama Layanan / Paket:</span>
                                 <span id="summary-item-name" class="font-bold text-slate-800 text-sm">-</span>
                             </div>
+                            <div id="summary-piece-quantity-wrapper" class="hidden">
+                                <span class="text-slate-400 block text-[10px] uppercase font-bold">Banyaknya Pesanan:</span>
+                                <span id="summary-piece-quantity" class="font-extrabold text-brand-700 text-sm">-</span>
+                            </div>
                             <div>
                                 <span class="text-slate-400 block text-[10px] uppercase font-bold">Waktu Pengerjaan:</span>
                                 <span id="summary-item-time" class="font-semibold text-slate-700">-</span>
@@ -586,10 +633,14 @@
         const cPkg = document.getElementById('container-package');
         const cSat = document.getElementById('container-satuan');
         const cKil = document.getElementById('container-kiloan');
+        const cPieceQty = document.getElementById('container-piece-quantity');
 
         cPkg.classList.toggle('hidden', type !== 'package');
         cSat.classList.toggle('hidden', type !== 'satuan');
         cKil.classList.toggle('hidden', type !== 'kiloan');
+        if (cPieceQty) {
+            cPieceQty.classList.toggle('hidden', type !== 'satuan');
+        }
 
         // Automatically select the first visible item in this category if none in this category is selected
         if (type === 'package') {
@@ -614,6 +665,51 @@
 
     function onItemSelect() {
         document.getElementById('err-selection').classList.add('hidden');
+        onPieceQuantityChange();
+    }
+
+    function adjustPieceQty(delta) {
+        const input = document.getElementById('piece_quantity');
+        if (!input) return;
+        let val = parseInt(input.value) || 1;
+        val = Math.max(1, Math.min(999, val + delta));
+        input.value = val;
+        onPieceQuantityChange();
+    }
+
+    function onPieceQuantityChange() {
+        const { itemType, selected } = getSelectedItem();
+        const qtyInput = document.getElementById('piece_quantity');
+        const errQty = document.getElementById('err-piece_quantity');
+        if (!qtyInput) return;
+
+        let val = parseInt(qtyInput.value);
+
+        if (isNaN(val) || val < 1) {
+            if (errQty) {
+                errQty.textContent = 'Banyaknya pesanan minimal 1 pcs.';
+                errQty.classList.remove('hidden');
+            }
+        } else {
+            if (errQty) {
+                errQty.classList.add('hidden');
+            }
+        }
+
+        if (selected && itemType === 'satuan') {
+            const rawPrice = parseInt(selected.dataset.price.replace(/\./g, '')) || 0;
+            const unit = selected.dataset.unit || 'Pcs';
+            const qty = Math.max(1, isNaN(val) ? 1 : val);
+            const subtotal = qty * rawPrice;
+            const unitLabel = document.getElementById('label-qty-unit');
+            const badgeUnit = document.getElementById('badge-satuan-unit');
+            const calcPreview = document.getElementById('satuan-calc-preview');
+            if (unitLabel) unitLabel.textContent = unit;
+            if (badgeUnit) badgeUnit.textContent = 'Satuan / ' + unit;
+            if (calcPreview) {
+                calcPreview.textContent = `${qty} ${unit} × Rp ${selected.dataset.price} = Rp ${subtotal.toLocaleString('id-ID')}`;
+            }
+        }
     }
 
     function getSelectedItem() {
@@ -642,6 +738,21 @@
             isValid = false;
         } else {
             errSelection.classList.add('hidden');
+        }
+
+        if (itemType === 'satuan') {
+            const qtyInput = document.getElementById('piece_quantity');
+            const errQty = document.getElementById('err-piece_quantity');
+            const qtyVal = parseInt(qtyInput ? qtyInput.value : 0);
+            if (isNaN(qtyVal) || qtyVal < 1) {
+                if (errQty) {
+                    errQty.textContent = 'Silakan tentukan banyaknya pesanan satuan (minimal 1 pcs).';
+                    errQty.classList.remove('hidden');
+                }
+                isValid = false;
+            } else if (errQty) {
+                errQty.classList.add('hidden');
+            }
         }
 
         const valuableItemsError = document.getElementById('err-has_valuable_items');
@@ -716,6 +827,8 @@
 
     function populateStep3Summary() {
         const { itemType, selected } = getSelectedItem();
+        const qtyWrapper = document.getElementById('summary-piece-quantity-wrapper');
+        const qtyDisplay = document.getElementById('summary-piece-quantity');
 
         if (selected) {
             const categoryLabel = selected.dataset.category || (itemType === 'package' ? 'Paket Bundling' : (itemType === 'satuan' ? 'Layanan Satuan' : 'Layanan Kiloan'));
@@ -725,10 +838,25 @@
 
             if (itemType === 'kiloan') {
                 document.getElementById('summary-item-price').textContent = `Rp ${selected.dataset.price} / Kg (Timbang di outlet)`;
+                if (qtyWrapper) {
+                    qtyWrapper.classList.add('hidden');
+                }
             } else if (itemType === 'satuan') {
-                document.getElementById('summary-item-price').textContent = `Rp ${selected.dataset.price} / ${selected.dataset.unit}`;
+                const qtyVal = Math.max(1, parseInt(document.getElementById('piece_quantity').value) || 1);
+                const rawPrice = parseInt(selected.dataset.price.replace(/\./g, '')) || 0;
+                const subtotal = qtyVal * rawPrice;
+                const unit = selected.dataset.unit || 'Pcs';
+
+                document.getElementById('summary-item-price').textContent = `Rp ${subtotal.toLocaleString('id-ID')} (Est. ${qtyVal} ${unit} × Rp ${selected.dataset.price})`;
+                if (qtyWrapper) {
+                    qtyWrapper.classList.remove('hidden');
+                    qtyDisplay.textContent = `${qtyVal} ${unit}`;
+                }
             } else {
                 document.getElementById('summary-item-price').textContent = `Rp ${selected.dataset.price} / paket`;
+                if (qtyWrapper) {
+                    qtyWrapper.classList.add('hidden');
+                }
             }
         }
 
@@ -743,6 +871,10 @@
         const note = document.getElementById('customer_note').value.trim();
         document.getElementById('summary-customer-note').textContent = note || '-';
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        onPieceQuantityChange();
+    });
 
     document.getElementById('order-form').addEventListener('submit', function (e) {
         const agreeCheckbox = document.getElementById('agree_terms');

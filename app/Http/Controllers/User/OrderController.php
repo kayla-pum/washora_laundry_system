@@ -45,7 +45,6 @@ class OrderController extends Controller
         return view('user.orders.index', compact('orders', 'status', 'statusCounts'));
     }
 
-    
     public function create(Request $request)
     {
         $categories = ServiceCategory::where('status', 'active')
@@ -91,13 +90,13 @@ class OrderController extends Controller
         ));
     }
 
-    
     public function store(Request $request)
     {
         $validated = $request->validate([
             'item_type' => ['required', 'in:kiloan,satuan,package,service'],
             'service_id' => ['required_if:item_type,kiloan,satuan,service', 'nullable', 'exists:servies,id'],
             'package_id' => ['required_if:item_type,package', 'nullable', 'exists:packages,id'],
+            'piece_quantity' => ['nullable', 'integer', 'min:1', 'max:999'],
             'recipient_name' => ['required', 'string', 'max:100'],
             'whatsapp_number' => ['required', 'string', 'regex:/^[0-9]{8,20}$/'],
             'pickup_address' => ['required', 'string', 'min:5'],
@@ -108,6 +107,8 @@ class OrderController extends Controller
             'item_type.required' => 'Silakan tentukan jenis layanan (Paket Bundling, Layanan Satuan, atau Layanan Kiloan).',
             'service_id.required_if' => 'Silakan pilih layanan laundry yang diinginkan.',
             'package_id.required_if' => 'Silakan pilih paket laundry yang diinginkan.',
+            'piece_quantity.min' => 'Banyaknya pesanan satuan minimal 1 pcs.',
+            'piece_quantity.integer' => 'Banyaknya pesanan satuan harus berupa angka bulat.',
             'recipient_name.required' => 'Nama lengkap pemesan wajib diisi.',
             'pickup_address.required' => 'Alamat penjemputan cucian wajib diisi.',
             'has_valuable_items.required' => 'Silakan jawab apakah terdapat barang berharga.',
@@ -166,6 +167,10 @@ class OrderController extends Controller
             } else {
                 $service = Service::findOrFail($validated['service_id']);
                 $isKiloan = strtolower($service->unit) === 'kg';
+                $quantity = $isKiloan ? 1 : (! empty($validated['piece_quantity']) ? (int) $validated['piece_quantity'] : 1);
+                $unitPrice = $service->price;
+                $subtotal = $isKiloan ? 0 : ($quantity * $unitPrice);
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'item_type' => 'service',
@@ -173,12 +178,12 @@ class OrderController extends Controller
                     'package_id' => null,
                     'item_name' => $service->name,
                     'unit' => $service->unit,
-                    'quantity' => 1,
-                    'unit_price' => $service->price,
-                    'subtotal' => $isKiloan ? 0 : $service->price,
+                    'quantity' => $quantity,
+                    'unit_price' => $unitPrice,
+                    'subtotal' => $subtotal,
                     'notes' => $isKiloan
                         ? 'Layanan Kiloan - Menunggu penimbangan admin ('.$service->service_type.')'
-                        : 'Layanan Satuan ('.$service->service_type.')',
+                        : 'Layanan Satuan: '.$quantity.' '.$service->unit.' ('.$service->service_type.')',
                 ]);
             }
 
@@ -196,7 +201,6 @@ class OrderController extends Controller
         });
     }
 
-   
     public function success(Order $order)
     {
         // Authorize customer
@@ -209,7 +213,6 @@ class OrderController extends Controller
         return view('user.orders.success', compact('order'));
     }
 
-    
     public function show(Order $order)
     {
         // Authorize customer
@@ -262,7 +265,6 @@ class OrderController extends Controller
         return back()->with('success', 'Terima kasih atas ulasan Anda! Testimoni Anda telah berhasil dikirim dan kini tampil di halaman beranda.');
     }
 
-    
     public function storeDashboardReview(Request $request)
     {
         $validated = $request->validate([
@@ -303,7 +305,6 @@ class OrderController extends Controller
         return back()->with('success', 'Terima kasih atas ulasan Anda! Testimoni Anda telah berhasil dikirim dan kini tampil di halaman beranda.');
     }
 
-    
     public function cancel(Order $order, Request $request)
     {
         if ($order->user_id !== Auth::id()) {

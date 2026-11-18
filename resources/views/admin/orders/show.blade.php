@@ -66,6 +66,14 @@
                                     <p class="text-xs text-slate-400">
                                         Tarif per satuan: <span class="font-bold text-slate-700">Rp {{ number_format($item->unit_price, 0, ',', '.') }} / {{ $item->unit }}</span>
                                     </p>
+                                    @if(strtolower($item->unit) !== 'kg')
+                                        <div class="mt-1 flex items-center gap-2">
+                                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-brand-50 border border-brand-200 text-brand-800 text-xs font-bold">
+                                                <i class="fa-solid fa-boxes-stacked text-brand-600"></i>
+                                                <span>Banyaknya Pesanan Pelanggan: <strong>{{ $item->quantity }} {{ $item->unit }}</strong></span>
+                                            </span>
+                                        </div>
+                                    @endif
                                 </div>
                                 <span class="px-2.5 py-1 bg-slate-100 rounded-lg text-xs font-bold text-slate-600 self-start sm:self-auto">
                                     Tipe: {{ strtoupper($item->item_type) }}
@@ -76,9 +84,13 @@
                                 <!-- Input Qty / Weight -->
                                 <div>
                                     <label class="block text-[11px] font-bold text-slate-600 mb-1">
-                                        Berat / Qty Aktual ({{ $item->unit }}):
+                                        @if(strtolower($item->unit) === 'kg')
+                                            Berat Aktual (Kg):
+                                        @else
+                                            Banyaknya / Qty Aktual ({{ $item->unit }}):
+                                        @endif
                                     </label>
-                                    <input type="number" step="0.1" min="0.1" name="item_quantities[{{ $item->id }}]" id="qty-{{ $item->id }}" value="{{ old('item_quantities.' . $item->id, $item->quantity > 0 ? $item->quantity : 1) }}" required oninput="calculateSubtotal({{ $item->id }}, {{ $item->unit_price }})" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all">
+                                    <input type="number" step="{{ strtolower($item->unit) === 'kg' ? '0.1' : '1' }}" min="{{ strtolower($item->unit) === 'kg' ? '0.1' : '1' }}" name="item_quantities[{{ $item->id }}]" id="qty-{{ $item->id }}" value="{{ old('item_quantities.' . $item->id, $item->quantity > 0 ? $item->quantity : 1) }}" required oninput="calculateSubtotal({{ $item->id }}, {{ $item->unit_price }})" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all">
                                 </div>
 
                                 <!-- Unit Price Confirmation -->
@@ -129,9 +141,9 @@
                 <!-- Total & Submit Confirmation -->
                 <div class="p-5 bg-white rounded-2xl border border-amber-300 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div>
-                        <span class="text-xs text-slate-500 font-semibold">Total Biaya Setelah Penimbangan:</span>
+                        <span class="text-xs text-slate-500 font-semibold">Total Biaya Setelah Penimbangan / Verifikasi:</span>
                         <p class="text-2xl font-black text-brand-700" id="grand-total-display">
-                            Rp {{ number_format($order->items->sum('unit_price'), 0, ',', '.') }}
+                            Rp {{ number_format($order->items->sum(fn($i) => ($i->quantity > 0 ? $i->quantity : 1) * $i->unit_price), 0, ',', '.') }}
                         </p>
                     </div>
 
@@ -239,6 +251,17 @@
                 </div>
                 <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 space-y-2">
                     <span class="text-amber-800 font-bold block">Informasi Tambahan:</span>
+                    @php
+                        $firstItem = $order->items->first();
+                    @endphp
+                    @if($firstItem && strtolower($firstItem->unit) !== 'kg')
+                        <div>
+                            <span class="text-amber-800 font-semibold block">Banyaknya Pesanan (Satuan):</span>
+                            <p class="text-amber-950 font-black text-sm">
+                                {{ $firstItem->quantity }} {{ $firstItem->unit }}
+                            </p>
+                        </div>
+                    @endif
                     <div>
                         <span class="text-amber-800 font-semibold block">Barang berharga:</span>
                         <p class="text-amber-900">
@@ -290,9 +313,14 @@
                             <p class="text-slate-400">
                                 Tarif: Rp {{ number_format($item->unit_price, 0, ',', '.') }} / {{ $item->unit }}
                             </p>
+                            @if($item->notes)
+                                <p class="text-[11px] text-brand-600">{{ $item->notes }}</p>
+                            @endif
                         </div>
                         <div class="text-right">
-                            <p class="font-bold text-slate-700">{{ $item->quantity }} {{ $item->unit }}</p>
+                            <p class="font-extrabold text-slate-800 text-sm">
+                                <span class="text-slate-500 font-normal text-xs">Banyaknya:</span> {{ $item->quantity }} {{ $item->unit }}
+                            </p>
                             <p class="text-sm font-black text-slate-900">
                                 {{ $item->subtotal > 0 ? 'Rp ' . number_format($item->subtotal, 0, ',', '.') : 'Menunggu timbang' }}
                             </p>
@@ -302,10 +330,17 @@
             </div>
 
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                <div class="flex justify-between">
-                    <span class="text-slate-500 font-semibold">Total Berat Ditimbang:</span>
-                    <span class="font-bold text-slate-900">{{ $order->total_weight ? $order->total_weight . ' Kg' : '-' }}</span>
-                </div>
+                @if($order->total_weight)
+                    <div class="flex justify-between">
+                        <span class="text-slate-500 font-semibold">Total Berat Ditimbang:</span>
+                        <span class="font-bold text-slate-900">{{ $order->total_weight }} Kg</span>
+                    </div>
+                @elseif($order->items->first() && strtolower($order->items->first()->unit) !== 'kg')
+                    <div class="flex justify-between">
+                        <span class="text-slate-500 font-semibold">Banyaknya Pesanan Satuan:</span>
+                        <span class="font-bold text-slate-900">{{ $order->items->first()->quantity }} {{ $order->items->first()->unit }}</span>
+                    </div>
+                @endif
                 <div class="flex justify-between">
                     <span class="text-slate-500 font-semibold">Estimasi Selesai:</span>
                     <span class="font-bold text-slate-900">

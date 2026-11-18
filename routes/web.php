@@ -35,7 +35,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 /*
 |--------------------------------------------------------------------------
-| Customer Portal (User Routes)
+| Portal Pengguna (User Routes)
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'customer'])->prefix('user')->name('user.')->group(function () {
