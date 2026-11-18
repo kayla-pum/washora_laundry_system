@@ -158,6 +158,38 @@ Versi di bawah mengikuti batasan versi pada manifest proyek. Dependency frontend
 
    Buka `http://127.0.0.1:8000` di browser.
 
+## Panduan Penggunaan
+
+### Pelanggan
+
+1. Buka halaman beranda, lalu pilih **Masuk** untuk login atau **Daftar Akun Baru** untuk registrasi.
+2. Setelah login, buka **Dashboard** untuk melihat ringkasan pesanan dan transaksi.
+3. Pilih **Pesan Laundry**, lalu tentukan jenis pesanan:
+   - **Paket Bundling** untuk paket laundry yang tersedia.
+   - **Layanan Satuan** untuk barang yang dihitung per buah atau pasang.
+   - **Layanan Kiloan** untuk layanan yang dihitung per kilogram.
+4. Isi nama, nomor WhatsApp, alamat penjemputan, informasi barang berharga atau risiko warna luntur, serta catatan tambahan.
+5. Periksa kembali ringkasan pesanan, lalu kirim formulir.
+6. Catat kode pesanan yang ditampilkan. Gunakan kode tersebut pada halaman **Pelacakan** atau buka menu **Pesanan Saya** untuk melihat riwayat dan rincian pesanan.
+7. Setelah pesanan berstatus `completed`, pelanggan dapat memberikan rating dan testimoni pada halaman rincian pesanan.
+
+### Administrator
+
+1. Masuk melalui `/admin/login` menggunakan akun administrator.
+2. Buka **Dashboard** untuk melihat pesanan menunggu verifikasi, proses laundry, pesanan siap diambil atau diantar, dan omset.
+3. Buka **Pesanan Laundry**, pilih pesanan, lalu pada status `pending` masukkan berat atau jumlah aktual, harga satuan, estimasi selesai, dan catatan verifikasi.
+4. Konfirmasi pesanan untuk mengubah status menjadi `confirmed`.
+5. Gunakan menu status pada halaman detail untuk memperbarui pesanan menjadi `processing`, `washing`, `finishing`, `ready`, `completed`, atau `cancelled`.
+6. Kelola kategori, layanan, paket, dan layanan unggulan dari menu **Katalog & Layanan**.
+7. Buka **Data Pelanggan** untuk melihat pelanggan beserta riwayat pesanan.
+8. Buka **Transaksi & Struk** untuk melihat transaksi dan mencetak invoice.
+9. Buka **Laporan & Rekap** untuk melihat rekap periode, mencetak laporan, atau mengunduh PDF.
+10. Buka **Testimoni Pelanggan** untuk menyembunyikan atau menghapus ulasan.
+
+### Pelacakan Pesanan
+
+Pengunjung dapat membuka halaman **Pelacakan**, memasukkan kode dengan format `WSH-YYYYMMDD-XXX`, lalu memilih **Cari Pesanan**. Sistem menampilkan status, rincian layanan, berat atau jumlah, estimasi selesai, biaya, dan riwayat perubahan status jika kode ditemukan.
+
 ## Akun Demo
 
 Akun berikut disediakan oleh seeder proyek:
