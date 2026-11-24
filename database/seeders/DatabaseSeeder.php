@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         $admin = User::create([
             'name' => 'Administrator Washora',
             'email' => 'admin@washora.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('Password'),
             'phone' => '081234567890',
             'role' => 'admin',
         ]);

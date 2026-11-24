@@ -361,6 +361,8 @@ Harga dan subtotal menggunakan `decimal(12,2)`, sedangkan berat dan jumlah mengg
 
 Alur berikut sesuai dengan route pelanggan yang dilindungi middleware `auth` dan `customer`, serta `User\OrderController`.
 
+**Kode Mermaid:**
+
 ```mermaid
 flowchart TD
     mulai([Mulai]) --> buka["Pelanggan membuka website"]
@@ -394,6 +396,8 @@ Pelanggan harus login untuk mengirim pesanan. Layanan kiloan belum memiliki subt
 
 Alur berikut sesuai dengan route administrator, middleware `auth` dan `admin`, serta `Admin\OrderController`.
 
+**Kode Mermaid:**
+
 ```mermaid
 flowchart TD
     mulai([Mulai]) --> buka["Administrator membuka halaman login"]
@@ -424,6 +428,7 @@ Setelah pesanan dikonfirmasi, administrator dapat memilih status `confirmed`, `p
 ## Flowchart Pelacakan Pesanan
 
 Pelacakan tersedia untuk umum pada route `GET /tracking`.
+
 
 ```mermaid
 flowchart TD
